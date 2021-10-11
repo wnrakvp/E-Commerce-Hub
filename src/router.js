@@ -1,0 +1,34 @@
+import { createRouter, createWebHistory } from 'vue-router'
+const routes = [
+  { path: '/', name: 'home', component: () => import('./pages/home.vue') },
+  { path: '/login', name: 'login', component: () => import('./pages/login.vue') },
+  { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('./pages/notfound.vue') },
+  {
+    path: '/console',
+    name: 'console',
+    component: () => import('./pages/console.vue'),
+    children: [
+      {
+        path: 'product',
+        name: 'products',
+        component: () => import('./pages/products.vue'),
+        children: [
+          { path: ':id', name: 'sku', component: () => import('./pages/sku.vue') }
+        ]
+      },
+      { path: 'order', name: 'orders', component: () => import('./pages/orders.vue') }
+    ]
+  },
+]
+
+const router = createRouter({
+  history: createWebHistory(),
+  linkActiveClass: '',
+  linkExactActiveClass: 'active',
+  routes
+})
+router.isReady().then(() => {
+  console.debug(`app is ready`)
+}).catch(console.error)
+
+export default router
