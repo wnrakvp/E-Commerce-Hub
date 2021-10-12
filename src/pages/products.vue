@@ -6,7 +6,7 @@
             <span>Products</span>
             <i class="bi-plus-circle"></i>
           </h6>
-          <router-link v-for="(item, idx) in productList" :to="{ name: 'sku', params: { id: item.id } }"><MediaObject :="item"/></router-link>
+          <router-link v-for="(item, idx) in all" :to="{ name: 'sku', params: { id: item.id } }" :key="idx"><MediaObject :="item"/></router-link>
         </div>
       </div>
       <router-view></router-view>
@@ -14,9 +14,15 @@
 </template>
 <script>
 import MediaObject from '../elements/mediaobject.vue'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     MediaObject
+  },
+  computed: {
+    ...mapGetters('Products', {
+      all: 'all'
+    })
   },
   data () {
     return {
@@ -27,6 +33,8 @@ export default {
         { id: 4, title: 'Product Name 4', details: 'Some representative placeholder content, with some information about this user. Imagine this being some sort of status update, perhaps?' },
       ]
     }
+  },
+  methods: {
   }
 }
 </script>
