@@ -14,13 +14,6 @@ const routes = [
         path: 'product',
         name: 'products',
         component: () => import('./pages/products.vue'),
-        beforeEnter (to, from, next) {
-          console.debug('beforeRouteEnter')
-          store.dispatch('Products/getAll').then(result => {
-            console.debug(result)
-            next()
-          }).catch(console.error)
-        },
         children: [
           { path: ':id', name: 'sku', component: () => import('./pages/sku.vue') }
         ]

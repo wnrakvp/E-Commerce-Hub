@@ -4,7 +4,7 @@ const store = createStore({
   actions: {
   },
   modules: {
-    Products
+    // Products
   }
 })
 

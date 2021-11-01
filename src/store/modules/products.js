@@ -11,9 +11,9 @@ export default {
     all: state => state.all
   },
   mutaition: {
-    SET_ALL (state, value) {
-      state.all = value
-    }
+    // SET_ALL (state, value) {
+    //   state.all = value
+    // }
   },
   actions: {
     getAll ({commit}) {
