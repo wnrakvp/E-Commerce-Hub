@@ -8,28 +8,34 @@
       </form>
       <div class="d-flex d-lg-none">
         <button class="btn" @click="toggleMenu">
-          <i v-if="isMenuHidden" class="bi-arrows-expand"></i>
-          <i v-else class="bi-arrows-collapse"></i>
+          <i v-if="isMenuHidden" class="bi-chevron-bar-expand"></i>
+          <i v-else class="bi-chevron-bar-contract"></i>
         </button>
       </div>
     </div>
   </nav>
-  <div class="container-xxl">
+  <div class="container-md">
     <div class="row g-0">
-      <div class="col-lg-3">
+      <div class="col-lg-2 col-xxl-2">
         <div class="pt-3 px-4 d-lg-block" :class="{ 'd-none': isMenuHidden }">
-          <ul class="nav nav-pills flex-column nav-fill">
-            <li class="nav-item position-relative">
-              <router-link :to="{name: 'products'}" class="nav-link"><i class="bi-cart"></i> Products</router-link>
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <router-link :to="{name: 'products'}" class="nav-link text-nowrap"><i class="bi-grid"></i> Products</router-link>
             </li>
             <li class="nav-item">
-              <router-link :to="{name: 'orders'}" class="nav-link"><i class="bi-file-earmark"></i> Orders</router-link>
+              <router-link :to="{name: 'sku'}" class="nav-link text-nowrap"><i class="bi-file-earmark"></i> SKU</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{name: 'orders'}" class="nav-link text-nowrap"><i class="bi-table"></i> Order</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{name: 'stock'}" class="nav-link text-nowrap"><i class="bi-inboxes"></i> Stock</router-link>
             </li>
             <li class="border-top my-3"></li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
                 <strong>mdo</strong></a>
-              <ul class="dropdown-menu w-100 show">
+              <ul class="dropdown-menu w-100">
                 <li><a class="dropdown-item" href="#">Action</a></li>
                 <li><a class="dropdown-item" href="#">Another action</a></li>
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
@@ -40,7 +46,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-lg-9"><router-view></router-view></div>
+      <div class="col-lg-6 col-xl-6"><router-view></router-view></div>
     </div>
   </div>
 </template>
