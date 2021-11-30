@@ -40,7 +40,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory('/docs/'),
+  history: createWebHashHistory('/e-commerce-hub-web/'),
   linkActiveClass: 'active',
   routes
 })
