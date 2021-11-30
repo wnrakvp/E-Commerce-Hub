@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouterView } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import store from './store'
 import ConsoleView from './views/Console.vue'
 const routes = [
@@ -40,7 +40,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory('/docs/'),
   linkActiveClass: 'active',
   routes
 })
