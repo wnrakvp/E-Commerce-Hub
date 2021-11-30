@@ -1,0 +1,73 @@
+<template>
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <div class="d-flex justify-content-between align-items-center pb-2">
+      <h6 class="h6 my-0">SKU Management</h6>
+      <div class="btn-group" role="group">
+        <div class="btn-group" role="group">
+          <button id="FilterProductItem" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false"><i class="bi-funnel"></i> Filter by Product</button>
+          <ul class="dropdown-menu" aria-labelledby="FilterProductItem">
+            <li><a class="dropdown-item" @click="filterById(null)">View All</a></li>
+            <li v-for="(item, idx) in productList" :key="idx">
+              <a class="dropdown-item" @click="filterById(item.id)">{{item.name}}</a>
+            </li>
+          </ul>
+        </div>
+        <router-link :to="{ name: 'sku-item', params: { id: 'add' } }" custom v-slot="{ navigate }">
+          <button class="btn btn-sm btn-outline-secondary" @click="navigate"><i class="bi-plus-circle"></i> Add</button>
+        </router-link>
+      </div>
+    </div>
+    <router-link v-for="(item, idx) in skuList" :to="{ name: 'sku-item', params: { id: item.id } }" :key="idx" custom v-slot="{ navigate }">
+      <SKUItem @click="navigate" v-bind="{
+        title: item.name,
+        details: item.desc,
+        imageURL: item.image,
+        isShopee: item.isShopee,
+        isLazada: item.isLazada
+      }"/>
+    </router-link>
+    <small class="d-block text-center mt-3">
+      <a href="#">View More</a>
+    </small>
+  </div>
+  <router-view></router-view>
+</template>
+<script>
+import SKUItem from '../elements/SKUObject.vue'
+import { mapGetters, mapActions } from 'vuex'
+import { Dropdown } from 'bootstrap'
+export default {
+  components: {
+    SKUItem
+  },
+  mounted () {
+    Promise.all([
+      this.getAllProducts(),
+      this.getAllSKU()
+    ]).then(result => {
+      console.debug(result)
+    }).catch(console.error)
+  },
+  computed: {
+    ...mapGetters('Products', {
+      productList: 'all'
+    }),
+    ...mapGetters('SKU', {
+      skuList: 'all'
+    })
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
+    ...mapActions('Products', {
+      getAllProducts: 'getAll'
+    }),
+    ...mapActions('SKU', {
+      getAllSKU: 'getAll',
+      filterById: 'filterById'
+    })
+  }
+}
+</script>

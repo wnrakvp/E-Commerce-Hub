@@ -1,26 +1,40 @@
 import { createRouter, createWebHistory, RouterView } from 'vue-router'
 import store from './store'
+import ConsoleView from './views/Console.vue'
 const routes = [
-  { path: '/', name: 'home', component: () => import('./pages/Home.vue') },
-  { path: '/login', name: 'login', component: () => import('./pages/Login.vue') },
-  { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('./pages/NotFound.vue') },
+  { path: '/', name: 'home', component: () => import('./views/Home.vue') },
+  { path: '/login', name: 'login', component: () => import('./views/Login.vue') },
+  { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('./views/NotFound.vue') },
   {
     path: '/console',
     name: 'console',
     redirect: { name: 'products' },
-    component: () => import('./pages/Console.vue'),
+    component: ConsoleView,
     children: [
       {
         path: 'product',
         name: 'products',
-        component: () => import('./pages/Products.vue'),
+        component: () => import('./views/Products.vue'),
         children: [
-          { path: ':id', name: 'product-item', component: () => import('./pages/ProductItem.vue') }
+          { path: ':id', name: 'product-item', component: () => import('./views/ProductItem.vue'), props: true }
         ]
       },
-      { path: 'sku', name: 'sku', component: () => import('./pages/SKU.vue') },
-      { path: 'order', name: 'orders', component: () => import('./pages/Orders.vue') },
-      { path: 'stock', name: 'stock', component: () => import('./pages/Stock.vue') },
+      {
+        path: 'sku',
+        name: 'sku',
+        component: () => import('./views/SKU.vue'),
+        children: [
+          { path: ':id', name: 'sku-item', component: () => import('./views/SKUItem.vue') }
+        ]
+      },
+      {
+        path: 'stock',
+        name: 'stock',
+        component: () => import('./views/Stock.vue'),
+        children: [
+          { path: ':id', name: 'stock-item', component: () => import('./views/StockItem.vue') }
+        ]
+      },
     ]
   },
 ]

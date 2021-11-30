@@ -3,58 +3,87 @@ const masterdata = {
     {
       _id: 1,
       productId: 1,
-      name: 'Apple M1 Chip with 8-Core CPU and 7-Core GPU 256GB Storage (Space Grey)',
-      image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-space-gray-select-201810?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1603332211000',
-      desc: 'Apple M1 chip with 8‑core CPU, 7‑core GPU, and 16‑core Neural Engine\n8GB unified memory\n256GB SSD storage¹\nRetina display with True Tone\nMagic Keyboard\nTouch ID\nForce Touch trackpad\nTwo Thunderbolt / USB 4 ports'
+      name: 'tfndn-50',
+      image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg',
+      desc: 'Tom Ford : Noir de Noir 50 ML',
+      isShopee: false,
+      isLazada: true
     },
     {
       _id: 2,
       productId: 1,
-      name: 'Apple M1 Chip with 8-Core CPU and 7-Core GPU 256GB Storage (Gold)',
-      image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-gold-select-201810?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1603332211000',
-      desc: 'Apple M1 chip with 8‑core CPU, 7‑core GPU, and 16‑core Neural Engine\n8GB unified memory\n256GB SSD storage¹\nRetina display with True Tone\nMagic Keyboard\nTouch ID\nForce Touch trackpad\nTwo Thunderbolt / USB 4 ports'
+      name: 'tfndn-100',
+      image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dwa2e15b39/images/large/0000102334.jpg',
+      desc: 'Tom Ford : Noir de Noir 100 ML',
+      isShopee: true,
+      isLazada: true
     },
     {
       _id: 3,
       productId: 1,
-      name: 'Apple M1 Chip with 8-Core CPU and 7-Core GPU 256GB Storage (Silver)',
-      image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-silver-select-201810?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1603332212000',
-      desc: 'Apple M1 chip with 8‑core CPU, 7‑core GPU, and 16‑core Neural Engine\n8GB unified memory\n256GB SSD storage¹\nRetina display with True Tone\nMagic Keyboard\nTouch ID\nForce Touch trackpad\nTwo Thunderbolt / USB 4 ports'
+      name: 'tfndn-250',
+      image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw42fc54f8/images/large/0000102607.jpg',
+      desc: 'Tom Ford : Noir de Noir 250 ML',
+      isShopee: false,
+      isLazada: true
     },
     {
       _id: 4,
-      productId: 1,
-      name: 'Apple M1 Chip with 8-Core CPU and 8-Core GPU 512GB Storage (Space Grey)',
-      image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-space-gray-select-201810?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1603332211000',
-      desc: 'Apple M1 chip with 8‑core CPU, 8‑core GPU, and 16‑core Neural Engine\n8GB unified memory\n512GB SSD storage¹\nRetina display with True Tone\nMagic Keyboard\nTouch ID\nForce Touch trackpad\nTwo Thunderbolt / USB 4 ports'
+      productId: 2,
+      name: 'aventus18n01',
+      image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
+      desc: 'Batch หายาก ปี 2018',
+      isShopee: true,
+      isLazada: true
     },
     {
       _id: 5,
-      productId: 1,
-      name: 'Apple M1 Chip with 8-Core CPU and 8-Core GPU 512GB Storage (Gold)',
-      image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-gold-select-201810?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1603332211000',
-      desc: 'Apple M1 chip with 8‑core CPU, 8‑core GPU, and 16‑core Neural Engine\n8GB unified memory\n512GB SSD storage¹\nRetina display with True Tone\nMagic Keyboard\nTouch ID\nForce Touch trackpad\nTwo Thunderbolt / USB 4 ports'
+      productId: 2,
+      name: 'aventus19n01',
+      image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
+      desc: 'Batch หายาก ปี 2019',
+      isShopee: true,
+      isLazada: true
     },
     {
       _id: 6,
-      productId: 1,
-      name: 'Apple M1 Chip with 8-Core CPU and 8-Core GPU 512GB Storage (Silver)',
-      image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-silver-select-201810?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1603332212000',
-      desc: 'Apple M1 chip with 8‑core CPU, 8‑core GPU, and 16‑core Neural Engine\n8GB unified memory\n512GB SSD storage¹\nRetina display with True Tone\nMagic Keyboard\nTouch ID\nForce Touch trackpad\nTwo Thunderbolt / USB 4 ports'
+      productId: 2,
+      name: 'aventus20m01',
+      image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
+      desc: 'Batch ใหม่ ผลิตต้นปี 2020',
+      isShopee: true,
+      isLazada: true
+    },
+    {
+      _id: 7,
+      productId: 2,
+      name: 'aventus21p01',
+      image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
+      desc: 'Batch ใหม่ ผลิตต้นปี 2021',
+      isShopee: true,
+      isLazada: true
     }
   ],
   productList: [
     {
       _id: 1,
-      name: 'Apple Macbook Air',
-      desc: 'Apple MacBook Air 2020 is a macOS laptop with a 13.30-inch display that has a resolution of 2560x1600 pixels. It is powered by a Core i3 processor and it comes with 8GB of RAM. The Apple MacBook Air 2020 packs 256GB of SSD storage. Graphics are powered by Integrated Graphics Processor.',
+      name: 'Tom Ford : Noir de Noir',
+      desc: '"Noir de Noir is dark, sexy and indulgent. Yin collides with Yang featuring black rose, black truffle and patchouli for an intense, sensual awakening."—TOM FORD',
+      image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg',
     },
     {
       _id: 2,
-      name: 'Apple Macbook Pro',
-      desc: 'Apple MacBook Pro is a macOS laptop with a 13.30-inch display that has a resolution of 2560x1600 pixels. It is powered by a Core i5 processor and it comes with 12GB of RAM. The Apple MacBook Pro packs 512GB of SSD storage.',
+      name: 'Creed : Aventus',
+      desc: 'Aventus celebrates strength, vision and success, inspired by the dramatic life of war, peace and romance lived by Emperor Napoleon. The bottle is emblazoned with a silver emblem of a horse and rider.',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.9828.jpg',
+    },
+    {
+      _id: 3,
+      name: 'Jo Malone : Wood Sage & Sea Salt',
+      desc: '‘Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.’',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.25529.jpg',
     }
-  ]
+  ],
 }
 function Mockup () {
   // TODO: do some initial things
@@ -72,10 +101,10 @@ function Mockup () {
         result: masterdata.productList.find(x => x._id === id)
       })
     },
-    getAllSKU (productId) {
+    getAllSKU () {
       return Promise.resolve({
         reason: 'OK',
-        result: masterdata.skuList.find(x => x.productId === productId)
+        result: masterdata.skuList
       })
     }
   }
