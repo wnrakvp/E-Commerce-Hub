@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import store from './store'
 import ConsoleView from './views/Console.vue'
 const routes = [
   { path: '/', name: 'home', component: () => import('./views/Home.vue') },

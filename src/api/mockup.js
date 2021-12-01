@@ -7,7 +7,8 @@ const masterdata = {
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg',
       desc: 'Tom Ford : Noir de Noir 50 ML',
       isShopee: false,
-      isLazada: true
+      isLazada: true,
+      isActive: true
     },
     {
       _id: 2,
@@ -16,7 +17,8 @@ const masterdata = {
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dwa2e15b39/images/large/0000102334.jpg',
       desc: 'Tom Ford : Noir de Noir 100 ML',
       isShopee: true,
-      isLazada: true
+      isLazada: true,
+      isActive: true
     },
     {
       _id: 3,
@@ -25,7 +27,8 @@ const masterdata = {
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw42fc54f8/images/large/0000102607.jpg',
       desc: 'Tom Ford : Noir de Noir 250 ML',
       isShopee: false,
-      isLazada: true
+      isLazada: true,
+      isActive: true
     },
     {
       _id: 4,
@@ -34,7 +37,8 @@ const masterdata = {
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch หายาก ปี 2018',
       isShopee: true,
-      isLazada: true
+      isLazada: true,
+      isActive: true
     },
     {
       _id: 5,
@@ -43,7 +47,8 @@ const masterdata = {
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch หายาก ปี 2019',
       isShopee: true,
-      isLazada: true
+      isLazada: true,
+      isActive: true
     },
     {
       _id: 6,
@@ -52,7 +57,8 @@ const masterdata = {
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch ใหม่ ผลิตต้นปี 2020',
       isShopee: true,
-      isLazada: true
+      isLazada: true,
+      isActive: true
     },
     {
       _id: 7,
@@ -61,7 +67,8 @@ const masterdata = {
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch ใหม่ ผลิตต้นปี 2021',
       isShopee: true,
-      isLazada: true
+      isLazada: true,
+      isActive: true
     }
   ],
   productList: [
@@ -70,20 +77,28 @@ const masterdata = {
       name: 'Tom Ford : Noir de Noir',
       desc: '"Noir de Noir is dark, sexy and indulgent. Yin collides with Yang featuring black rose, black truffle and patchouli for an intense, sensual awakening."—TOM FORD',
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg',
+      isActive: true
     },
     {
       _id: 2,
       name: 'Creed : Aventus',
       desc: 'Aventus celebrates strength, vision and success, inspired by the dramatic life of war, peace and romance lived by Emperor Napoleon. The bottle is emblazoned with a silver emblem of a horse and rider.',
       image: 'https://fimgs.net/mdimg/perfume/375x500.9828.jpg',
+      isActive: true
     },
     {
       _id: 3,
       name: 'Jo Malone : Wood Sage & Sea Salt',
       desc: '‘Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.’',
       image: 'https://fimgs.net/mdimg/perfume/375x500.25529.jpg',
+      isActive: true
     }
   ],
+}
+function delay (t, v) {
+  return new Promise((resolve) => { 
+    setTimeout(resolve.bind(null, v), t)
+  })
 }
 function Mockup () {
   // TODO: do some initial things
@@ -92,13 +107,55 @@ function Mockup () {
     getAllProducts () {
       return Promise.resolve({
         reason: 'OK',
-        result: masterdata.productList
+        result: masterdata.productList.filter(({isActive}) => isActive)
       })
     },
     getProduct (id) {
       return Promise.resolve({
         reason: 'OK',
         result: masterdata.productList.find(x => x._id === id)
+      })
+    },
+    createProduct (name, desc, image) {
+      const _id = masterdata.productList.length + 1
+      masterdata.productList.push({ _id, name, desc, image })
+      return Promise.resolve({
+        reason: 'OK',
+        result: { _id }
+      })
+    },
+    updateProduct (id, name, desc, image) {
+      return delay(700).then(() => {
+        const product = masterdata.productList.find(({_id}) => _id === id)
+        if (product) {
+          Object.assign(product, { _id: id, name, desc, image })
+          return Promise.resolve({
+            reason: 'OK',
+            result: { _id: id }
+          })
+        } else {
+          return Promise.reject({
+            reason: 'not found',
+            result: null
+          })
+        }
+      })
+    },
+    deleteProduct (id) {
+      return delay(700).then(() => {
+        const product = masterdata.productList.find(({_id}) => _id === id)
+        if (product) {
+          Object.assign(product, { ...product, isActive: false })
+          return Promise.resolve({
+            reason: 'OK',
+            result: { _id: id }
+          })
+        } else {
+          return Promise.reject({
+            reason: 'not found',
+            result: null
+          })
+        }
       })
     },
     getAllSKU () {
