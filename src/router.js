@@ -23,7 +23,7 @@ const routes = [
         name: 'sku',
         component: () => import('./views/SKU.vue'),
         children: [
-          { path: ':id', name: 'sku-item', component: () => import('./views/SKUItem.vue') }
+          { path: ':id', name: 'sku-item', component: () => import('./views/SKUItem.vue'), props: true }
         ]
       },
       {

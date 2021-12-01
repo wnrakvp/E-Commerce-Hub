@@ -51,7 +51,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-lg-6 col-xl-6"><router-view></router-view></div>
+      <div class="col-lg-9 col-xl-10"><router-view></router-view></div>
     </div>
   </div>
 </template>

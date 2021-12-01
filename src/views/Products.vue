@@ -6,16 +6,19 @@
         <button class="btn btn-sm btn-outline-secondary" @click="navigate"><i class="bi-plus-circle"></i> Add</button>
       </router-link>
     </div>
-    <router-link v-for="(item, idx) in productList" :to="{ name: 'product-item', params: { id: item.id } }" :key="idx" custom v-slot="{ navigate }">
-      <ProductItem @click="navigate" v-bind="{
-        title: item.name,
-        details: item.desc,
-        imageURL: item.image
-      }"/>
-    </router-link>
-    <small class="d-block text-center mt-3">
-      <a href="#">View More</a>
-    </small>
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+        <router-link v-for="(item, idx) in productList" :to="{ name: 'product-item', params: { id: item.id } }" :key="idx" custom v-slot="{ navigate }">
+          <div class="col">
+            <ProductItem @click="navigate" v-bind="{
+              title: item.name,
+              details: item.desc,
+              imageURL: item.image
+            }"/>
+          </div>
+        </router-link>
+      </div>
+    </div>
   </div>
   <router-view></router-view>
 </template>

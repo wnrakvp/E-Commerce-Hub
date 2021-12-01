@@ -17,18 +17,22 @@
         </router-link>
       </div>
     </div>
-    <router-link v-for="(item, idx) in skuList" :to="{ name: 'sku-item', params: { id: item.id } }" :key="idx" custom v-slot="{ navigate }">
-      <SKUItem @click="navigate" v-bind="{
-        title: item.name,
-        details: item.desc,
-        imageURL: item.image,
-        isShopee: item.isShopee,
-        isLazada: item.isLazada
-      }"/>
-    </router-link>
-    <small class="d-block text-center mt-3">
-      <a href="#">View More</a>
-    </small>
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+        <router-link v-for="(item, idx) in skuList" :to="{ name: 'sku-item', params: { id: item.id } }" :key="idx" custom v-slot="{ navigate }">
+          <div class="col align-self-stretch">
+            <SKUItem @click="navigate" v-bind="{
+              title: item.name,
+              details: item.desc,
+              price: item.price,
+              imageURL: item.image,
+              isShopee: item.isShopee,
+              isLazada: item.isLazada
+            }"/>
+          </div>
+        </router-link>
+      </div>
+    </div>
   </div>
   <router-view></router-view>
 </template>

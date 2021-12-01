@@ -1,13 +1,13 @@
 <template>
-<div class="card mb-3">
+<div class="card h-100">
   <div class="row g-0">
-    <div class="col-4" style="max-width: 8rem;">
+    <div class="col" style="max-width: 6rem;">
       <img :src="imageURL" :alt="title" class="img-fluid rounded-start">
     </div>
-    <div class="col-8">
+    <div class="col">
       <div class="card-body">
-        <h6 class="card-title">{{title}}</h6>
-        <p class="card-text" style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;"><small>{{details}}</small></p>
+        <h6 class="card-title" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">{{title}}</h6>
+        <p class="card-text" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;"><small>{{details}}</small></p>
       </div>
     </div>
   </div>
