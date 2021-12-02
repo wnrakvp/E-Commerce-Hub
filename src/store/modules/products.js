@@ -56,7 +56,6 @@ export default {
         return api.updateProduct( id, name, desc, image ).then(({result}) => {
           const { _id } = result
           const model = new ProductModel(_id, name, desc, image)
-          console.debug(model)
           commit('EDIT_ALL', model)
           return Promise.resolve(model)
         }).catch(Promise.reject)
@@ -64,7 +63,6 @@ export default {
         return api.createProduct( name, desc, image).then(({result}) => {
           const { _id } = result
           const model = new ProductModel(_id, name, desc, image)
-          console.debug(model)
           commit('UNSHIFT_ALL', model)
           return Promise.resolve(model)
         }).catch(Promise.reject)

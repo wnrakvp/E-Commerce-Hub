@@ -6,8 +6,8 @@
     </div>
     <div class="col">
       <div class="card-body">
-        <h6 class="card-title" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">{{title}}</h6>
-        <p class="card-text" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;"><small>{{details}}</small></p>
+        <h6 class="card-title clamp">{{title}}</h6>
+        <p class="card-text clamp clamp-3"><small>{{details}}</small></p>
       </div>
     </div>
   </div>

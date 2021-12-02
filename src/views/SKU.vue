@@ -23,11 +23,12 @@
           <div class="col align-self-stretch">
             <SKUItem @click="navigate" v-bind="{
               title: item.name,
+              product: item.product?.name,
               details: item.desc,
               price: item.price,
               imageURL: item.image,
-              isShopee: item.isShopee,
-              isLazada: item.isLazada
+              isShopee: item.marketplaces.has('shopee'),
+              isLazada: item.marketplaces.has('lazada')
             }"/>
           </div>
         </router-link>
@@ -37,7 +38,7 @@
   <router-view></router-view>
 </template>
 <script>
-import SKUItem from '../elements/SKUObject.vue'
+import SKUItem from './elements/SKUObject.vue'
 import { mapGetters, mapActions } from 'vuex'
 import { Dropdown } from 'bootstrap'
 export default {

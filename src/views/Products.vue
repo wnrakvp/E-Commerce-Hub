@@ -23,7 +23,7 @@
   <router-view></router-view>
 </template>
 <script>
-import ProductItem from '../elements/ProductObject.vue'
+import ProductItem from './elements/ProductObject.vue'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   components: {

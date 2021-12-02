@@ -5,15 +5,15 @@
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <form>
+    <form @submit.prevent="submit">
       <fieldset :disabled="disabled">
           <div class="mb-3">
           <label for="skuName" class="form-label">SKU Name</label>
-          <input type="text" class="form-control" id="skuName" placeholder="Name">
+          <input type="text" class="form-control" id="skuName" placeholder="The unique reference of stock keeping unit" v-model="name">
         </div>
         <div class="mb-3">
           <label for="skuDescription" class="form-label">Description</label>
-          <textarea class="form-control" id="skuDescription" rows="3"></textarea>
+          <textarea class="form-control" id="skuDescription" rows="3" placeholder="Please describe your SKU ..." v-model="desc"></textarea>
         </div>
         <div class="mb-3">
           <label for="skuImage" class="form-label">Image</label>
@@ -21,31 +21,50 @@
         </div>
         <div class="mb-3">
           <label for="originalPrice" class="form-label">Original Price</label>
-          <input type="number" min="0" class="form-control" id="originalPrice" placeholder="Price">
+          <input type="number"
+          min="0"
+          class="form-control"
+          id="originalPrice"
+          placeholder="How much does it cost?"
+          v-model="price">
         </div>
         <div class="mb-3">
           <label for="selectProduct" class="form-label">Product</label>
-          <select class="form-select" id="selectProduct">
-            <option selected>Open this to select product</option>
-            <option value="1">aaa</option>
-            <option value="2">bbbb</option>
-            <option value="3">ccc</option>
+          <select class="form-select" id="selectProduct" v-model="productId">
+            <option value="">Open this to select product</option>
+            <option v-for="(item, idx) in productList"
+            :key="idx"
+            :value="item.id">{{item.name}}</option>
           </select>
         </div>
       </fieldset>
       <fieldset class="mb-3" :disabled="disabled">
         <legend class="form-label">Marketplace</legend>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="checkboxAllMarketplace" value="all">
+          <input type="checkbox"
+          class="form-check-input"
+          id="checkboxAllMarketplace"
+          v-model="isAllMarketplace"
+          @change="checkAllMarketplaces">
           <label class="form-check-label" for="checkboxAllMarketplace">All</label>
         </div>
         <div class="input-group">
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="checkboxShopee" value="shopee">
+            <input type="checkbox"
+            class="form-check-input"
+            id="checkboxShopee"
+            value="shopee"
+            v-model="marketplaces"
+            @change="checkAllMarketplaces">
             <label class="form-check-label" for="checkboxShopee">Shopee</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="checkboxLazada" value="lazada">
+            <input type="checkbox"
+            class="form-check-input"
+            id="checkboxLazada"
+            value="lazada"
+            v-model="marketplaces"
+            @change="checkAllMarketplaces">
             <label class="form-check-label" for="checkboxLazada">Lazada</label>
           </div>
           <div class="form-check form-check-inline">
@@ -53,11 +72,27 @@
             <label class="form-check-label" for="checkboxJD">JD Central</label>
           </div>
         </div>
+        <hr>
+        <div v-if="id === 'add'" class="mb-3 text-end">
+          <button v-if="isSaving" type="submit" class="btn btn-primary">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Saving...
+          </button>
+          <button v-else type="submit" class="btn btn-primary">Add SKU</button>
+        </div>
+        <div v-else class="mb-3 d-flex justify-content-between">
+          <button v-if="isDeleting" type="button" class="btn btn btn-outline-danger">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Deleting...
+          </button>
+          <button v-else type="button" class="btn btn btn-outline-danger" @click="remove"><i class="bi-trash"></i> Delete</button>
+          <button v-if="isSaving" type="submit" class="btn btn-primary">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Saving...
+          </button>
+          <button v-else type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
       </fieldset>
-      <hr>
-      <div class="mb-3 text-end">
-        <button type="submit" class="btn btn-primary">Add SKU</button>
-      </div>
     </form>
   </div>
 </div>
@@ -65,7 +100,7 @@
 
 <script>
 import {Offcanvas} from 'bootstrap'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   props: {
     id: String
@@ -73,31 +108,38 @@ export default {
   mounted() {
     if (this.id === 'add') {
       this.draft().then(o => {
-        this.prductId = o.productId
+        this.productId = o.productId
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
         this.image = o.image
-        this.isShopee = o.isShopee
-        this.isLazada = o.isLazada
+        this.marketplaces = o.marketplaces
+        this.isAllMarketplace = this.marketplaces.size === 2
         this._offcanvas = new Offcanvas(this.$refs.SKUItem)
         this._offcanvas.show()
         this.$refs.SKUItem.addEventListener('hidden.bs.offcanvas', this.close)
       }).catch(console.error)
     } else {
       this.get(Number(this.id)).then(o => {
-        this.prductId = o.productId
+        console.debug(o.productId)
+        this.productId = o.productId
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
         this.image = o.image
-        this.isShopee = o.isShopee
-        this.isLazada = o.isLazada
+        this.marketplaces = o.marketplaces
+        this.isAllMarketplace = this.marketplaces.size === 2
+        console.debug(this.productId)
         this._offcanvas = new Offcanvas(this.$refs.SKUItem)
         this._offcanvas.show()
         this.$refs.SKUItem.addEventListener('hidden.bs.offcanvas', this.close)
       }).catch(console.error)
     }
+  },
+  computed: {
+    ...mapGetters('Products', {
+      productList: 'all'
+    })
   },
   data() {
     return {
@@ -105,22 +147,59 @@ export default {
       disabled: false,
       isSaving: false,
       isDeleting: false,
-      productId: null,
+      productId: '',
       name: '',
       desc: '',
       price: 0,
       image: '',
-      isShopee: false,
-      isLazada: false
+      marketplaces: new Set(),
+      isAllMarketplace: false
     }
   },
   methods: {
     close() {
       this.$router.replace({ name: 'sku' })
     },
+    checkAllMarketplaces (e) {
+      console.debug(e.target.id)
+      if (e.target.id === 'checkboxAllMarketplace') {
+        if (this.isAllMarketplace) {
+          this.marketplaces.add('shopee')
+          this.marketplaces.add('lazada')
+        } else {
+          this.marketplaces.delete('shopee')
+          this.marketplaces.delete('lazada')
+        }
+      } else {
+        if (this.marketplaces.size === 2) this.isAllMarketplace = true
+        else this.isAllMarketplace = false
+      }
+    },
+    submit () {
+      this.disabled = true
+      this.isSaving = true
+      const {id, productId, name, desc, price, image, marketplaces} = this
+      this.save({id: Number(id), productId, name, desc, price, image, marketplaces}).then(() => {
+        this.disabled = false
+        this.isSaving = false
+        this._offcanvas.hide()
+      }).catch(console.error)
+    },
+    remove () {
+      this.disabled = true
+      this.isDeleting = true
+      const {id} = this
+      this.delete(Number(id)).then(() => {
+        this.disabled = false
+        this.isDeleting = false
+        this._offcanvas.hide()
+      }).catch(console.error)
+    },
     ...mapActions('SKU', {
       draft: 'draft',
       get: 'get',
+      save: 'save',
+      delete: 'delete'
     })
   }
 }

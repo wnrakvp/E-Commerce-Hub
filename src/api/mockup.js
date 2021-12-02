@@ -6,9 +6,8 @@ const masterdata = {
       name: 'tfndn-50',
       price: 2500,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg',
-      desc: 'Tom Ford : Noir de Noir 50 ML',
-      isShopee: false,
-      isLazada: true,
+      desc: '50 ML',
+      marketplaces: ['shopee', 'lazada'],
       isActive: true
     },
     {
@@ -17,9 +16,8 @@ const masterdata = {
       name: 'tfndn-100',
       price: 2500,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dwa2e15b39/images/large/0000102334.jpg',
-      desc: 'Tom Ford : Noir de Noir 100 ML',
-      isShopee: true,
-      isLazada: true,
+      desc: '100 ML',
+      marketplaces: ['shopee', 'lazada'],
       isActive: true
     },
     {
@@ -28,9 +26,8 @@ const masterdata = {
       name: 'tfndn-250',
       price: 2500,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw42fc54f8/images/large/0000102607.jpg',
-      desc: 'Tom Ford : Noir de Noir 250 ML',
-      isShopee: false,
-      isLazada: true,
+      desc: '250 ML',
+      marketplaces: ['shopee', 'lazada'],
       isActive: true
     },
     {
@@ -40,8 +37,7 @@ const masterdata = {
       price: 2500,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch หายาก ปี 2018',
-      isShopee: true,
-      isLazada: true,
+      marketplaces: ['shopee', 'lazada'],
       isActive: true
     },
     {
@@ -51,8 +47,7 @@ const masterdata = {
       price: 2500,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch หายาก ปี 2019',
-      isShopee: true,
-      isLazada: true,
+      marketplaces: ['shopee', 'lazada'],
       isActive: true
     },
     {
@@ -62,8 +57,7 @@ const masterdata = {
       price: 2500,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch ใหม่ ผลิตต้นปี 2020',
-      isShopee: true,
-      isLazada: true,
+      marketplaces: ['shopee', 'lazada'],
       isActive: true
     },
     {
@@ -73,8 +67,7 @@ const masterdata = {
       price: 2500,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch ใหม่ ผลิตต้นปี 2021',
-      isShopee: true,
-      isLazada: true,
+      marketplaces: ['shopee', 'lazada'],
       isActive: true
     }
   ],
@@ -166,11 +159,69 @@ function Mockup () {
       })
     },
     getAllSKU () {
-      return Promise.resolve({
-        reason: 'OK',
-        result: masterdata.skuList
+      const list = masterdata.skuList.filter(({isActive}) => isActive)
+      const result = []
+      for(let i in list) {
+        const sku = list[i]
+        sku.product = masterdata.productList.find(({_id}) => _id === sku.productId)
+        delete sku.productId
+        result.push(sku)
+      }
+      return Promise.resolve({ reason: 'OK', result })
+    },
+    createSKU (productId, name, desc, price, image, marketplaces) {
+      return delay(700).then(() => {
+        const _id = masterdata.skuList.length + 1
+        masterdata.skuList.push({ _id, productId, name, desc, price, image, marketplaces })
+        product = masterdata.productList.find(item => item._id === productId)
+        return Promise.resolve({
+          reason: 'OK',
+          result: { _id, product, name, desc, price, image, marketplaces }
+        })
       })
-    }
+    },
+    getSKU (id) {
+      const sku = masterdata.skuList.find(x => x._id === id)
+      const product = masterdata.productList.find(item => item._id === sku.productId)
+      delete sku.productId
+      return Promise.resolve({ reason: 'OK', result: {...sku, product} })
+    },
+    updateSKU (id, productId, name, desc, price, image, marketplaces) {
+      return delay(700).then(() => {
+        const sku = masterdata.skuList.find(({_id}) => _id === id)
+        if (sku) {
+          Object.assign(sku, { _id: id, productId, name, desc, price, image, marketplaces })
+          sku.product = masterdata.productList.find(({_id}) => _id === sku.productId)
+          delete sku.productId
+          return Promise.resolve({
+            reason: 'OK',
+            result: sku
+          })
+        } else {
+          return Promise.reject({
+            reason: 'not found',
+            result: null
+          })
+        }
+      })
+    },
+    deleteSKU (id) {
+      return delay(700).then(() => {
+        const sku = masterdata.skuList.find(({_id}) => _id === id)
+        if (sku) {
+          Object.assign(sku, { ...sku, isActive: false })
+          return Promise.resolve({
+            reason: 'OK',
+            result: { _id: id }
+          })
+        } else {
+          return Promise.reject({
+            reason: 'not found',
+            result: null
+          })
+        }
+      })
+    },
   }
 }
 export default Mockup
