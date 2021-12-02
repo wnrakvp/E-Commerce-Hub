@@ -31,7 +31,7 @@ const routes = [
         name: 'stock',
         component: () => import('./views/Stock.vue'),
         children: [
-          { path: ':id', name: 'stock-item', component: () => import('./views/StockItem.vue') }
+          { path: ':id', name: 'stock-item', component: () => import('./views/StockItem.vue'), props: true }
         ]
       },
     ]

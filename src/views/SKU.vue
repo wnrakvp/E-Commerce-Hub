@@ -1,7 +1,7 @@
 <template>
   <div class="my-3 p-3 bg-body rounded shadow-sm">
     <div class="d-flex justify-content-between align-items-center pb-2">
-      <h6 class="h6 my-0">SKU Management</h6>
+      <h6 class="h6 my-0">SKU Management <i class="bi-question-circle"></i></h6>
       <div class="btn-group" role="group">
         <div class="btn-group" role="group">
           <button id="FilterProductItem" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false"><i class="bi-funnel"></i> Filter by Product</button>

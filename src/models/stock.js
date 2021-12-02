@@ -1,11 +1,9 @@
 class StockModel {
-  constructor (id, date, marketplace, skuId, price, amount) {
+  constructor (id, date, marketplace, items) {
     this.id = id
     this.date = date
     this.marketplace = marketplace
-    this.skuId = skuId
-    this.price = price
-    this.amount = amount
+    this.items = items
   }
 }
 export default StockModel

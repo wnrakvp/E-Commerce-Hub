@@ -38,8 +38,8 @@
             </li>
             <li class="border-top my-3"></li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><img src="../assets/doge.svg" alt="" width="32" height="32" class="rounded-circle me-2 bg-warning">
-                <strong>Doge Shop</strong></a>
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><img src="../assets/shop.jpeg" alt="" width="32" height="32" class="rounded-circle me-2 bg-warning">
+                <strong>Gentlemen</strong></a>
               <ul class="dropdown-menu w-100">
                 <li><a class="dropdown-item" href="#">Action</a></li>
                 <li><a class="dropdown-item" href="#">Another action</a></li>

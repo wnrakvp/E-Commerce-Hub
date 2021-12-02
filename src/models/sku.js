@@ -1,6 +1,7 @@
 class SKUModel {
-  constructor (id, product, name, desc, price, image, marketplaces) {
+  constructor (id, productId, product, name, desc, price, image, marketplaces) {
     this.id = id
+    this.productId = productId
     this.product = product
     this.name = name
     this.desc = desc

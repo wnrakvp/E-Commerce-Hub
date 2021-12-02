@@ -69,6 +69,26 @@ const masterdata = {
       desc: 'Batch ใหม่ ผลิตต้นปี 2021',
       marketplaces: ['shopee', 'lazada'],
       isActive: true
+    },
+    {
+      _id: 8,
+      productId: 3,
+      name: 'woodsage-th',
+      price: 2500,
+      image: 'https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg',
+      desc: 'ป้าย สคบ.ไทย (SEAL) + กล่องโบว์',
+      marketplaces: ['shopee', 'lazada'],
+      isActive: true
+    },
+    {
+      _id: 9,
+      productId: 3,
+      name: 'woodsage-king',
+      price: 2500,
+      image: 'https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg',
+      desc: 'ป้าย King Power (SEAL) + กล่องโบว์',
+      marketplaces: ['shopee', 'lazada'],
+      isActive: true
     }
   ],
   productList: [
@@ -94,6 +114,27 @@ const masterdata = {
       isActive: true
     }
   ],
+  stockList: [
+    {
+      _id: 1,
+      date: new Date(),
+      marketplace: 'shopee',
+      items: [
+        { skuId: 1, price: 2500, amount: 10 },
+        { skuId: 2, price: 2500, amount: 20 },
+        { skuId: 3, price: 2500, amount: 30 }
+      ]
+    },
+    {
+      _id: 2,
+      date: new Date(),
+      marketplace: 'lazada',
+      items: [
+        { skuId: 4, price: 2500, amount: 40 },
+        { skuId: 5, price: 2500, amount: 50 }
+      ]
+    }
+  ]
 }
 function delay (t, v) {
   return new Promise((resolve) => { 
@@ -162,10 +203,9 @@ function Mockup () {
       const list = masterdata.skuList.filter(({isActive}) => isActive)
       const result = []
       for(let i in list) {
-        const sku = list[i]
-        sku.product = masterdata.productList.find(({_id}) => _id === sku.productId)
-        delete sku.productId
-        result.push(sku)
+        const sku = {...list[i]}
+        const product = masterdata.productList.find(({_id}) => _id === sku.productId)
+        result.push({...sku, product})
       }
       return Promise.resolve({ reason: 'OK', result })
     },
@@ -173,17 +213,16 @@ function Mockup () {
       return delay(700).then(() => {
         const _id = masterdata.skuList.length + 1
         masterdata.skuList.push({ _id, productId, name, desc, price, image, marketplaces })
-        product = masterdata.productList.find(item => item._id === productId)
+        const product = masterdata.productList.find(item => item._id === productId)
         return Promise.resolve({
           reason: 'OK',
-          result: { _id, product, name, desc, price, image, marketplaces }
+          result: { _id, productId, product, name, desc, price, image, marketplaces }
         })
       })
     },
     getSKU (id) {
       const sku = masterdata.skuList.find(x => x._id === id)
       const product = masterdata.productList.find(item => item._id === sku.productId)
-      delete sku.productId
       return Promise.resolve({ reason: 'OK', result: {...sku, product} })
     },
     updateSKU (id, productId, name, desc, price, image, marketplaces) {
@@ -191,11 +230,10 @@ function Mockup () {
         const sku = masterdata.skuList.find(({_id}) => _id === id)
         if (sku) {
           Object.assign(sku, { _id: id, productId, name, desc, price, image, marketplaces })
-          sku.product = masterdata.productList.find(({_id}) => _id === sku.productId)
-          delete sku.productId
+          const product = masterdata.productList.find(({_id}) => _id === sku.productId)
           return Promise.resolve({
             reason: 'OK',
-            result: sku
+            result: {...sku, product}
           })
         } else {
           return Promise.reject({
@@ -222,6 +260,31 @@ function Mockup () {
         }
       })
     },
+    getAllStock () {
+      const list = masterdata.stockList
+      const result = []
+      for(let i in list) {
+        const stock = {...list[i]}
+        const items = []
+        for(let j in stock.items) {
+          const item = {...stock.items[j]}
+          const sku = masterdata.skuList.find(({_id}) => _id === item.skuId)
+          items.push({...item, sku})
+        }
+        result.push({...stock, items})
+      }
+      return Promise.resolve({ reason: 'OK', result })
+    },
+    getStock (id) {
+      const stock = masterdata.stockList.find(x => x._id === id)
+      const items = []
+      for(let j in stock.items) {
+        const item = {...stock.items[j]}
+        const sku = masterdata.skuList.find(({_id}) => _id === item.skuId)
+        items.push({...item, sku})
+      }
+      return Promise.resolve({ reason: 'OK', result: {...stock, items} })
+    }
   }
 }
 export default Mockup

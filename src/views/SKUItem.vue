@@ -7,35 +7,35 @@
   <div class="offcanvas-body">
     <form @submit.prevent="submit">
       <fieldset :disabled="disabled">
-          <div class="mb-3">
-          <label for="skuName" class="form-label">SKU Name</label>
-          <input type="text" class="form-control" id="skuName" placeholder="The unique reference of stock keeping unit" v-model="name">
+        <div class="mb-3">
+          <label for="selectProduct" class="form-label">Product <i class="bi-question-circle"></i></label>
+          <select class="form-select" id="selectProduct" v-model="productId">
+            <option value="">Select a current product</option>
+            <option v-for="(item, idx) in productList"
+            :key="idx"
+            :value="item.id">{{item.name}}</option>
+          </select>
         </div>
         <div class="mb-3">
-          <label for="skuDescription" class="form-label">Description</label>
-          <textarea class="form-control" id="skuDescription" rows="3" placeholder="Please describe your SKU ..." v-model="desc"></textarea>
+          <label for="skuName" class="form-label">SKU Name <i class="bi-question-circle"></i></label>
+          <input type="text" class="form-control" id="skuName" placeholder="Must be unique" v-model="name">
+        </div>
+        <div class="mb-3">
+          <label for="skuDescription" class="form-label">Attributes <i class="bi-question-circle"></i></label>
+          <textarea class="form-control" id="skuDescription" rows="1" placeholder="e.g. size, color, etc." v-model="desc"></textarea>
         </div>
         <div class="mb-3">
           <label for="skuImage" class="form-label">Image</label>
           <input class="form-control" type="file" id="skuImage">
         </div>
         <div class="mb-3">
-          <label for="originalPrice" class="form-label">Original Price</label>
+          <label for="originalPrice" class="form-label">Price</label>
           <input type="number"
           min="0"
           class="form-control"
           id="originalPrice"
           placeholder="How much does it cost?"
           v-model="price">
-        </div>
-        <div class="mb-3">
-          <label for="selectProduct" class="form-label">Product</label>
-          <select class="form-select" id="selectProduct" v-model="productId">
-            <option value="">Open this to select product</option>
-            <option v-for="(item, idx) in productList"
-            :key="idx"
-            :value="item.id">{{item.name}}</option>
-          </select>
         </div>
       </fieldset>
       <fieldset class="mb-3" :disabled="disabled">
@@ -108,7 +108,7 @@ export default {
   mounted() {
     if (this.id === 'add') {
       this.draft().then(o => {
-        this.productId = o.productId
+        this.productId = o.product.id
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
@@ -121,15 +121,13 @@ export default {
       }).catch(console.error)
     } else {
       this.get(Number(this.id)).then(o => {
-        console.debug(o.productId)
-        this.productId = o.productId
+        this.productId = o.product.id
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
         this.image = o.image
         this.marketplaces = o.marketplaces
         this.isAllMarketplace = this.marketplaces.size === 2
-        console.debug(this.productId)
         this._offcanvas = new Offcanvas(this.$refs.SKUItem)
         this._offcanvas.show()
         this.$refs.SKUItem.addEventListener('hidden.bs.offcanvas', this.close)
