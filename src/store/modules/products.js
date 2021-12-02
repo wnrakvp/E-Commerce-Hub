@@ -49,7 +49,7 @@ export default {
       }).catch(Promise.reject)
     },
     draft () {
-      return Promise.resolve(new ProductModel('', '', '', 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg'))
+      return Promise.resolve(new ProductModel('', '', '', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdT-CMjPc50R-jKEvJl_rcn3mBMvkcUwERg'))
     },
     save ({commit}, {id, name, desc, image}) {
       if (id) {

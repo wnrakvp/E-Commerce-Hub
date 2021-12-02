@@ -84,7 +84,7 @@ export default {
     draft () {
       const product = new ProductModel('', '', '', '')
       return Promise.resolve(new SKUModel('', '',product, '', '', 0,
-      'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg', new Set(['shopee', 'lazada'])))
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdT-CMjPc50R-jKEvJl_rcn3mBMvkcUwERg', new Set(['shopee', 'lazada'])))
     },
     save ({commit}, {id, productId, name, desc, price, image, marketplaces}) {
       if (id) {

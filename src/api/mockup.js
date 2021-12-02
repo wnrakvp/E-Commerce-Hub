@@ -4,77 +4,77 @@ const masterdata = {
       _id: 1,
       productId: 1,
       name: 'tfndn-50',
-      price: 2500,
+      price: 9200,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg',
       desc: '50 ML',
-      marketplaces: ['shopee', 'lazada'],
+      marketplaces: ['shopee'],
       isActive: true
     },
     {
       _id: 2,
       productId: 1,
       name: 'tfndn-100',
-      price: 2500,
+      price: 12400,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dwa2e15b39/images/large/0000102334.jpg',
       desc: '100 ML',
-      marketplaces: ['shopee', 'lazada'],
+      marketplaces: ['shopee'],
       isActive: true
     },
     {
       _id: 3,
       productId: 1,
       name: 'tfndn-250',
-      price: 2500,
+      price: 22000,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw42fc54f8/images/large/0000102607.jpg',
       desc: '250 ML',
-      marketplaces: ['shopee', 'lazada'],
+      marketplaces: ['shopee'],
       isActive: true
     },
     {
       _id: 4,
       productId: 2,
       name: 'aventus18n01',
-      price: 2500,
+      price: 12000,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch หายาก ปี 2018',
-      marketplaces: ['shopee', 'lazada'],
+      marketplaces: ['lazada'],
       isActive: true
     },
     {
       _id: 5,
       productId: 2,
       name: 'aventus19n01',
-      price: 2500,
+      price: 12000,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch หายาก ปี 2019',
-      marketplaces: ['shopee', 'lazada'],
+      marketplaces: ['lazada'],
       isActive: true
     },
     {
       _id: 6,
       productId: 2,
       name: 'aventus20m01',
-      price: 2500,
+      price: 12000,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch ใหม่ ผลิตต้นปี 2020',
-      marketplaces: ['shopee', 'lazada'],
+      marketplaces: ['lazada'],
       isActive: true
     },
     {
       _id: 7,
       productId: 2,
       name: 'aventus21p01',
-      price: 2500,
+      price: 12000,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch ใหม่ ผลิตต้นปี 2021',
-      marketplaces: ['shopee', 'lazada'],
+      marketplaces: ['lazada'],
       isActive: true
     },
     {
       _id: 8,
       productId: 3,
       name: 'woodsage-th',
-      price: 2500,
+      price: 5600,
       image: 'https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg',
       desc: 'ป้าย สคบ.ไทย (SEAL) + กล่องโบว์',
       marketplaces: ['shopee', 'lazada'],
@@ -84,7 +84,7 @@ const masterdata = {
       _id: 9,
       productId: 3,
       name: 'woodsage-king',
-      price: 2500,
+      price: 4675,
       image: 'https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg',
       desc: 'ป้าย King Power (SEAL) + กล่องโบว์',
       marketplaces: ['shopee', 'lazada'],
@@ -117,21 +117,21 @@ const masterdata = {
   stockList: [
     {
       _id: 1,
-      date: new Date(),
+      date: new Date('2021-11-30'),
       marketplace: 'shopee',
       items: [
-        { skuId: 1, price: 2500, amount: 10 },
-        { skuId: 2, price: 2500, amount: 20 },
-        { skuId: 3, price: 2500, amount: 30 }
+        { skuId: 1, price: 9200, amount: 10 },
+        { skuId: 2, price: 12400, amount: 20 },
+        { skuId: 3, price: 22000, amount: 30 }
       ]
     },
     {
       _id: 2,
-      date: new Date(),
+      date: new Date('2021-12-01'),
       marketplace: 'lazada',
       items: [
-        { skuId: 4, price: 2500, amount: 40 },
-        { skuId: 5, price: 2500, amount: 50 }
+        { skuId: 4, price: 12000, amount: 40 },
+        { skuId: 5, price: 12000, amount: 50 }
       ]
     }
   ]

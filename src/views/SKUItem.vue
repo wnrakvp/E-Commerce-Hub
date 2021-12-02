@@ -25,7 +25,7 @@
           <textarea class="form-control" id="skuDescription" rows="1" placeholder="e.g. size, color, etc." v-model="desc"></textarea>
         </div>
         <div class="mb-3">
-          <label for="skuImage" class="form-label">Image</label>
+          <label for="skuImage" class="form-label">Image <i class="bi-question-circle"></i></label>
           <input class="form-control" type="file" id="skuImage">
         </div>
         <div class="mb-3">
