@@ -51,7 +51,7 @@ export default {
         })
         commit('SET_ALL', skuList)
         // TODO: throw something to router for handle state
-        return Promise.resolve('200')
+        return Promise.resolve(skuList)
       }).catch(err => {
         console.error(err)
         return Promise.resolve('200')

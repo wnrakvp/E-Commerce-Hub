@@ -284,6 +284,22 @@ function Mockup () {
         items.push({...item, sku})
       }
       return Promise.resolve({ reason: 'OK', result: {...stock, items} })
+    },
+    createStock(date, marketplace, items) {
+      return delay(700).then(() => {
+        const _id = masterdata.stockList.length + 1
+        masterdata.stockList.push({ _id, date, marketplace, items })
+        const skus = []
+        for(let j in items) {
+          const item = {...items[j]}
+          const sku = masterdata.skuList.find(({_id}) => _id === item.skuId)
+          skus.push({...item, sku})
+        }
+        return Promise.resolve({
+          reason: 'OK',
+          result: { _id, date, marketplace, items: skus }
+        })
+      })
     }
   }
 }
