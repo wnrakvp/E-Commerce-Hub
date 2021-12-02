@@ -23,6 +23,9 @@ export default {
     UNSHIFT_ALL (state, value) {
       state.all.unshift(value)
     },
+    PUSH_ALL (state, value) {
+      state.all.push(value)
+    },
     DELETE_ALL (state, value) {
       state.all = state.all.filter(({id}) => id !== value)
     }
@@ -112,7 +115,7 @@ export default {
           items.push(new StockLineItemModel(skuId, sku, price, amount))
         })
         const model = new StockModel(_id, date, marketplace, items)
-        commit('UNSHIFT_ALL', model)
+        commit('PUSH_ALL', model)
         return Promise.resolve(model)
       }).catch(Promise.reject)
     }
