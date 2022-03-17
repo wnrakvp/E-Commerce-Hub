@@ -1,3 +1,4 @@
+import axios from 'axios';
 const masterdata = {
   skuList: [
     {
@@ -108,6 +109,20 @@ const masterdata = {
     },
     {
       _id: 3,
+      name: 'Jo Malone : Wood Sage & Sea Salt',
+      desc: '‘Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.’',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.25529.jpg',
+      isActive: true
+    },
+    {
+      _id: 4,
+      name: 'Jo Malone : Wood Sage & Sea Salt',
+      desc: '‘Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.’',
+      image: 'https://fimgs.net/mdimg/perfume/375x500.25529.jpg',
+      isActive: true
+    },
+    {
+      _id: 5,
       name: 'Jo Malone : Wood Sage & Sea Salt',
       desc: '‘Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.’',
       image: 'https://fimgs.net/mdimg/perfume/375x500.25529.jpg',
