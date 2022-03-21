@@ -1,4 +1,3 @@
-import axios from 'axios';
 const masterdata = {
   skuList: [
     {
@@ -6,6 +5,7 @@ const masterdata = {
       productId: 1,
       name: 'tfndn-50',
       price: 9200,
+      amount: 20,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg',
       desc: '50 ML',
       marketplaces: ['shopee'],
@@ -16,6 +16,7 @@ const masterdata = {
       productId: 1,
       name: 'tfndn-100',
       price: 12400,
+      amount: 20,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dwa2e15b39/images/large/0000102334.jpg',
       desc: '100 ML',
       marketplaces: ['shopee'],
@@ -26,6 +27,7 @@ const masterdata = {
       productId: 1,
       name: 'tfndn-250',
       price: 22000,
+      amount: 20,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw42fc54f8/images/large/0000102607.jpg',
       desc: '250 ML',
       marketplaces: ['shopee'],
@@ -36,6 +38,7 @@ const masterdata = {
       productId: 2,
       name: 'aventus18n01',
       price: 12000,
+      amount: 20,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch หายาก ปี 2018',
       marketplaces: ['lazada'],
@@ -46,6 +49,7 @@ const masterdata = {
       productId: 2,
       name: 'aventus19n01',
       price: 12000,
+      amount: 20,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch หายาก ปี 2019',
       marketplaces: ['lazada'],
@@ -56,6 +60,7 @@ const masterdata = {
       productId: 2,
       name: 'aventus20m01',
       price: 12000,
+      amount: 20,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch ใหม่ ผลิตต้นปี 2020',
       marketplaces: ['lazada'],
@@ -66,6 +71,7 @@ const masterdata = {
       productId: 2,
       name: 'aventus21p01',
       price: 12000,
+      amount: 20,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch ใหม่ ผลิตต้นปี 2021',
       marketplaces: ['lazada'],
@@ -76,6 +82,7 @@ const masterdata = {
       productId: 3,
       name: 'woodsage-th',
       price: 5600,
+      amount: 20,
       image: 'https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg',
       desc: 'ป้าย สคบ.ไทย (SEAL) + กล่องโบว์',
       marketplaces: ['shopee', 'lazada'],
@@ -86,6 +93,7 @@ const masterdata = {
       productId: 3,
       name: 'woodsage-king',
       price: 4675,
+      amount: 20,
       image: 'https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg',
       desc: 'ป้าย King Power (SEAL) + กล่องโบว์',
       marketplaces: ['shopee', 'lazada'],
@@ -113,20 +121,6 @@ const masterdata = {
       desc: '‘Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.’',
       image: 'https://fimgs.net/mdimg/perfume/375x500.25529.jpg',
       isActive: true
-    },
-    {
-      _id: 4,
-      name: 'Jo Malone : Wood Sage & Sea Salt',
-      desc: '‘Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.’',
-      image: 'https://fimgs.net/mdimg/perfume/375x500.25529.jpg',
-      isActive: true
-    },
-    {
-      _id: 5,
-      name: 'Jo Malone : Wood Sage & Sea Salt',
-      desc: '‘Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.’',
-      image: 'https://fimgs.net/mdimg/perfume/375x500.25529.jpg',
-      isActive: true
     }
   ],
   stockList: [
@@ -148,6 +142,62 @@ const masterdata = {
         { skuId: 4, price: 12000, amount: 40 },
         { skuId: 5, price: 12000, amount: 50 }
       ]
+    }
+  ],
+  inventoryList: [
+    {
+      _id: 1,
+      skuId: 1,
+      productId: 1,
+      amount: '10'
+    },
+    {
+      _id: 2,
+      skuId: 2,
+      productId: 1,
+      amount: '10'
+    },
+    {
+      _id: 3,
+      skuId: 3,
+      productId: 1,
+      amount: '10'
+    },
+    {
+      _id: 4,
+      skuId: 4,
+      productId: 2,
+      amount: '10'
+    },
+    {
+      _id: 5,
+      skuId: 5,
+      productId: 2,
+      amount: '10'
+    },
+    {
+      _id: 6,
+      skuId: 6,
+      productId: 2,
+      amount: '10'
+    },
+    {
+      _id: 7,
+      skuId: 7,
+      productId: 3,
+      amount: '10'
+    },
+    {
+      _id: 8,
+      skuId: 8,
+      productId: 3,
+      amount: '10'
+    },
+    {
+      _id: 9,
+      skuId: 9,
+      productId: 3,
+      amount: '10'
     }
   ]
 }
