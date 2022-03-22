@@ -37,6 +37,15 @@
           placeholder="How much does it cost?"
           v-model="price">
         </div>
+        <div class="mb-3">
+          <label for="originalAmount" class="form-label">Amount</label>
+          <input type="number"
+          min="0"
+          class="form-control"
+          id="originalAmount"
+          placeholder="How many do you have?"
+          v-model="amount">
+        </div>
       </fieldset>
       <fieldset class="mb-3" :disabled="disabled">
         <legend class="form-label">Marketplace</legend>
@@ -112,6 +121,7 @@ export default {
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
+        this.amount = o.amount
         this.image = o.image
         this.marketplaces = o.marketplaces
         this.isAllMarketplace = this.marketplaces.size === 2
@@ -125,6 +135,7 @@ export default {
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
+        this.amount = o.amount
         this.image = o.image
         this.marketplaces = o.marketplaces
         this.isAllMarketplace = this.marketplaces.size === 2
@@ -149,6 +160,7 @@ export default {
       name: '',
       desc: '',
       price: 0,
+      amount: 0,
       image: '',
       marketplaces: new Set(),
       isAllMarketplace: false
@@ -176,8 +188,8 @@ export default {
     submit () {
       this.disabled = true
       this.isSaving = true
-      const {id, productId, name, desc, price, image, marketplaces} = this
-      this.save({id: Number(id), productId, name, desc, price, image, marketplaces}).then(() => {
+      const {id, productId, name, desc, price, amount, image, marketplaces} = this
+      this.save({id: Number(id), productId, name, desc, price, amount, image, marketplaces}).then(() => {
         this.disabled = false
         this.isSaving = false
         this._offcanvas.hide()

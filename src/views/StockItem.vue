@@ -41,7 +41,7 @@
                   <td>{{idx + 1}}</td>
                   <td>{{item.sku.name}}</td>
                   <td>{{item.price}}</td>
-                  <td>{{item.amount}}</td>
+                  <td>{{item.amountOnSell}}</td>
                   <td v-if="id === 'add'"><button type="button" class="btn-close" aria-label="Close" @click="removeItem(idx)"></button></td>
                 </tr>
               </tbody>
@@ -54,7 +54,7 @@
                     </select>
                   </td>
                   <td><input type="number" class="form-control form-control-sm" id="price" placeholder="Price" v-model="price"></td>
-                  <td><input type="number" class="form-control form-control-sm" id="amount" placeholder="Amount" v-model="amount"></td>
+                  <td><input type="number" class="form-control form-control-sm" id="amount" placeholder="Amount" v-model="amountOnSell"></td>
                   <td><button type="button" class="btn btn-sm btn-outline-secondary" @click="addItem()"><i class="bi-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
@@ -124,7 +124,7 @@ export default {
       items: [],
       skuId: '',
       price: 0,
-      amount: 1
+      amountOnSell: 1
     }
   },
   methods: {
@@ -145,7 +145,7 @@ export default {
           skuId: this.skuId,
           sku,
           price: this.price,
-          amount: this.amount
+          amountOnSell: this.amountOnSell
         })
       }
     },

@@ -12,6 +12,7 @@
       <table class="table text-center align-middle">
         <thead>
           <tr>
+            <th scope="col">Inventory Type</th>
             <th scope="col">Product</th>
             <th scope="col">SKU</th>
             <th scope="col">Amount</th>
@@ -19,10 +20,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, i) in skuList" :key="i">
-            <td>{{ item.product?.name }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.amount }}</td>
+          <tr v-for="(item, i) in inventoryList" :key="i">
+            <td><strong>{{ item.type }}</strong></td>
+            <td>{{ item.product.name }}<br><img class="img-fluid" style="max-width: 150px; max-height:150px" :src="item.sku.image"></td>
+            <td>{{ item.sku.name }}</td>
+            <td>{{ item.sku.amount }}</td>
             <td>On Sell/ On Hand</td>
           </tr>
         </tbody>
@@ -33,10 +35,9 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
-
 export default {
   mounted() {
-    Promise.all([this.getAllProducts(), this.getAllSKU()])
+    Promise.all([this.getAllProducts(), this.getAllSKU(), this.getAll(), this.getAllInventory()])
       .then((result) => {
         console.debug(result);
       })
@@ -49,9 +50,16 @@ export default {
     ...mapGetters("SKU", {
       skuList: "all",
     }),
+    ...mapGetters('Stock', {
+      stockList: 'all'
+    }),
+    ...mapGetters('Inventory', {
+      inventoryList: 'all'
+    }),
   },
   data() {
-    return {};
+    return {
+    };
   },
   methods: {
     ...mapActions("Products", {
@@ -59,10 +67,15 @@ export default {
     }),
     ...mapActions("SKU", {
       getAllSKU: "getAll",
-      filterById: "filterById",
+    }),
+    ...mapActions('Stock', {
+      getAll: 'getAll'
+    }),
+    ...mapActions('Inventory', {
+      getAllInventory: 'getAll'
     }),
     Logger() {
-      console.log(this.skuList);
+      console.log(this.inventoryList);
     }
   },
 };

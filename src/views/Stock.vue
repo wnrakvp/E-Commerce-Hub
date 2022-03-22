@@ -29,7 +29,7 @@
               </td>
               <td>{{item.sku.name}}</td>
               <td>{{item.price.toLocaleString()}}</td>
-              <td>{{item.amount}}/{{item.amount}}</td>
+              <td>{{item.amountOnSell}}/{{item.amountOnSell}}</td>
               <td>
                 <router-link :to="{ name: 'stock-item', params: { id: stock.id } }" custom v-slot="{ navigate }">
                   <button class="btn btn-sm btn-outline-secondary" @click="navigate"><i class="bi-three-dots"></i></button>
@@ -74,7 +74,7 @@ export default {
       if (month.length < 2) month = '0' + month
       if (day.length < 2) day = '0' + day
       return [day, month, year].join('-')
-    }
+    },
   }
 }
 </script>

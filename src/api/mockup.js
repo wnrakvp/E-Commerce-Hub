@@ -129,9 +129,9 @@ const masterdata = {
       date: new Date('2021-11-30'),
       marketplace: 'shopee',
       items: [
-        { skuId: 1, price: 9200, amount: 10 },
-        { skuId: 2, price: 12400, amount: 20 },
-        { skuId: 3, price: 22000, amount: 30 }
+        { skuId: 1, price: 9200, amountOnSell: 10 },
+        { skuId: 2, price: 12400, amountOnSell: 20 },
+        { skuId: 3, price: 22000, amountOnSell: 30 }
       ]
     },
     {
@@ -139,8 +139,8 @@ const masterdata = {
       date: new Date('2021-12-01'),
       marketplace: 'lazada',
       items: [
-        { skuId: 4, price: 12000, amount: 40 },
-        { skuId: 5, price: 12000, amount: 50 }
+        { skuId: 4, price: 12000, amountOnSell: 40 },
+        { skuId: 5, price: 12000, amountOnSell: 50 }
       ]
     }
   ],
@@ -148,58 +148,49 @@ const masterdata = {
     {
       _id: 1,
       skuId: 1,
-      productId: 1,
-      amount: '10'
+      type: 'Internal'
     },
     {
       _id: 2,
       skuId: 2,
-      productId: 1,
-      amount: '10'
+      type: 'Warehouse'
     },
     {
       _id: 3,
       skuId: 3,
-      productId: 1,
-      amount: '10'
+      type: 'Internal'
     },
     {
       _id: 4,
       skuId: 4,
-      productId: 2,
-      amount: '10'
+      type: 'Internal'
     },
     {
       _id: 5,
       skuId: 5,
-      productId: 2,
-      amount: '10'
+      type: 'Warehouse'
     },
     {
       _id: 6,
       skuId: 6,
-      productId: 2,
-      amount: '10'
+      type: 'Warehouse'
     },
     {
       _id: 7,
       skuId: 7,
-      productId: 3,
-      amount: '10'
+      type: 'Internal'
     },
     {
       _id: 8,
       skuId: 8,
-      productId: 3,
-      amount: '10'
+      type: 'Warehouse'
     },
     {
       _id: 9,
       skuId: 9,
-      productId: 3,
-      amount: '10'
+      type: 'Internal'
     }
-  ]
+  ],
 }
 function delay (t, v) {
   return new Promise((resolve) => { 
@@ -274,14 +265,14 @@ function Mockup () {
       }
       return Promise.resolve({ reason: 'OK', result })
     },
-    createSKU (productId, name, desc, price, image, marketplaces) {
+    createSKU (productId, name, desc, price, amount, image, marketplaces) {
       return delay(700).then(() => {
         const _id = masterdata.skuList.length + 1
-        masterdata.skuList.push({ _id, productId, name, desc, price, image, marketplaces })
+        masterdata.skuList.push({ _id, productId, name, desc, price, amount, image, marketplaces })
         const product = masterdata.productList.find(item => item._id === productId)
         return Promise.resolve({
           reason: 'OK',
-          result: { _id, productId, product, name, desc, price, image, marketplaces }
+          result: { _id, productId, product, name, desc, price, amount, image, marketplaces }
         })
       })
     },
@@ -290,11 +281,11 @@ function Mockup () {
       const product = masterdata.productList.find(item => item._id === sku.productId)
       return Promise.resolve({ reason: 'OK', result: {...sku, product} })
     },
-    updateSKU (id, productId, name, desc, price, image, marketplaces) {
+    updateSKU (id, productId, name, desc, price, amount, image, marketplaces) {
       return delay(700).then(() => {
         const sku = masterdata.skuList.find(({_id}) => _id === id)
         if (sku) {
-          Object.assign(sku, { _id: id, productId, name, desc, price, image, marketplaces })
+          Object.assign(sku, { _id: id, productId, name, desc, price, amount, image, marketplaces })
           const product = masterdata.productList.find(({_id}) => _id === sku.productId)
           return Promise.resolve({
             reason: 'OK',
@@ -365,7 +356,18 @@ function Mockup () {
           result: { _id, date, marketplace, items: skus }
         })
       })
-    }
+    },
+    getAllInventory () {
+      const list = masterdata.inventoryList
+      const result = []
+      for(let i in list) {
+        const inventory = {...list[i]}
+        const sku = masterdata.skuList.find(({_id}) => _id === inventory.skuId)
+        const product = masterdata.productList.find(({_id}) => _id === sku.productId)
+        result.push({...inventory, sku, product})
+      }
+      return Promise.resolve({ reason: 'OK', result })
+    },
   }
 }
 export default Mockup

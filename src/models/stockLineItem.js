@@ -1,9 +1,9 @@
 class StockLineItemModel {
-  constructor (skuId, sku, price, amount) {
+  constructor (skuId, sku, price, amountOnSell) {
     this.skuId = skuId
     this.sku = sku
     this.price = price
-    this.amount = amount
+    this.amountOnSell = amountOnSell
   }
 }
 export default StockLineItemModel

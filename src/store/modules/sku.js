@@ -85,12 +85,12 @@ export default {
     },
     draft () {
       const product = new ProductModel('', '', '', '')
-      return Promise.resolve(new SKUModel('', '',product, '', '', 0, 0,
+      return Promise.resolve(new SKUModel('', '',product, '', '', 0,0,
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdT-CMjPc50R-jKEvJl_rcn3mBMvkcUwERg', new Set(['shopee', 'lazada'])))
     },
     save ({commit}, {id, productId, name, desc, price, amount, image, marketplaces}) {
       if (id) {
-        return api.updateSKU(id, productId, name, desc, price, amount, image, [...marketplaces]).then(({result}) => {
+        return api.updateSKU(id, productId, name, desc, price,amount, image, [...marketplaces]).then(({result}) => {
           const { _id, product } = result
           const model = new SKUModel(
             _id,

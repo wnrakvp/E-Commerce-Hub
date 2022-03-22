@@ -36,7 +36,7 @@ export default {
         const list = []
         result.forEach(({_id, date, marketplace, items: lineItems}) => {
           const items = []
-          lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
+          lineItems.forEach(({skuId, sku: skuDetails, price, amountOnSell}) => {
             const sku = new SKUModel(
               skuDetails._id,
               skuDetails.productId,
@@ -44,10 +44,11 @@ export default {
               skuDetails.name,
               skuDetails.desc,
               skuDetails.price,
+              skuDetails.amount,
               skuDetails.image,
               new Set(skuDetails.marketplaces)
             )
-            items.push(new StockLineItemModel(skuId, sku, price, amount))
+            items.push(new StockLineItemModel(skuId, sku, price, amountOnSell))
           })
           list.push(new StockModel(_id, date, marketplace, items))
         })
@@ -65,7 +66,7 @@ export default {
         let {_id, date, marketplace, items: lineItems} = result
         console.debug(_id, date, marketplace, lineItems)
         const items = []
-        lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
+        lineItems.forEach(({skuId, sku: skuDetails, price, amountOnSell}) => {
           const sku = new SKUModel(
             skuDetails._id,
             skuDetails.productId,
@@ -73,10 +74,11 @@ export default {
             skuDetails.name,
             skuDetails.desc,
             skuDetails.price,
+            skuDetails.amount,
             skuDetails.image,
             new Set(skuDetails.marketplaces)
           )
-          items.push(new StockLineItemModel(skuId, sku, price, amount))
+          items.push(new StockLineItemModel(skuId, sku, price, amountOnSell))
         })
         const model = new StockModel(_id, date, marketplace, items)
         return Promise.resolve(model)
@@ -94,14 +96,14 @@ export default {
     },
     save ({commit}, {date, marketplace, items}) {
       const skus = []
-      items.forEach(({skuId, price, amount}) => {
-        skus.push({skuId, price, amount})
+      items.forEach(({skuId, price, amountOnSell}) => {
+        skus.push({skuId, price, amountOnSell})
       })
       return api.createStock(date, marketplace, skus).then(({result}) => {
         const { _id, items:lineItems } = result
         console.debug(_id, lineItems)
         const items = []
-        lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
+        lineItems.forEach(({skuId, sku: skuDetails, price, amountOnSell}) => {
           const sku = new SKUModel(
             skuDetails._id,
             skuDetails.productId,
@@ -109,10 +111,11 @@ export default {
             skuDetails.name,
             skuDetails.desc,
             skuDetails.price,
+            skuDetails.amount,
             skuDetails.image,
             new Set(skuDetails.marketplaces)
           )
-          items.push(new StockLineItemModel(skuId, sku, price, amount))
+          items.push(new StockLineItemModel(skuId, sku, price, amountOnSell))
         })
         const model = new StockModel(_id, date, marketplace, items)
         commit('PUSH_ALL', model)

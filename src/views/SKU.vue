@@ -40,7 +40,6 @@
 <script>
 import SKUItem from './elements/SKUObject.vue'
 import { mapGetters, mapActions } from 'vuex'
-import { Dropdown } from 'bootstrap'
 export default {
   components: {
     SKUItem
