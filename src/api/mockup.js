@@ -191,6 +191,48 @@ const masterdata = {
       type: 'Internal'
     }
   ],
+  orderList: [
+    {
+      _id: 1,
+      date: new Date('2021-11-30'),
+      marketplace: 'shopee',
+      orderNo: 'No001',
+      trackNo: 'RE123456780TH',
+      orderStatus: 'Paid',
+      delivery: 'KERRY',
+      items: [
+        { skuId: 1, price: 9200, amount: 1 },
+        { skuId: 2, price: 12400, amount: 2,},
+        { skuId: 3, price: 22000, amount: 3,}
+      ]
+    },
+    {
+      _id: 2,
+      date: new Date('2021-12-01'),
+      marketplace: 'lazada',
+      orderNo: 'No002',
+      trackNo: 'RE123456788TH',
+      orderStatus: 'Shipping',
+      delivery: 'EMS',
+      items: [
+        { skuId: 4, price: 12000, amount: 2,},
+        { skuId: 5, price: 32000, amount: 10,}
+      ]
+    },
+    {
+      _id: 3,
+      date: new Date('2021-12-25'),
+      marketplace: 'shopee',
+      orderNo: 'No003',
+      trackNo: 'RE1234567777TH',
+      orderStatus: 'Packing',
+      delivery: 'FLASH',
+      items: [
+        { skuId: 6, price: 3000, amount: 3,},
+        { skuId: 7, price: 7000, amount: 7,}
+      ]
+    }
+  ],
 }
 function delay (t, v) {
   return new Promise((resolve) => { 
