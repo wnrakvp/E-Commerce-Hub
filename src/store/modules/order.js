@@ -62,7 +62,7 @@ export default {
     },
     get (context, id) {
       return api.getOrder(id).then(({result}) => {
-        let {_id, date, marketplace, orderNo, trackNo, items: lineItems} = result
+        let {_id, date, marketplace, orderNo, trackNo, orderStatus, delivery, items: lineItems} = result
         console.debug(_id, date, marketplace, orderNo, trackNo, orderStatus, delivery, lineItems)
         const items = []
         lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
