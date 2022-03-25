@@ -15,7 +15,6 @@
             <th scope="col">Inventory Type</th>
             <th scope="col">Product</th>
             <th scope="col">SKU</th>
-            <th scope="col">Amount</th>
             <th scope="col">On Sell/On Hand</th>
           </tr>
         </thead>
@@ -24,8 +23,7 @@
             <td><strong>{{ item.type }}</strong></td>
             <td>{{ item.product.name }}<br><img class="img-fluid" style="max-width: 150px; max-height:150px" :src="item.sku.image"></td>
             <td>{{ item.sku.name }}</td>
-            <td>{{ item.sku.amount }}</td>
-            <td>On Sell/ On Hand</td>
+            <td>{{ SumStock(item.skuId) }}/ {{ item.sku.amount }}</td>
           </tr>
         </tbody>
       </table>
@@ -74,6 +72,19 @@ export default {
     ...mapActions('Inventory', {
       getAllInventory: 'getAll'
     }),
+    SumStock(skuId) {
+      // const sum = 0;
+      // for(i in this.stockList){
+      //   for(j in this.stockList[i].items) {
+      //     if (skuId == this.stockList[i].items[j].skuId) {
+      //       sum += this.stockList[i].items[j].amountOnSell;
+      //     } else {
+      //       sum += 0;
+      //     }
+      //   }
+      // }
+      // return sum;
+    },
     Logger() {
       console.log(this.inventoryList);
     }
