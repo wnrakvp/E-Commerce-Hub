@@ -39,6 +39,14 @@ const routes = [
         name: 'inventory',
         component: () => import('./views/Inventory.vue'),
       },
+      {
+        path: 'order',
+        name: 'order',
+        component: () => import('./views/Order.vue'),
+        children: [
+          { path: ':id', name: 'order-item', component: () => import('./views/OrderItem.vue'), props: true }
+        ]
+      },
     ]
   },
 ]

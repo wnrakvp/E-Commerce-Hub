@@ -3,6 +3,7 @@ import Products from './modules/products'
 import SKU from './modules/sku'
 import Stock from './modules/stock'
 import Inventory from './modules/inventory'
+import Order from './modules/order'
 
 const store = createStore({
   actions: {
@@ -11,7 +12,8 @@ const store = createStore({
     Products,
     SKU,
     Stock,
-    Inventory
+    Inventory,
+    Order
   }
 })
 
