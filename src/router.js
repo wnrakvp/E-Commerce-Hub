@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import ConsoleView from './views/Console.vue'
 const routes = [
-  { path: '/', name: 'home', component: () => import('./views/Home.vue') },
+  { path: '/', name: 'home', component: () => import('./views/console.vue') },
   { path: '/login', name: 'login', component: () => import('./views/Login.vue') },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('./views/NotFound.vue') },
   {
