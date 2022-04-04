@@ -9,6 +9,8 @@
         <button class="btn btn-sm btn-outline-secondary" @click="navigate"><i class="bi-plus-circle"></i> Add</button>
       </router-link> -->
     </div>
+
+
     <div class="table">
       <table class="table">
         <tr>
@@ -17,10 +19,6 @@
           <th class="text-warning">On preparing({{8}})</th>
           <th class="text-info">On delivery({{6}})</th>
           <th class="text-success">Delivered({{6}})</th>
-          <th class="text-Muted">Canceled({{7}})</th>
-          <th class="text-danger">Refunded({{5}})</th>
-          <th></th>
-          <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -58,7 +56,7 @@
               <td>{{order.orderStatus}}</td>
               <td>{{order.delivery}}</td>
               <td>{{getCountItems(i)}}</td>
-              <td>{{getTotal(i)}}</td>
+              <td>{{getTotal(i).toLocaleString()}}</td>
               <td>{{formatDate(order.date)}}</td>
               <!-- <td>{{item.sku.name}}</td> -->
               <!-- <td>{{item.price.toLocaleString()}}</td> -->

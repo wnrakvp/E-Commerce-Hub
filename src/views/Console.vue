@@ -1,8 +1,10 @@
 <template>
   <nav class="navbar sticky-top navbar-white bg-white shadow-sm">
     <div class="container-fluid">
-      <a class="navbar-brand col-lg-3" href="#">E-Commerce <span class="badge bg-primary">hub</span></a>
-      <a class="nav-link text-nowrap disabled"><i class="bi-bell-fill"></i> Notifications</a>
+      <a class="navbar-brand col-lg-9" href="#">E-Commerce <span class="badge bg-primary">hub</span></a>
+      
+      <a class="nav-link text-nowrap"><i class="bi-bell-fill" style="font-size:20px"></i>&nbsp;&nbsp;&nbsp;
+      <img src="../assets/shop.jpeg" alt="" width="32" height="32" class="rounded-circle me-2 bg-warning"></a>
       <div class="d-flex d-lg-none">
         <button class="btn" @click="toggleMenu">
           <i v-if="isMenuHidden" class="bi-chevron-bar-expand"></i>
