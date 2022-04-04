@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import ConsoleView from './views/Console.vue'
 const routes = [
-  { path: '/', name: 'home', component: () => import('./views/Console.vue') },
+  { path: '/', name: 'home', component: () => import('./views/Login.vue') },
   { path: '/login', name: 'login', component: () => import('./views/Login.vue') },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('./views/NotFound.vue') },
   {
@@ -46,6 +46,14 @@ const routes = [
         children: [
           { path: ':id', name: 'order-item', component: () => import('./views/OrderItem.vue'), props: true }
         ]
+      },
+      {
+        path: 'track',
+        name: 'track',
+        component: () => import('./views/TrackShipment.vue'),
+        // children: [
+        //   { path: ':id', name: 'order-item', component: () => import('./views/OrderItem.vue'), props: true }
+        // ]
       },
     ]
   },

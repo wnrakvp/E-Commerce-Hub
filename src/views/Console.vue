@@ -32,7 +32,7 @@
               <router-link :to="{name: 'order'}" class="nav-link text-nowrap"><i class="bi-cart4"></i> Orders</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-nowrap disabled"><i class="bi bi-box-seam"></i> Track Shipment</a>
+              <router-link :to="{name: 'track'}" class="nav-link text-nowrap"><i class="bi bi-box-seam"></i> Track Shipment</router-link>
             </li>
             <li class="border-top my-3"></li>
             <li class="nav-item dropdown">
