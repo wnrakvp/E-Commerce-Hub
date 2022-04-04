@@ -1,9 +1,9 @@
 <template>
 <div class="offcanvas offcanvas-end" tabindex="-1" ref="OrderItem" aria-labelledby="OrderItemLabel">
   <div class="offcanvas-header">
-     <button class="btn btn-sm btn-outline-secondary" @click="Logger">
+     <!-- <button class="btn btn-sm btn-outline-secondary" @click="Logger">
         <i class="bi-plus-circle"></i> Logger
-      </button>
+      </button> -->
     <h5 class="offcanvas-title" id="ProductItemLabel">{{id==='add'?'Add':''}} Order Item</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
@@ -11,20 +11,45 @@
     <form @submit.prevent="submit">
       <fieldset :disabled="disabled">
         <div class="mb-3">
+          <label for="orderNoToAction" class="form-label">Order No.</label>
+          <input type="text" class="form-control" id="orderNo" placeholder="Order Number" v-model="orderNo">
+          <br>
           <label for="dateToAction" class="form-label">Date to Action</label>
           <input type="date" class="form-control" id="dateToAction" placeholder="Name" v-model="date">
-        </div>
-        <div class="mb-3">
+          <br>
           <label for="marketplace" class="form-label">Marketplace</label>
           <select class="form-select" id="marketplace" v-model="marketplace" @change="changeMarketplace">
             <option value="">Open this to select marketplace</option>
             <option value="shopee">Shopee</option>
             <option value="lazada">Lazada</option>
           </select>
-        </div>
-         <div class="mb-3">
-          <label for="orderNo" class="form-label">Order No</label>
-          <input type="text" class="form-control" id="orderNo" placeholder="Order Number" v-model="orderNo">
+          <br>
+          <label for="delivery" class="form-label">Delivery</label>
+          <br>  
+          <input type="radio" id="radioboxSelf" value="Self" v-model="deliveryBy" >
+          <label for="one">Self</label>
+        
+          <input type="radio" id="radioboxWarehouse" value="Warehouse" v-model="deliveryBy"> 
+          <label for="one">Warehouse</label>
+        
+          <input type="radio" id="radioboxCourier" value="Courier" v-model="deliveryBy">
+          <label for="two">Courier</label>              
+          <br>
+          <span>delivery By Test: {{ deliveryBy }}</span>
+          <br>
+
+          <select class="form-select" id="delivery" v-model="delivery" @change="changeDelivery">
+            <option value="">Open this to select delivery</option>
+            <option value="EMS">EMS</option>
+            <option value="KERRY">KERRY</option>
+            <option value="FLASH">FLASH</option>
+          </select>
+          <br>
+          
+          <label for="trackToAction" class="form-label">Tracking No.</label>
+          <input type="text" class="form-control" id="trackNo" placeholder="Tracking No." v-model="trackNo">
+          <br>
+
         </div>
         <div class="mb-3">
           <label class="form-label">Line Items</label>
@@ -104,6 +129,7 @@ export default {
         this.orderNo = o.orderNo
         this.trackNo = o.trackNo
         this.orderStatus = o.orderStatus
+        this.deliveryBy = o.deliveryBy
         this.delivery = o.delivery
         this.items = o.items 
         this._offcanvas = new Offcanvas(this.$refs.OrderItem)
@@ -119,6 +145,7 @@ export default {
         this.orderNo = o.orderNo
         this.trackNo = o.trackNo
         this.orderStatus = o.orderStatus
+        this.deliveryBy = o.deliveryBy
         this.delivery = o.delivery
         this.items = o.items 
         this._offcanvas = new Offcanvas(this.$refs.OrderItem)
@@ -150,6 +177,7 @@ export default {
       orderNo: '',
       trackNo: '',
       orderStatus: '',
+      deliveryBy: '',
       delivery: '',
       marketplace: '',
       skuList: [],
@@ -165,6 +193,11 @@ export default {
     },
     changeMarketplace () {
       this.skuId = ''
+    },
+    checkRadio (e) {      
+      console.log('radioboxSelf.value: '+radioboxSelf.value);
+      console.debug('e.target.id: '+e.target.id)
+
     },
     removeItem (idx) {
       this.items.splice(idx, 1)
@@ -236,6 +269,11 @@ export default {
       return  countItem
      },
     Logger() {
+      var form = document.getElementById("radioboxSelf");
+      alert(form.elements["radioboxSelf"].value);
+
+
+
       console.log('items: '+this.items);
       console.log('price: '+this.items[1].price);
      

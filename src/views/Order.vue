@@ -2,12 +2,30 @@
   <div class="my-3 p-3 bg-body rounded shadow-sm">
     <div class="d-flex justify-content-between align-items-center border-bottom pb-1">
       <h6 class="h6 my-0">Order Management</h6>
-      <button class="btn btn-sm btn-outline-secondary" @click="Logger">
+      <!-- <button class="btn btn-sm btn-outline-secondary" @click="Logger">
         <i class="bi-plus-circle"></i> Logger
-      </button>
-      <router-link :to="{ name: 'order-item', params: { id: 'add' } }" custom v-slot="{ navigate }">
+      </button> -->
+      <!-- <router-link :to="{ name: 'order-item', params: { id: 'add' } }" custom v-slot="{ navigate }">
         <button class="btn btn-sm btn-outline-secondary" @click="navigate"><i class="bi-plus-circle"></i> Add</button>
-      </router-link>
+      </router-link> -->
+    </div>
+    <div class="table">
+      <table class="table">
+        <tr>
+          <th class="text-primary">Total({{60}})</th>
+          <th class="text-secondary">Waiting for confirm({{10}})</th>
+          <th class="text-warning">On preparing({{8}})</th>
+          <th class="text-info">On delivery({{6}})</th>
+          <th class="text-success">Delivered({{6}})</th>
+          <th class="text-Muted">Canceled({{7}})</th>
+          <th class="text-danger">Refunded({{5}})</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </table>
     </div>
     <div class="table-responsive">
       <table class="table text-center align-middle">
