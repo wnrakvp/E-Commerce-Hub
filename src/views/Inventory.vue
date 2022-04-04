@@ -12,18 +12,27 @@
       <table class="table text-center align-middle">
         <thead>
           <tr>
-            <th scope="col">Product</th>
+            <th scope="col">Date</th>
+            <th scope="col">Warehouse</th>
+            <th colspan ="2">Product</th>
             <th scope="col">SKU</th>
-            <th scope="col">Amount</th>
-            <th scope="col">On Sell/On Hand</th>
+            <th scope="col">Total</th>
+            <th scope="col">Reserved</th>
+            <th scope="col">Available</th>
+            <th scope="col">Views</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, i) in skuList" :key="i">
-            <td>{{ item.product?.name }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.amount }}</td>
-            <td>On Sell/ On Hand</td>
+          <tr v-for="(item, i) in inventoryList" :key="i">
+          <td></td>
+            <td><strong>{{ item.type }}</strong></td>
+            <td><img class="img-fluid rounded-start" style="max-width: 50px; max-height:50px" :src="item.sku.image"></td>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.sku.name }}</td>
+            <td>{{ item.sku.amount }}</td>
+            <td>{{ Reserved(item.skuId) }}</td>
+            <td>{{ item.sku.amount - Reserved(item.skuId) }}</td>
+            <td><button class="btn btn-sm btn-outline-secondary" ><i class="bi-three-dots"></i></button></td>
           </tr>
         </tbody>
       </table>
@@ -36,7 +45,7 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   mounted() {
-    Promise.all([this.getAllProducts(), this.getAllSKU()])
+    Promise.all([this.getAllProducts(), this.getAllSKU(), this.getAllInventory(), this.getAllStock()])
       .then((result) => {
         console.debug(result);
       })
@@ -49,6 +58,12 @@ export default {
     ...mapGetters("SKU", {
       skuList: "all",
     }),
+    ...mapGetters("Inventory", {
+      inventoryList: "all",
+    }),
+    ...mapGetters("Stock", {
+      stockList: "all",
+    }),
   },
   data() {
     return {};
@@ -59,10 +74,31 @@ export default {
     }),
     ...mapActions("SKU", {
       getAllSKU: "getAll",
-      filterById: "filterById",
     }),
+    ...mapActions("Inventory", {
+      getAllInventory: "getAll",
+    }),
+    ...mapActions("Stock", {
+      getAllStock: "getAll",
+    }),
+    Reserved(id) {
+      var total = 0;
+      var item;
+      for (let i = 0; i < this.stockList.length; i++) {
+        // console.trace();
+        item = this.stockList[i].items;
+        // console.log(i);
+        for(let j = 0; j < item.length; j++ ) {
+          // console.log(j);
+          if (id == item[j].skuId) {
+              total = total + item[j].amountOnSell;   
+            } 
+          }
+      }
+      return total;
+    },
     Logger() {
-      console.log(this.skuList);
+      console.log(this.stockList[0].items[2]);
     }
   },
 };

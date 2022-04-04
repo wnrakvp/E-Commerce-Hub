@@ -85,7 +85,7 @@ export default {
     },
     draft () {
       const product = new ProductModel('', '', '', '')
-      return Promise.resolve(new SKUModel('', '',product, '', '', 0,0,
+      return Promise.resolve(new SKUModel('', '',product, '', '', 0, 0,
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdT-CMjPc50R-jKEvJl_rcn3mBMvkcUwERg', new Set(['shopee', 'lazada'])))
     },
     save ({commit}, {id, productId, name, desc, price, amount, image, marketplaces}) {

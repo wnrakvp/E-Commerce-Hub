@@ -2,6 +2,7 @@
   <nav class="navbar sticky-top navbar-white bg-white shadow-sm">
     <div class="container-fluid">
       <a class="navbar-brand col-lg-3" href="#">E-Commerce <span class="badge bg-primary">hub</span></a>
+      <a class="nav-link text-nowrap disabled"><i class="bi-bell-fill"></i> Notifications</a>
       <div class="d-flex d-lg-none">
         <button class="btn" @click="toggleMenu">
           <i v-if="isMenuHidden" class="bi-chevron-bar-expand"></i>
@@ -31,10 +32,7 @@
               <router-link :to="{name: 'order'}" class="nav-link text-nowrap"><i class="bi-cart4"></i> Orders</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-nowrap disabled"><i class="bi-people"></i> Customers</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-nowrap disabled"><i class="bi-chat-left-quote"></i> Notifications</a>
+              <router-link :to="{name: 'track'}" class="nav-link text-nowrap"><i class="bi bi-box-seam"></i> Track Shipment</router-link>
             </li>
             <li class="border-top my-3"></li>
             <li class="nav-item dropdown">

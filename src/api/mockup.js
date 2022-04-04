@@ -406,6 +406,7 @@ function Mockup () {
         const inventory = {...list[i]}
         const sku = masterdata.skuList.find(({_id}) => _id === inventory.skuId)
         const product = masterdata.productList.find(({_id}) => _id === sku.productId)
+        // const stockLineItem = masterdata.stockList.items.find(({_id}) => _id === inventory.skuId)
         result.push({...inventory, sku, product})
       }
       return Promise.resolve({ reason: 'OK', result })
