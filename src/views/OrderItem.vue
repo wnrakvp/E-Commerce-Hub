@@ -1,6 +1,9 @@
 <template>
 <div class="offcanvas offcanvas-end" tabindex="-1" ref="OrderItem" aria-labelledby="OrderItemLabel">
   <div class="offcanvas-header">
+     <button class="btn btn-sm btn-outline-secondary" @click="Logger">
+        <i class="bi-plus-circle"></i> Logger
+      </button>
     <h5 class="offcanvas-title" id="ProductItemLabel">{{id==='add'?'Add':''}} Order Item</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
@@ -34,28 +37,28 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>SKU</th>
+                  <th>SKU</th>                  
                   <th>Price</th>
-                  <th>Amount</th>
-                  <th>Total</th>
+                  <th>Item</th>
+                  <th>Subtotal</th>
                   <th v-if="id === 'add'"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(item, idx) in items" :key="idx">
                   <td>{{idx + 1}}</td>
-                  <td>{{item.sku.name}}</td>
-                  <td>{{item.price.toLocaleString()}}</td>
-                  <td>{{item.amount}}</td>
-                  <td>{{(item.price*item.amount).toLocaleString()}}</td>
+                  <td>{{item.sku.name}}</td>                   
+                  <td>{{item.price.toLocaleString()}}</td>  
+                  <td>{{item.amount}}</td>          
+                  <td>{{getSubTotal(item.price,item.amount).toLocaleString()}}</td>
                   <td v-if="id === 'add'"><button type="button" class="btn-close" aria-label="Close" @click="removeItem(idx)"></button></td>
                 </tr>
                 <tr>
                   <td><strong>Total</strong></td>
+                  <td></td>                  
                   <td></td>
-                  <td></td>
-                  <td></td>
-                  <td><strong>{{total}}</strong></td>
+                  <td><strong>{{getCountItemsListItem().toLocaleString()}}</strong></td>
+                  <td><strong>{{getGrandTotal().toLocaleString()}}</strong></td>
                 </tr>
               </tbody>
               <tfoot v-if="id === 'add'">
@@ -204,7 +207,63 @@ export default {
     }),
     ...mapActions('SKU', {
       getAllSKU: 'getAll'
-    })
+    }),
+    getSubTotal(amount, price){
+        var subtotal = 0
+        subtotal = amount*price
+      return  subtotal
+     },
+    getGrandTotal(){
+        var grandTotal = 0
+        var price = 0
+        var amount = 0
+        var items = this.items
+        for(let i = 0;i < items.length; i++ ) {
+          price = items[i].price
+          amount = items[i].amount
+          grandTotal = grandTotal+(price*amount)       
+        }
+      return  grandTotal
+     },
+    getCountItemsListItem(){
+        var amount = 0
+        var countItem = 0
+        var items = this.items
+        for(let i = 0;i < items.length; i++ ) {
+          amount = items[i].amount
+          countItem = countItem+amount     
+        }
+      return  countItem
+     },
+    Logger() {
+      console.log('items: '+this.items);
+      console.log('price: '+this.items[1].price);
+     
+        var price = 0
+        var sumItem = 0
+        var total = 0
+        var amount = 0
+        var items = this.items
+        for(let j = 0;j < this.items.length; j++ ) {
+          
+          console.log('j: '+j); 
+          price = items[j].price  
+          amount = items[j].amount  
+
+          total = total+ (amount*price)
+          // sumItem = sumItem+ items[j].amount  
+          console.log('price: '+price);
+          // console.log('amount: '+amount);
+          console.log('total: '+total);
+          // console.log('sum item: '+sumItem);
+
+          // price = items[j].price 
+          // console.log('Amount: '+items[j].amount);   
+          // console.log('price: '+price);    
+          
+             
+        }
+    }
   }
 }
 </script>
