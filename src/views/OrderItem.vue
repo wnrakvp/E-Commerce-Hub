@@ -35,9 +35,6 @@
           <input type="radio" id="radioboxCourier" value="Courier" v-model="deliveryBy">
           <label for="two">Courier</label>              
           <br>
-          <span>delivery By Test: {{ deliveryBy }}</span>
-          <br>
-
           <select class="form-select" id="delivery" v-model="delivery" @change="changeDelivery">
             <option value="">Open this to select delivery</option>
             <option value="EMS">EMS</option>
