@@ -41,7 +41,10 @@
                   <button
                     type="submit"
                     class="btn btn-primary"
-                    @click="validateUser()"
+                    @click="
+                      validateUser();
+                      setOTP();
+                    "
                     v-bind:hidden="isLogin == true"
                   >
                     Login
@@ -54,20 +57,17 @@
                     </a>
                   </div>
                 </div> -->
-                <div class="d-flex justify-content-center mt-3">
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary"
-                    @click="setOTP()"
-                    v-show="isLogin"
-                  >
-                    Send Verification Code
-                  </button>
-                </div>
-                <div class="d-flex justify-content-center mt-3">
-                  <p style="text-align:center" v-show="isVerify">
-                    Verification Code is sent to <br><strong>{{email}}</strong>.<br>
-                    Please enter OTP to verify your account<br> {{otp}}
+                <div class="justify-content-center mt-3">
+                  <h3 style="text-align: center" v-show="isLogin">
+                    2-Step Verification
+                  </h3>
+                  <p style="text-align: center" v-show="isLogin">
+                    Verification Code is sent to <br /><strong>{{
+                      email
+                    }}</strong
+                    >.<br />
+                    Please enter OTP to verify your account<br />
+                    {{ otp }}
                   </p>
                 </div>
                 <div class="d-flex flex-row justify-content-center">
@@ -77,43 +77,54 @@
                     id="first"
                     maxlength="1"
                     v-model="first"
-                    v-show="isVerify"
+                    v-show="isLogin"
                   /><input
                     type="text"
                     class="m-2 form-control"
                     id="second"
                     maxlength="1"
                     v-model="second"
-                    v-show="isVerify"
+                    v-show="isLogin"
                   /><input
                     type="text"
                     class="m-2 form-control"
                     id="third"
                     maxlength="1"
                     v-model="third"
-                    v-show="isVerify"
+                    v-show="isLogin"
                   /><input
                     type="text"
                     class="m-2 form-control"
                     id="fourth"
                     maxlength="1"
                     v-model="fourth"
-                    v-show="isVerify"
+                    v-show="isLogin"
                   /><input
                     type="text"
                     class="m-2 form-control"
                     id="fifth"
                     maxlength="1"
                     v-model="fifth"
-                    v-show="isVerify"
+                    v-show="isLogin"
                   /><input
                     type="text"
                     class="m-2 form-control"
                     id="sixth"
                     maxlength="1"
                     v-model="sixth"
-                    v-show="isVerify"
+                    v-show="isLogin"
                   />
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    @click="setOTP()"
+                    v-show="isLogin"
+                    :disabled="otp != null"
+                  >
+                    Re-send OTP
+                  </button>
                 </div>
 
                 <div class="d-grid gap-2 mt-3">
@@ -134,7 +145,7 @@
                     type="submit"
                     class="btn btn-primary"
                     v-else
-                    v-show="isVerify"
+                    v-show="isLogin"
                     @click="noOTP()"
                   >
                     Verify
@@ -172,7 +183,6 @@ export default {
       fifth: null,
       sixth: null,
       isLogin: false,
-      isVerify: false,
     };
   },
   methods: {
@@ -182,7 +192,7 @@ export default {
       if (this.email != null && this.email.match(regEx)) {
         if (this.password == 123456789) {
           this.isLogin = true;
-          } else {
+        } else {
           alert('Please input correct password');
         }
       } else {
@@ -191,7 +201,9 @@ export default {
     },
     setOTP() {
       this.otp = Math.floor(100000 + Math.random() * 900000);
-      setTimeout(() => {this.otp = null;}, 10000) // 10 seconds OTP disappered
+      setTimeout(() => {
+        this.otp = null;
+      }, 10000); // 10 seconds OTP disappered
       // -----Send email to user-----
       // var templateParams = {
       //     userEmail: this.email,
@@ -210,10 +222,10 @@ export default {
       //     },
       //     (error) => {
       //       console.log('FAILED...', error.text);
+      //       alert('Failed to send OTP. Please Check your email.');
       //     }
       //   );
       // -----------------------------
-      this.isVerify = true;
     },
     noOTP() {
       alert('Please Input Correct OTP or Your OTP has timed out.');

@@ -38,6 +38,9 @@ const routes = [
         path: 'inventory',
         name: 'inventory',
         component: () => import('./views/Inventory.vue'),
+        children: [
+          { path: ':id', name: 'inventory-item', component: () => import('./views/InventoryItem.vue'), props: true }
+        ]
       },
       {
         path: 'order',

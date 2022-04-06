@@ -25,14 +25,16 @@
         <tbody>
           <tr v-for="(item, i) in inventoryList" :key="i">
           <td></td>
-            <td><strong>{{ item.type }}</strong></td>
+            <td><strong>{{ item.sku.type }}</strong></td>
             <td><img class="img-fluid rounded-start" style="max-width: 50px; max-height:50px" :src="item.sku.image"></td>
             <td>{{ item.product.name }}</td>
             <td>{{ item.sku.name }}</td>
-            <td>{{ item.sku.amount }}</td>
+            <td>{{ item.sku.amount  }}</td>
             <td>{{ Reserved(item.skuId) }}</td>
-            <td>{{ item.sku.amount - Reserved(item.skuId) }}</td>
-            <td><button class="btn btn-sm btn-outline-secondary" ><i class="bi-three-dots"></i></button></td>
+            <td>{{ item.sku.amount  - Reserved(item.skuId) }}</td>
+            <router-link :to="{ name: 'inventory-item', params: { id: item._id } }" custom v-slot="{ navigate }">
+            <td><button class="btn btn-sm btn-outline-secondary" @click="navigate"><i class="bi-three-dots"></i></button></td>
+            </router-link>
           </tr>
         </tbody>
       </table>
@@ -98,7 +100,7 @@ export default {
       return total;
     },
     Logger() {
-      console.log(this.stockList[0].items[2]);
+      console.log(this.inventoryList);
     }
   },
 };
