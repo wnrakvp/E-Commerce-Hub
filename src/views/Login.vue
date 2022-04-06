@@ -42,6 +42,7 @@
                     type="submit"
                     class="btn btn-primary"
                     @click="validateUser()"
+                    v-bind:hidden="isLogin == true"
                   >
                     Login
                   </button>
@@ -63,13 +64,11 @@
                     Send Verification Code
                   </button>
                 </div>
-                <div class="d-flex justify-content-center">
-                  <p v-show="isLogin">
-                    Please enter OTP to verify your account
+                <div class="d-flex justify-content-center mt-3">
+                  <p style="text-align:center" v-show="isVerify">
+                    Verification Code is sent to <br><strong>{{email}}</strong>.<br>
+                    Please enter OTP to verify your account<br> {{otp}}
                   </p>
-                </div>
-                <div class="d-flex justify-content-center">
-                  <p>{{ otp }}</p>
                 </div>
                 <div class="d-flex flex-row justify-content-center">
                   <input
@@ -78,42 +77,42 @@
                     id="first"
                     maxlength="1"
                     v-model="first"
-                    v-show="isLogin"
+                    v-show="isVerify"
                   /><input
                     type="text"
                     class="m-2 form-control"
                     id="second"
                     maxlength="1"
                     v-model="second"
-                    v-show="isLogin"
+                    v-show="isVerify"
                   /><input
                     type="text"
                     class="m-2 form-control"
                     id="third"
                     maxlength="1"
                     v-model="third"
-                    v-show="isLogin"
+                    v-show="isVerify"
                   /><input
                     type="text"
                     class="m-2 form-control"
                     id="fourth"
                     maxlength="1"
                     v-model="fourth"
-                    v-show="isLogin"
+                    v-show="isVerify"
                   /><input
                     type="text"
                     class="m-2 form-control"
                     id="fifth"
                     maxlength="1"
                     v-model="fifth"
-                    v-show="isLogin"
+                    v-show="isVerify"
                   /><input
                     type="text"
                     class="m-2 form-control"
                     id="sixth"
                     maxlength="1"
                     v-model="sixth"
-                    v-show="isLogin"
+                    v-show="isVerify"
                   />
                 </div>
 
@@ -135,7 +134,8 @@
                     type="submit"
                     class="btn btn-primary"
                     v-else
-                    v-show="isLogin"
+                    v-show="isVerify"
+                    @click="noOTP()"
                   >
                     Verify
                   </button>
@@ -159,7 +159,6 @@
 </template>
 <script>
 import emailjs from '@emailjs/browser';
-
 export default {
   data() {
     return {
@@ -173,6 +172,7 @@ export default {
       fifth: null,
       sixth: null,
       isLogin: false,
+      isVerify: false,
     };
   },
   methods: {
@@ -180,10 +180,10 @@ export default {
       const regEx =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (this.email != null && this.email.match(regEx)) {
-        if (this.password == null) {
-          alert('Please input password');
-        } else {
+        if (this.password == 123456789) {
           this.isLogin = true;
+          } else {
+          alert('Please input correct password');
         }
       } else {
         alert('Please input valid email.');
@@ -191,6 +191,7 @@ export default {
     },
     setOTP() {
       this.otp = Math.floor(100000 + Math.random() * 900000);
+      setTimeout(() => {this.otp = null;}, 10000) // 10 seconds OTP disappered
       // -----Send email to user-----
       // var templateParams = {
       //     userEmail: this.email,
@@ -212,11 +213,11 @@ export default {
       //     }
       //   );
       // -----------------------------
+      this.isVerify = true;
     },
-    noInput() {
-      alert('Please Input Correct Password');
+    noOTP() {
+      alert('Please Input Correct OTP or Your OTP has timed out.');
     },
   },
 };
-// Timer OTP
 </script>
