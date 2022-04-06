@@ -22,7 +22,7 @@
         </div>
       </form>
     </div>
-    <p>{{trackingno}}</p> 
+    <p>{{data}}</p> 
   </div>
 </template>
 
@@ -38,8 +38,8 @@ export default {
   },
   mounted() {
     // axios
-    //   .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-    //   .then((response) => (this.data = response));
+    //   .get('http://localhost:5000/items')
+    //   .then((response) => (this.data = response.data));
   },
   computed: {
     ...mapGetters('Order', {
