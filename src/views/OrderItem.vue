@@ -1,53 +1,97 @@
 <template>
 <div class="offcanvas offcanvas-end" tabindex="-1" ref="OrderItem" aria-labelledby="OrderItemLabel">
   <div class="offcanvas-header">
-     <!-- <button class="btn btn-sm btn-outline-secondary" @click="Logger">
-        <i class="bi-plus-circle"></i> Logger
-      </button> -->
-    <h5 class="offcanvas-title" id="ProductItemLabel">{{id==='add'?'Add':''}} Order Item</h5>
+    <h5 class="offcanvas-title" id="OrderItemLabel">{{id==='add'?'Add':''}} Order Item</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
     <form @submit.prevent="submit">
-      <fieldset :disabled="disabled">
-        <div class="mb-3">
+      <fieldset>        
+        <div class="mb-1">
+          <div v-if="orderStatus === 'READY_TO_SHIP'">
+            <p class="badge bg-danger">{{ getStatus(orderStatus) }}</p>
+          </div>
+          <div v-if="orderStatus === 'ON_DELIVERY'">
+            <p class="badge bg-warning">{{ getStatus(orderStatus) }}</p>
+          </div>
+          <div v-if="orderStatus === 'SHIPPED'">
+            <p class="badge bg-info">{{ getStatus(orderStatus) }}</p>
+          </div>
+          <div v-if="orderStatus === 'COMPLETED'">
+            <p class="badge bg-success">{{ getStatus(orderStatus) }}</p>
+          </div>
           <label for="orderNoToAction" class="form-label">Order No.</label>
-          <input type="text" class="form-control" id="orderNo" placeholder="Order Number" v-model="orderNo">
+          <input type="text" class="form-control" id="orderNo" placeholder="Order Number" v-model="orderNo" :disabled="disabled">
           <br>
           <label for="dateToAction" class="form-label">Date to Action</label>
-          <input type="date" class="form-control" id="dateToAction" placeholder="Name" v-model="date">
+          <input type="date" class="form-control" id="dateToAction" placeholder="Name" v-model="date" :disabled="disabled">
           <br>
           <label for="marketplace" class="form-label">Marketplace</label>
-          <select class="form-select" id="marketplace" v-model="marketplace" @change="changeMarketplace">
+          <select class="form-select" id="marketplace" v-model="marketplace" @change="changeMarketplace" :disabled="disabled">
             <option value="">Open this to select marketplace</option>
             <option value="shopee">Shopee</option>
             <option value="lazada">Lazada</option>
           </select>
           <br>
-          <label for="delivery" class="form-label">Delivery</label>
-          <br>  
-          <input type="radio" id="radioboxSelf" value="Self" v-model="deliveryBy" >
-          <label for="one">Self</label>
         
-          <input type="radio" id="radioboxWarehouse" value="Warehouse" v-model="deliveryBy"> 
-          <label for="one">Warehouse</label>
-        
-          <input type="radio" id="radioboxCourier" value="Courier" v-model="deliveryBy">
-          <label for="two">Courier</label>              
-          <br>
-          <select class="form-select" id="delivery" v-model="delivery" @change="changeDelivery">
-            <option value="">Open this to select delivery</option>
-            <option value="EMS">EMS</option>
-            <option value="KERRY">KERRY</option>
-            <option value="FLASH">FLASH</option>
-          </select>
-          <br>
-          
-          <label for="trackToAction" class="form-label">Tracking No.</label>
-          <input type="text" class="form-control" id="trackNo" placeholder="Tracking No." v-model="trackNo">
-          <br>
+          <div v-if="orderStatus != 'READY_TO_SHIP'" >
+              <label for="delivery" class="form-label">Delivery :</label>
+              <br> 
+              <!-- For update delivery detail -->
+              <!-- Radior button -->
+              <div v-if="orderStatus === 'ON_DELIVERY'" >
+                <input type="radio" id="Self" value="Self" v-model="deliveryBy" >
+                <label for="one">Self</label><br>
 
+                <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" > 
+                <label for="one">Warehouse</label><br> 
+
+                <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" >
+                <label for="two">Courier</label><br>   
+
+                <br>
+                <!-- Dropdown List -->
+                <select class="form-select" id="delivery" v-model="delivery" @change="changeDelivery">
+                  <option value="">Open this to select delivery</option>
+                  <option value="EMS">EMS</option>
+                  <option value="KERRY">KERRY</option>
+                  <option value="FLASH">FLASH</option>
+                </select> 
+
+                <label for="trackToAction" class="form-label">Tracking No.</label>
+                <input type="text" class="form-control" id="trackNo" placeholder="Tracking No." v-model="trackNo">
+              </div>
+
+              <!-- For View Only -->
+               <!-- Radior button -->
+              <div v-else-if="orderStatus != 'ON_DELIVERY'" >
+                <fieldset :disabled="disabled">
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" >
+                  <label for="one">Self</label><br>
+
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" > 
+                  <label for="one">Warehouse</label><br> 
+
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" >
+                  <label for="two">Courier</label><br> 
+
+                  <br>
+                  <!-- Dropdown List -->
+                  <select class="form-select" id="delivery" v-model="delivery" @change="changeDelivery">
+                    <option value="">Open this to select delivery</option>
+                    <option value="EMS">EMS</option>
+                    <option value="KERRY">KERRY</option>
+                    <option value="FLASH">FLASH</option>
+                  </select>  
+
+                  <br>
+                  <label for="trackToAction" class="form-label">Tracking No.</label>
+                  <input type="text" class="form-control" id="trackNo" placeholder="Tracking No." v-model="trackNo"> 
+                </fieldset>
+              </div>
+          </div>
         </div>
+        <!-- Product Line Item -->
         <div class="mb-3">
           <label class="form-label">Line Items</label>
           <div class="responsive-table">
@@ -56,6 +100,7 @@
               <col width="100">
               <col width="100">
               <col width="65">
+              <!-- Header Table -->
               <thead>
                 <tr>
                   <th>#</th>
@@ -66,6 +111,7 @@
                   <th v-if="id === 'add'"></th>
                 </tr>
               </thead>
+              <!-- Detail Table -->
               <tbody>
                 <tr v-for="(item, idx) in items" :key="idx">
                   <td>{{idx + 1}}</td>
@@ -75,6 +121,7 @@
                   <td>{{getSubTotal(item.price,item.amount).toLocaleString()}}</td>
                   <td v-if="id === 'add'"><button type="button" class="btn-close" aria-label="Close" @click="removeItem(idx)"></button></td>
                 </tr>
+                <!-- Summary -->
                 <tr>
                   <td><strong>Total</strong></td>
                   <td></td>                  
@@ -100,9 +147,16 @@
           </div>
         </div>
         <hr>
-        <div v-if="id === 'add'" class="mb-3 text-end">
-          <button type="submit" class="btn btn-primary">Publish</button>
+        <!-- Button for Update Status -->
+        <div v-if="orderStatus === 'READY_TO_SHIP'" class="mb-3 text-end">
+          <button type="updateStatus" class="btn btn-primary">Click to Prepare</button>
         </div>
+        <div v-if="orderStatus === 'ON_DELIVERY'" class="mb-3 text-end">
+          <button type="updateStatus" class="btn btn-primary">Confirm to Send Order</button>
+        </div>
+        <!-- <div v-if="id === 'add'" class="mb-3 text-end">
+          <button type="submit" class="btn btn-primary">Publish</button>
+        </div> -->
       </fieldset>
     </form>
   </div>
@@ -191,11 +245,11 @@ export default {
     changeMarketplace () {
       this.skuId = ''
     },
-    checkRadio (e) {      
-      console.log('radioboxSelf.value: '+radioboxSelf.value);
-      console.debug('e.target.id: '+e.target.id)
+    // checkRadio (e) {      
+    //   console.log('radioboxSelf.value: '+radioboxSelf.value);
+    //   console.debug('e.target.id: '+e.target.id)
 
-    },
+    // },
     removeItem (idx) {
       this.items.splice(idx, 1)
     },
@@ -216,7 +270,17 @@ export default {
       this.isSaving = true
       const {date, marketplace, items} = this
       this.save({date, marketplace, items}).then(() => {
-        this.disabled = false
+        this.disabled = false              
+        this.isSaving = false
+        this._offcanvas.hide()
+      }).catch(console.error)
+    },
+    updateStatus() {
+      this.disabled = true
+      this.isSaving = true
+      const {trackNo, orderStatus, delivery, deliveryBy} = this
+      this.update({trackNo, orderStatus, delivery, deliveryBy}).then(() => {
+        this.disabled = false              
         this.isSaving = false
         this._offcanvas.hide()
       }).catch(console.error)
@@ -238,6 +302,19 @@ export default {
     ...mapActions('SKU', {
       getAllSKU: 'getAll'
     }),
+    getStatus(orderStatus){
+      var textStatus = ""
+      if (orderStatus == 'READY_TO_SHIP'){
+        textStatus= 'Ready to ship'
+      } else if (orderStatus == 'ON_DELIVERY') {
+        textStatus= 'On delivery'
+      } else if (orderStatus == 'SHIPPED') {
+        textStatus= 'Shipped'
+      } else if (orderStatus == 'COMPLETED') {
+        textStatus= 'Completed'
+      } 
+      return textStatus
+    },
     getSubTotal(amount, price){
         var subtotal = 0
         subtotal = amount*price
@@ -269,8 +346,6 @@ export default {
       var form = document.getElementById("radioboxSelf");
       alert(form.elements["radioboxSelf"].value);
 
-
-
       console.log('items: '+this.items);
       console.log('price: '+this.items[1].price);
      
@@ -294,9 +369,7 @@ export default {
 
           // price = items[j].price 
           // console.log('Amount: '+items[j].amount);   
-          // console.log('price: '+price);    
-          
-             
+          // console.log('price: '+price);  
         }
     }
   }
