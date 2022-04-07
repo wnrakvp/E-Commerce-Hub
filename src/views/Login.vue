@@ -38,15 +38,17 @@
                   <label for="floatingPassword">Password</label>
                 </div>
                 <div class="d-grid gap-2 mb-3">
-                  <button
+                  <button v-if="isLogging" type="submit" class="btn btn-primary" disabled>
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Logging in...
+                  </button>
+                  <button v-else
                     type="submit"
                     class="btn btn-primary"
-                    @click="
+                    @click.prevent="
                       validateUser();
-                      setOTP();
-                    "
-                    v-bind:hidden="isLogin == true"
-                  >
+                      setOTP();"
+                    v-bind:hidden="isLogin == true">
                     Login
                   </button>
                 </div>
@@ -119,7 +121,7 @@
                   <button
                     type="button"
                     class="btn btn-outline-primary"
-                    @click="setOTP()"
+                    @click.prevent="setOTP()"
                     v-show="isLogin"
                     :disabled="otp != null"
                   >
@@ -183,6 +185,7 @@ export default {
       fifth: null,
       sixth: null,
       isLogin: false,
+      isLogging: false,
     };
   },
   methods: {
@@ -191,7 +194,11 @@ export default {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (this.email != null && this.email.match(regEx)) {
         if (this.password == 123456789) {
-          this.isLogin = true;
+          this.isLogging = true;
+          setTimeout(()=>{
+            this.isLogin = true;
+            this.isLogging = false;
+            },2000);
         } else {
           alert('Please input correct password');
         }

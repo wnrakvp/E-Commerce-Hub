@@ -316,14 +316,14 @@ function Mockup () {
       }
       return Promise.resolve({ reason: 'OK', result })
     },
-    createSKU (productId, name, desc, price, amount, image, marketplaces) {
+    createSKU (productId, name, desc, price, type, amount, image, marketplaces) {
       return delay(700).then(() => {
         const _id = masterdata.skuList.length + 1
-        masterdata.skuList.push({ _id, productId, name, desc, price, amount, image, marketplaces })
+        masterdata.skuList.push({ _id, productId, name, desc, price, type, amount, image, marketplaces })
         const product = masterdata.productList.find(item => item._id === productId)
         return Promise.resolve({
           reason: 'OK',
-          result: { _id, productId, product, name, desc, price, amount, image, marketplaces }
+          result: { _id, productId, product, name, desc, price, type, amount, image, marketplaces }
         })
       })
     },
@@ -332,11 +332,11 @@ function Mockup () {
       const product = masterdata.productList.find(item => item._id === sku.productId)
       return Promise.resolve({ reason: 'OK', result: {...sku, product} })
     },
-    updateSKU (id, productId, name, desc, price, amount, image, marketplaces) {
+    updateSKU (id, productId, name, desc, price, type, amount, image, marketplaces) {
       return delay(700).then(() => {
         const sku = masterdata.skuList.find(({_id}) => _id === id)
         if (sku) {
-          Object.assign(sku, { _id: id, productId, name, desc, price, amount, image, marketplaces })
+          Object.assign(sku, { _id: id, productId, name, desc, price, type, amount, image, marketplaces })
           const product = masterdata.productList.find(({_id}) => _id === sku.productId)
           return Promise.resolve({
             reason: 'OK',
