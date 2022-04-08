@@ -9,20 +9,23 @@
       <fieldset :disabled="disabled">
         <div class="mb-3">
           <label for="selectProduct" class="form-label">Product <i class="bi-question-circle"></i></label>
-          <select class="form-select" id="selectProduct" v-model="productId">
-            <option value="">Select a current product</option>
+          <select class="form-select" id="selectProduct" v-model="productId" required>
+            <option selected disabled value="">Select a current product</option>
             <option v-for="(item, idx) in productList"
             :key="idx"
             :value="item.id">{{item.name}}</option>
           </select>
+          <div class="invalid-feedback">
+          Please select a Product.
+          </div>
         </div>
         <div class="mb-3">
           <label for="skuName" class="form-label">SKU Name <i class="bi-question-circle"></i></label>
-          <input type="text" class="form-control" id="skuName" placeholder="Must be unique" v-model="name">
+          <input type="text" class="form-control" id="skuName" placeholder="Must be unique" v-model="name" required>
         </div>
         <div class="mb-3">
           <label for="skuDescription" class="form-label">Attributes <i class="bi-question-circle"></i></label>
-          <textarea class="form-control" id="skuDescription" rows="1" placeholder="e.g. size, color, etc." v-model="desc"></textarea>
+          <textarea class="form-control" id="skuDescription" rows="1" placeholder="e.g. size, color, etc." v-model="desc" required></textarea>
         </div>
         <div class="mb-3">
           <label for="skuImage" class="form-label">Image <i class="bi-question-circle"></i></label>
@@ -38,12 +41,22 @@
           v-model="price">
         </div>
         <div class="mb-3">
-          <label for="originalAmount" class="form-label">Amount</label>
+          <label for="originalAmount" class="form-label">Warehouse Type</label>
+          <select class="form-select" id="selectWarehouse" v-model="type" required>
+          <option selected disabled value="">Select a warehouse</option>
+          <option value="Internal">Internal</option>
+          <option value="External Warehouse">External Warehouse</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="originalAmount" class="form-label" :hidden="type==''">Amount</label>
           <input type="number"
           min="0"
           class="form-control"
           id="originalAmount"
           placeholder="How many do you have?"
+          :disabled="type=='External Warehouse'"
+          :hidden="type==''"
           v-model="amount">
         </div>
       </fieldset>
@@ -121,6 +134,7 @@ export default {
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
+        this.type = o.type
         this.amount = o.amount
         this.image = o.image
         this.marketplaces = o.marketplaces
@@ -135,6 +149,7 @@ export default {
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
+        this.type = o.type
         this.amount = o.amount
         this.image = o.image
         this.marketplaces = o.marketplaces
@@ -161,6 +176,7 @@ export default {
       desc: '',
       price: 0,
       amount: 0,
+      type: '',
       image: '',
       marketplaces: new Set(),
       isAllMarketplace: false
@@ -188,8 +204,13 @@ export default {
     submit () {
       this.disabled = true
       this.isSaving = true
-      const {id, productId, name, desc, price, amount, image, marketplaces} = this
-      this.save({id: Number(id), productId, name, desc, price, amount, image, marketplaces}).then(() => {
+      const {id, productId, name, desc, price, type, amount, image, marketplaces} = this
+      // Object.values(this).forEach((value) => {
+      //   if(!value){
+      //     alert(`Please input ${value} field`);
+      //   }
+      // })
+        this.save({id: Number(id), productId, name, desc, price, type, amount, image, marketplaces}).then(() => {
         this.disabled = false
         this.isSaving = false
         this._offcanvas.hide()
@@ -204,6 +225,9 @@ export default {
         this.isDeleting = false
         this._offcanvas.hide()
       }).catch(console.error)
+    },
+    resetAmount() {
+      this.amount = 0;
     },
     ...mapActions('SKU', {
       draft: 'draft',
