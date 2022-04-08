@@ -30,8 +30,8 @@
             <td>{{ item.product.name }}</td>
             <td>{{ item.sku.name }}</td>
             <td>{{ item.sku.amount }}</td>
-            <td>{{ Reserved(item.skuId, i) }}</td>
-            <!-- <td>{{ item.sku.amount - Reserved(item.sku.skuId, i) }}</td> -->
+            <td>{{ Reserved(item.skuId) }}</td>
+            <td>{{ item.sku.amount - Reserved(item.skuId) }}</td>
             <td><button class="btn btn-sm btn-outline-secondary" ><i class="bi-three-dots"></i></button></td>
           </tr>
         </tbody>
