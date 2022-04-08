@@ -2,7 +2,6 @@ import { createStore } from 'vuex'
 import Products from './modules/products'
 import SKU from './modules/sku'
 import Stock from './modules/stock'
-import Inventory from './modules/inventory'
 import Order from './modules/order'
 
 const store = createStore({
@@ -12,7 +11,6 @@ const store = createStore({
     Products,
     SKU,
     Stock,
-    Inventory,
     Order
   }
 })

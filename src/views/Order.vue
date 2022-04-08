@@ -14,7 +14,7 @@
     <div class="table">
       <table class="table">
         <tr>
-          <th class="text-primary">Total({{10}})</th>
+          <th class="text-primary">Total({{getCountTotal()}})</th>
           <th class="text-danger">Rady to ship({{getCountReadyToShip()}})</th>
           <th class="text-warning">On Delivery({{getCountOnDelivery()}})</th>
           <th class="text-info">Shipped({{getCountShipped()}})</th>
@@ -138,10 +138,10 @@ export default {
         }
       return  CountItems
      },
-    //  getCountTotal(){
-    //    var Count=0
-    //    return Count
-    //  },
+     getCountTotal(){
+       var count=this.orderList.length
+       return count
+     },
      getCountReadyToShip(){
        var count=0
        for(let i = 0; i < this.orderList.length; i++){

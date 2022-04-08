@@ -198,8 +198,9 @@ const masterdata = {
       marketplace: 'shopee',
       orderNo: 'No001',
       trackNo: 'RE123456780TH',
-      orderStatus: 'Paid',
+      orderStatus: 'READY_TO_SHIP',
       delivery: 'KERRY',
+      deliveryBy: 'Warehouse',
       items: [
         { skuId: 1, price: 9200, amount: 1 },
         { skuId: 2, price: 12400, amount: 2,},
@@ -212,8 +213,9 @@ const masterdata = {
       marketplace: 'lazada',
       orderNo: 'No002',
       trackNo: 'RE123456788TH',
-      orderStatus: 'Shipping',
+      orderStatus: 'ON_DELIVERY',
       delivery: 'EMS',
+      deliveryBy: 'Self',
       items: [
         { skuId: 4, price: 12000, amount: 2,},
         { skuId: 5, price: 32000, amount: 10,}
@@ -225,8 +227,9 @@ const masterdata = {
       marketplace: 'shopee',
       orderNo: 'No003',
       trackNo: 'RE1234567777TH',
-      orderStatus: 'Packing',
+      orderStatus: 'SHIPPED',
       delivery: 'FLASH',
+      deliveryBy: 'Courier',
       items: [
         { skuId: 6, price: 3000, amount: 3,},
         { skuId: 7, price: 7000, amount: 7,}
@@ -450,6 +453,23 @@ function Mockup () {
           reason: 'OK',
           result: { _id, date, marketplace, items: skus }
         })
+      })
+    },
+    updateOrder (id, trackNo, orderStatus, delivery, deliveryBy) {
+      return delay(700).then(() => {
+        const order = masterdata.order.find(({_id}) => _id === id)
+        if (order) {
+          Object.assign(order, { _id: id, trackNo, orderStatus, delivery, deliveryBy })
+          return Promise.resolve({
+            reason: 'OK',
+            result: { _id: id }
+          })
+        } else {
+          return Promise.reject({
+            reason: 'not found',
+            result: null
+          })
+        }
       })
     }
   }
