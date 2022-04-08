@@ -14,7 +14,7 @@
           <tr>
             <th scope="col">Date</th>
             <th scope="col">Warehouse</th>
-            <th colspan ="2">Product</th>
+            <th colspan="2">Product</th>
             <th scope="col">SKU</th>
             <th scope="col">Total</th>
             <th scope="col">Reserved</th>
@@ -24,15 +24,47 @@
         </thead>
         <tbody>
           <tr v-for="(item, i) in inventoryList" :key="i">
-          <td></td>
-            <td><strong>{{ item.type }}</strong></td>
-            <td><img class="img-fluid rounded-start" style="max-width: 50px; max-height:50px" :src="item.sku.image"></td>
+            <td></td>
+            <td>
+              <strong>{{ item.sku.type }}</strong>
+            </td>
+            <td>
+              <img
+                class="img-fluid rounded-start"
+                style="max-width: 50px; max-height: 50px"
+                :src="item.sku.image"
+              />
+            </td>
             <td>{{ item.product.name }}</td>
             <td>{{ item.sku.name }}</td>
             <td>{{ item.sku.amount }}</td>
             <td>{{ Reserved(item.skuId) }}</td>
             <td>{{ item.sku.amount - Reserved(item.skuId) }}</td>
+<<<<<<< HEAD
             <td><button class="btn btn-sm btn-outline-secondary" ><i class="bi-three-dots"></i></button></td>
+=======
+            <router-link
+              :to="{
+                name: 'inventory-item',
+                params: {
+                  id: item._id,
+                  productName: item.product.name,
+                  skuName: item.sku.name,
+                },
+              }"
+              custom
+              v-slot="{ navigate }"
+            >
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-secondary"
+                  @click="navigate"
+                >
+                  <i class="bi-three-dots"></i>
+                </button>
+              </td>
+            </router-link>
+>>>>>>> cc80c3992df13d10b42e475fb14d51d53ac96841
           </tr>
         </tbody>
       </table>
@@ -41,64 +73,70 @@
   <router-view></router-view>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   mounted() {
-    Promise.all([this.getAllProducts(), this.getAllSKU(), this.getAllInventory(), this.getAllStock()])
+    Promise.all([
+      this.getAllProducts(),
+      this.getAllSKU(),
+      this.getAllInventory(),
+      this.getAllStock(),
+    ])
       .then((result) => {
         console.debug(result);
       })
       .catch(console.error);
   },
   computed: {
-    ...mapGetters("Products", {
-      productList: "all",
+    ...mapGetters('Products', {
+      productList: 'all',
     }),
-    ...mapGetters("SKU", {
-      skuList: "all",
+    ...mapGetters('SKU', {
+      skuList: 'all',
     }),
-    ...mapGetters("Inventory", {
-      inventoryList: "all",
+    ...mapGetters('Inventory', {
+      inventoryList: 'all',
     }),
-    ...mapGetters("Stock", {
-      stockList: "all",
+    ...mapGetters('Stock', {
+      stockList: 'all',
     }),
   },
   data() {
     return {};
   },
   methods: {
-    ...mapActions("Products", {
-      getAllProducts: "getAll",
+    ...mapActions('Products', {
+      getAllProducts: 'getAll',
     }),
-    ...mapActions("SKU", {
-      getAllSKU: "getAll",
+    ...mapActions('SKU', {
+      getAllSKU: 'getAll',
     }),
-    ...mapActions("Inventory", {
-      getAllInventory: "getAll",
+    ...mapActions('Inventory', {
+      getAllInventory: 'getAll',
     }),
-    ...mapActions("Stock", {
-      getAllStock: "getAll",
+    ...mapActions('Stock', {
+      getAllStock: 'getAll',
     }),
     Reserved(id) {
       var total = 0;
       var item;
       for (let i = 0; i < this.stockList.length; i++) {
+        // console.trace();
         item = this.stockList[i].items;
         // console.log(i);
-        for(let j = 0; j < item.length; j++ ) {
+        for (let j = 0; j < item.length; j++) {
           // console.log(j);
           if (id == item[j].skuId) {
-              total = total + item[j].amountOnSell;   
-            } 
+            total = total + item[j].amountOnSell;
           }
+        }
       }
       return total;
     },
     Logger() {
-      console.log(this.stockList[0].items[2]);
-    }
+      console.log(this.inventoryList);
+    },
   },
 };
 </script>

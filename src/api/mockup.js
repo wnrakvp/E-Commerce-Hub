@@ -5,6 +5,7 @@ const masterdata = {
       productId: 1,
       name: 'tfndn-50',
       price: 9200,
+      type: 'Internal',
       amount: 20,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg',
       desc: '50 ML',
@@ -16,6 +17,7 @@ const masterdata = {
       productId: 1,
       name: 'tfndn-100',
       price: 12400,
+      type: 'Internal',
       amount: 20,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dwa2e15b39/images/large/0000102334.jpg',
       desc: '100 ML',
@@ -27,6 +29,7 @@ const masterdata = {
       productId: 1,
       name: 'tfndn-250',
       price: 22000,
+      type: 'Internal',
       amount: 20,
       image: 'https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw42fc54f8/images/large/0000102607.jpg',
       desc: '250 ML',
@@ -38,6 +41,7 @@ const masterdata = {
       productId: 2,
       name: 'aventus18n01',
       price: 12000,
+      type: 'Internal',
       amount: 20,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch หายาก ปี 2018',
@@ -49,6 +53,7 @@ const masterdata = {
       productId: 2,
       name: 'aventus19n01',
       price: 12000,
+      type: 'Internal',
       amount: 20,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch หายาก ปี 2019',
@@ -60,6 +65,7 @@ const masterdata = {
       productId: 2,
       name: 'aventus20m01',
       price: 12000,
+      type: 'Internal',
       amount: 20,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch ใหม่ ผลิตต้นปี 2020',
@@ -71,6 +77,7 @@ const masterdata = {
       productId: 2,
       name: 'aventus21p01',
       price: 12000,
+      type: 'Internal',
       amount: 20,
       image: 'https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg',
       desc: 'Batch ใหม่ ผลิตต้นปี 2021',
@@ -82,6 +89,7 @@ const masterdata = {
       productId: 3,
       name: 'woodsage-th',
       price: 5600,
+      type: 'Internal',
       amount: 20,
       image: 'https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg',
       desc: 'ป้าย สคบ.ไทย (SEAL) + กล่องโบว์',
@@ -93,6 +101,7 @@ const masterdata = {
       productId: 3,
       name: 'woodsage-king',
       price: 4675,
+      type: 'Internal',
       amount: 20,
       image: 'https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg',
       desc: 'ป้าย King Power (SEAL) + กล่องโบว์',
@@ -148,47 +157,47 @@ const masterdata = {
     {
       _id: 1,
       skuId: 1,
-      type: 'Internal'
+      amountInWH: 0,
     },
     {
       _id: 2,
       skuId: 2,
-      type: 'Warehouse'
+      amountInWH: 0,
     },
     {
       _id: 3,
       skuId: 3,
-      type: 'Internal'
+      amountInWH: 0,
     },
     {
       _id: 4,
       skuId: 4,
-      type: 'Internal'
+      amountInWH: 0,
     },
     {
       _id: 5,
       skuId: 5,
-      type: 'Warehouse'
+      amountInWH: 0,
     },
     {
       _id: 6,
       skuId: 6,
-      type: 'Warehouse'
+      amountInWH: 0,
     },
     {
       _id: 7,
       skuId: 7,
-      type: 'Internal'
+      amountInWH: 0,
     },
     {
       _id: 8,
       skuId: 8,
-      type: 'Warehouse'
+      amountInWH: 0,
     },
     {
       _id: 9,
       skuId: 9,
-      type: 'Internal'
+      amountInWH: 0,
     }
   ],
   orderList: [
@@ -307,14 +316,14 @@ function Mockup () {
       }
       return Promise.resolve({ reason: 'OK', result })
     },
-    createSKU (productId, name, desc, price, amount, image, marketplaces) {
+    createSKU (productId, name, desc, price, type, amount, image, marketplaces) {
       return delay(700).then(() => {
         const _id = masterdata.skuList.length + 1
-        masterdata.skuList.push({ _id, productId, name, desc, price, amount, image, marketplaces })
+        masterdata.skuList.push({ _id, productId, name, desc, price, type, amount, image, marketplaces })
         const product = masterdata.productList.find(item => item._id === productId)
         return Promise.resolve({
           reason: 'OK',
-          result: { _id, productId, product, name, desc, price, amount, image, marketplaces }
+          result: { _id, productId, product, name, desc, price, type, amount, image, marketplaces }
         })
       })
     },
@@ -323,11 +332,11 @@ function Mockup () {
       const product = masterdata.productList.find(item => item._id === sku.productId)
       return Promise.resolve({ reason: 'OK', result: {...sku, product} })
     },
-    updateSKU (id, productId, name, desc, price, amount, image, marketplaces) {
+    updateSKU (id, productId, name, desc, price, type, amount, image, marketplaces) {
       return delay(700).then(() => {
         const sku = masterdata.skuList.find(({_id}) => _id === id)
         if (sku) {
-          Object.assign(sku, { _id: id, productId, name, desc, price, amount, image, marketplaces })
+          Object.assign(sku, { _id: id, productId, name, desc, price, type, amount, image, marketplaces })
           const product = masterdata.productList.find(({_id}) => _id === sku.productId)
           return Promise.resolve({
             reason: 'OK',

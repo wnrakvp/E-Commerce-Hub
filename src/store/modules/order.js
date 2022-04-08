@@ -34,7 +34,7 @@ export default {
     getAll ({commit}) {
       return api.getAllOrder().then(({result}) => {
         const list = []
-        result.forEach(({_id, date, marketplace, orderNo, trackNo, orderStatus, delivery, items: lineItems}) => {
+        result.forEach(({_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, items: lineItems}) => {
           const items = []
           lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
             const sku = new SKUModel(
@@ -49,7 +49,7 @@ export default {
             )
             items.push(new OrderLineItemModel(skuId, sku, price, amount))
           })
-          list.push(new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, delivery ,items))
+          list.push(new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery ,items))
         })
         console.debug(list)
         commit('SET_ALL', list)
@@ -62,8 +62,8 @@ export default {
     },
     get (context, id) {
       return api.getOrder(id).then(({result}) => {
-        let {_id, date, marketplace, orderNo, trackNo, orderStatus, delivery, items: lineItems} = result
-        console.debug(_id, date, marketplace, orderNo, trackNo, orderStatus, delivery, lineItems)
+        let {_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, items: lineItems} = result
+        console.debug(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, lineItems)
         const items = []
         lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
           const sku = new SKUModel(
@@ -78,7 +78,7 @@ export default {
           )
           items.push(new OrderLineItemModel(skuId, sku, price, amount))
         })
-        const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, delivery, items)
+        const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, items)
         return Promise.resolve(model)
       }).catch(err => {
         console.error(err)
@@ -114,7 +114,7 @@ export default {
           )
           items.push(new OrderLineItemModel(skuId, sku, price, amount))
         })
-        const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, delivery, items)
+        const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, items)
         commit('PUSH_ALL', model)
         return Promise.resolve(model)
       }).catch(Promise.reject)
