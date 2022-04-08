@@ -145,7 +145,7 @@ export default {
      getCountReadyToShip(){
        var count=0
        for(let i = 0; i < this.orderList.length; i++){
-          if (this.orderList[i].orderStatus == 'SHIPPED'){
+          if (this.orderList[i].orderStatus == 'READY_TO_SHIP'){
            count = count+1
          }
         }

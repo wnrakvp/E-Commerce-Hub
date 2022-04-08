@@ -8,7 +8,7 @@
           &nbsp;&nbsp;&nbsp;
           <i class="bi-bell-fill position-relative" style="font-size:20px">
           <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">
-            {{getCountTotal()}}
+            {{getCountNotification()}}
             <span class="visually-hidden">unread messages</span>
           </span>
           </i>
@@ -91,6 +91,16 @@ export default {
     },
     getCountTotal(){
        var count=this.orderList.length
+       return count
+     }
+     ,
+    getCountNotification(){
+       var count=0
+       for(let i = 0; i < this.orderList.length; i++){
+          if (this.orderList[i].orderStatus == 'READY_TO_SHIP'){
+           count = count+1
+         }
+        }
        return count
      }
   }
