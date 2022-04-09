@@ -12,7 +12,6 @@
       <table class="table text-center align-middle">
         <thead>
           <tr>
-            <th scope="col">Date</th>
             <th scope="col">Warehouse</th>
             <th colspan="2">Product</th>
             <th scope="col">SKU</th>
@@ -24,7 +23,6 @@
         </thead>
         <tbody>
           <tr v-for="(item, i) in inventoryList" :key="i">
-            <td></td>
             <td>
               <strong>{{ item.sku.type }}</strong>
             </td>
@@ -74,8 +72,6 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
   mounted() {
     Promise.all([
-      this.getAllProducts(),
-      this.getAllSKU(),
       this.getAllInventory(),
       this.getAllStock(),
     ])
@@ -85,12 +81,6 @@ export default {
       .catch(console.error);
   },
   computed: {
-    ...mapGetters('Products', {
-      productList: 'all',
-    }),
-    ...mapGetters('SKU', {
-      skuList: 'all',
-    }),
     ...mapGetters('Inventory', {
       inventoryList: 'all',
     }),
@@ -102,12 +92,6 @@ export default {
     return {};
   },
   methods: {
-    ...mapActions('Products', {
-      getAllProducts: 'getAll',
-    }),
-    ...mapActions('SKU', {
-      getAllSKU: 'getAll',
-    }),
     ...mapActions('Inventory', {
       getAllInventory: 'getAll',
     }),
