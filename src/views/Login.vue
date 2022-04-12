@@ -151,7 +151,7 @@
                       otp != null
                     "
                   >
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" @click="Login()">
                       Verify
                     </button>
                   </router-link>
@@ -204,14 +204,14 @@ export default {
     validateUser() {
       const regEx =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (this.email === null) {
-        return alert("Please input email");
+      if (this.email == null) {
+        return alert('Please Input Email');
       }
       if (!this.email.match(regEx)) {
-        return alert("Please input valid email");
+        return alert('Please Input valid Email');
       }
       if (this.password != 123456789) {
-        return alert("Please input correct password");
+        return alert('Please input correct password');
       }
       this.isLogging = true;
       setTimeout(() => {
@@ -223,7 +223,7 @@ export default {
       this.otp = Math.floor(100000 + Math.random() * 900000);
       setTimeout(() => {
         this.otp = null;
-      }, 10000); // 10 seconds OTP disappered
+      }, 30000); // 30 seconds OTP disappered
       // -----Send email to user-----
       // var templateParams = {
       //     userEmail: this.email,
@@ -249,6 +249,9 @@ export default {
     },
     noOTP() {
       alert("Please Input Correct OTP or Your OTP has timed out.");
+    },
+    Login() {
+      this.$store.commit("setAuth",true);
     },
   },
 };

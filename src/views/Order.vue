@@ -14,11 +14,11 @@
     <div class="table">
       <table class="table">
         <tr>
-          <th class="text-primary">Total({{60}})</th>
-          <th class="text-secondary">Waiting for confirm({{10}})</th>
-          <th class="text-warning">On preparing({{8}})</th>
-          <th class="text-info">On delivery({{6}})</th>
-          <th class="text-success">Delivered({{6}})</th>
+          <th class="text-primary">Total({{getCountTotal()}})</th>
+          <th class="text-danger">Rady to ship({{getCountReadyToShip()}})</th>
+          <th class="text-warning">On Delivery({{getCountOnDelivery()}})</th>
+          <th class="text-info">Shipped({{getCountShipped()}})</th>
+          <th class="text-success">Completed({{getCountCompleted()}})</th>
           <th></th>
           <th></th>
           <th></th>
@@ -53,7 +53,7 @@
               </td>
               <td>{{order.orderNo}}</td>
               <td>{{order.trackNo}}</td>
-              <td>{{order.orderStatus}}</td>
+              <td>{{getStatus(order.orderStatus)}}</td>
               <td>{{order.delivery}}</td>
               <td>{{getCountItems(i)}}</td>
               <td>{{getTotal(i).toLocaleString()}}</td>
@@ -108,6 +108,19 @@ export default {
       if (day.length < 2) day = '0' + day
       return [day, month, year].join('-')
     },
+    getStatus(orderStatus){
+      var textStatus = ""
+      if (orderStatus == 'READY_TO_SHIP'){
+        textStatus= 'Ready to ship'
+      } else if (orderStatus == 'ON_DELIVERY') {
+        textStatus= 'On delivery'
+      } else if (orderStatus == 'SHIPPED') {
+        textStatus= 'Shipped'
+      } else if (orderStatus == 'COMPLETED') {
+        textStatus= 'Completed'
+      } 
+      return textStatus
+    },
     getTotal(i){
         var total = 0
         var items = this.orderList[i].items
@@ -119,21 +132,72 @@ export default {
     getCountItems(i){
         var CountItems = 0
         var items = this.orderList[i].items
+        // console.log('item: '+items)
         for(let j = 0;j < items.length; j++ ) {
            CountItems +=1   
         }
       return  CountItems
      },
-    Logger() {
+     getCountTotal(){
+       var count=this.orderList.length
+       return count
+     },
+     getCountReadyToShip(){
+       var count=0
+       for(let i = 0; i < this.orderList.length; i++){
+          if (this.orderList[i].orderStatus == 'READY_TO_SHIP'){
+           count = count+1
+         }
+        }
+       return count
+     },
+     getCountOnDelivery(){
+       var count=0
+       for(let i = 0; i < this.orderList.length; i++){
+         if (this.orderList[i].orderStatus == 'ON_DELIVERY'){
+           count = count+1
+         }
+        }
+       return count
+     },
+     getCountShipped(){
+       var count=0
+       for(let i = 0; i < this.orderList.length; i++){
+         if (this.orderList[i].orderStatus == 'SHIPPED'){
+           count = count+1
+         }
+        }
+       return count
+     },
+     getCountCompleted(){
+       var count=0
+       for(let i = 0; i < this.orderList.length; i++){
+         if (this.orderList[i].orderStatus == 'COMPLETED'){
+           count = count+1
+         }
+        }
+       return count
+     },
+     Logger() {
       console.log('price'+this.orderList[0].items[0].price);
       console.log('amount'+this.orderList[0].items[0].amount);
       var total = 0
-        var items = this.orderList[0].items
-        for(let j = 0;j < items.length; j++ ) {
-           total = total+items[j].amount  
-           console.log('Total: '+total);
-           console.log('Amount: '+items[j].amount);     
+        //var items = this.orderList[0].items
+        console.log(i)
+
+        console.log('item: '+this.items.orderList)
+
+        for(let i = 0; i < this.orderList.length; i++){
+          item = this.orderList[i].item;
+
+          for(let j = 0;j < item.length; j++ ) {
+            
+               
+          }
         }
+
+
+        
     }
   }
 }

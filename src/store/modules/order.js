@@ -55,7 +55,7 @@ export default {
         commit('SET_ALL', list)
         // TODO: throw something to router for handle state
         return Promise.resolve(list)
-      }).catch(err => {
+      }).catch(err => {g
         console.error(err)
         return Promise.resolve('200')
       })
@@ -117,6 +117,29 @@ export default {
         const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, items)
         commit('PUSH_ALL', model)
         return Promise.resolve(model)
+      }).catch(Promise.reject)
+    },
+    update ({commit}, {id, trackNo, orderStatus, delivery, deliveryBy}) {
+      if (id) {
+        return api.updateOrder( _id, trackNo, orderStatus, delivery, deliveryBy ).then(({result}) => {
+          const { _id } = result
+          const model = new OrderModel(_id, trackNo, orderStatus, delivery, deliveryBy)
+          commit('EDIT_ALL', model)
+          return Promise.resolve(model)
+        }).catch(Promise.reject)
+      } else {
+        return api.createOrder( trackNo, orderStatus, delivery, deliveryBy).then(({result}) => {
+          const { _id } = result
+          const model = new OrderModel(_id, trackNo, orderStatus, delivery, deliveryBy)
+          commit('UNSHIFT_ALL', model)
+          return Promise.resolve(model)
+        }).catch(Promise.reject)
+      }
+    },
+    delete ({commit}, id) {
+      return api.deleteOrder(id).then(({result}) => {
+        commit('DELETE_ALL', id)
+        return Promise.resolve(id)
       }).catch(Promise.reject)
     }
   }

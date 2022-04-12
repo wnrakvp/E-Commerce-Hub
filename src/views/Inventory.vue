@@ -12,7 +12,10 @@
       <table class="table text-center align-middle">
         <thead>
           <tr>
+<<<<<<< HEAD
             <!-- <th scope="col">Date</th> -->
+=======
+>>>>>>> 0dcf7798ecb69c7432b0b045bbbe9b47908e2bde
             <th scope="col">Warehouse</th>
             <th colspan="2">Product</th>
             <th scope="col">SKU</th>
@@ -24,7 +27,10 @@
         </thead>
         <tbody>
           <tr v-for="(item, i) in inventoryList" :key="i">
+<<<<<<< HEAD
             <!-- <td></td> -->
+=======
+>>>>>>> 0dcf7798ecb69c7432b0b045bbbe9b47908e2bde
             <td>
               <strong>{{ item.sku.type }}</strong>
             </td>
@@ -83,22 +89,38 @@ export default {
       .catch(console.error);
   },
   computed: {
+<<<<<<< HEAD
     ...mapGetters("Inventory", {
       inventoryList: "all",
     }),
     ...mapGetters("Stock", {
       stockList: "all",
+=======
+    ...mapGetters('Inventory', {
+      inventoryList: 'all',
+    }),
+    ...mapGetters('Stock', {
+      stockList: 'all',
+>>>>>>> 0dcf7798ecb69c7432b0b045bbbe9b47908e2bde
     }),
   },
   data() {
     return {};
   },
   methods: {
+<<<<<<< HEAD
     ...mapActions("Inventory", {
       getAllInventory: "getAll",
     }),
     ...mapActions("Stock", {
       getAllStock: "getAll",
+=======
+    ...mapActions('Inventory', {
+      getAllInventory: 'getAll',
+    }),
+    ...mapActions('Stock', {
+      getAllStock: 'getAll',
+>>>>>>> 0dcf7798ecb69c7432b0b045bbbe9b47908e2bde
     }),
     Reserved(id) {
       var total = 0;
