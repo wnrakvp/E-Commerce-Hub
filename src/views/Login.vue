@@ -38,17 +38,29 @@
                   <label for="floatingPassword">Password</label>
                 </div>
                 <div class="d-grid gap-2 mb-3">
-                  <button v-if="isLogging" type="submit" class="btn btn-primary" disabled>
-                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                  Logging in...
+                  <button
+                    v-if="isLogging"
+                    type="submit"
+                    class="btn btn-primary"
+                    disabled
+                  >
+                    <span
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    Logging in...
                   </button>
-                  <button v-else
+                  <button
+                    v-else
                     type="submit"
                     class="btn btn-primary"
                     @click.prevent="
                       validateUser();
-                      setOTP();"
-                    v-bind:hidden="isLogin == true">
+                      setOTP();
+                    "
+                    v-bind:hidden="isLogin == true"
+                  >
                     Login
                   </button>
                 </div>
@@ -148,7 +160,7 @@
                     class="btn btn-primary"
                     v-else
                     v-show="isLogin"
-                    @click="noOTP()"
+                    @click.prevent="noOTP()"
                   >
                     Verify
                   </button>
@@ -171,7 +183,7 @@
   </section>
 </template>
 <script>
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser";
 export default {
   data() {
     return {
@@ -192,19 +204,20 @@ export default {
     validateUser() {
       const regEx =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (this.email != null && this.email.match(regEx)) {
-        if (this.password == 123456789) {
-          this.isLogging = true;
-          setTimeout(()=>{
-            this.isLogin = true;
-            this.isLogging = false;
-            },2000);
-        } else {
-          alert('Please input correct password');
-        }
-      } else {
-        alert('Please input valid email.');
+      if (this.email === null) {
+        return alert("Please input email");
       }
+      if (!this.email.match(regEx)) {
+        return alert("Please input valid email");
+      }
+      if (this.password != 123456789) {
+        return alert("Please input correct password");
+      }
+      this.isLogging = true;
+      setTimeout(() => {
+        this.isLogin = true;
+        this.isLogging = false;
+      }, 2000);
     },
     setOTP() {
       this.otp = Math.floor(100000 + Math.random() * 900000);
@@ -235,7 +248,7 @@ export default {
       // -----------------------------
     },
     noOTP() {
-      alert('Please Input Correct OTP or Your OTP has timed out.');
+      alert("Please Input Correct OTP or Your OTP has timed out.");
     },
   },
 };

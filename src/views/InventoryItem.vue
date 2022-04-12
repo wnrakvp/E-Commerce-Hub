@@ -27,6 +27,7 @@
             class="form-control"
             id="InventoryNo"
             placeholder="Inventory Number"
+            v-model="inventoryid"
           />
           <br />
         </div>
@@ -37,6 +38,7 @@
 </template>
 <script>
 import { Offcanvas } from 'bootstrap';
+import { mapActions } from 'vuex';
 export default {
   props: {
     id: String,
@@ -46,16 +48,20 @@ export default {
   data() {
     return {
       _offcanvas: null,
+      // inventoryid: '',
     };
   },
   mounted() {
     if (this.id) {
+      // this.get(Number(this.id)).then(o => {
+      // this.inventoryid = o.sku.id;
       this._offcanvas = new Offcanvas(this.$refs.InventoryItem);
       this._offcanvas.show();
       this.$refs.InventoryItem.addEventListener(
         'hidden.bs.offcanvas',
         this.close
       );
+      // }).catch(console.error)
     }
   },
   methods: {
@@ -63,5 +69,11 @@ export default {
       this.$router.replace({ name: 'inventory' });
     },
   },
+  // ...mapActions('SKU', {
+  //     draft: 'draft',
+  //     get: 'get',
+  //     save: 'save',
+  //     delete: 'delete'
+  //   })
 };
 </script>

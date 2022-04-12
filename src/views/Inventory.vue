@@ -12,7 +12,7 @@
       <table class="table text-center align-middle">
         <thead>
           <tr>
-            <th scope="col">Date</th>
+            <!-- <th scope="col">Date</th> -->
             <th scope="col">Warehouse</th>
             <th colspan="2">Product</th>
             <th scope="col">SKU</th>
@@ -24,7 +24,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, i) in inventoryList" :key="i">
-            <td></td>
+            <!-- <td></td> -->
             <td>
               <strong>{{ item.sku.type }}</strong>
             </td>
@@ -40,9 +40,6 @@
             <td>{{ item.sku.amount }}</td>
             <td>{{ Reserved(item.skuId) }}</td>
             <td>{{ item.sku.amount - Reserved(item.skuId) }}</td>
-<<<<<<< HEAD
-            <td><button class="btn btn-sm btn-outline-secondary" ><i class="bi-three-dots"></i></button></td>
-=======
             <router-link
               :to="{
                 name: 'inventory-item',
@@ -64,7 +61,6 @@
                 </button>
               </td>
             </router-link>
->>>>>>> cc80c3992df13d10b42e475fb14d51d53ac96841
           </tr>
         </tbody>
       </table>
@@ -73,13 +69,11 @@
   <router-view></router-view>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   mounted() {
     Promise.all([
-      this.getAllProducts(),
-      this.getAllSKU(),
       this.getAllInventory(),
       this.getAllStock(),
     ])
@@ -89,34 +83,22 @@ export default {
       .catch(console.error);
   },
   computed: {
-    ...mapGetters('Products', {
-      productList: 'all',
+    ...mapGetters("Inventory", {
+      inventoryList: "all",
     }),
-    ...mapGetters('SKU', {
-      skuList: 'all',
-    }),
-    ...mapGetters('Inventory', {
-      inventoryList: 'all',
-    }),
-    ...mapGetters('Stock', {
-      stockList: 'all',
+    ...mapGetters("Stock", {
+      stockList: "all",
     }),
   },
   data() {
     return {};
   },
   methods: {
-    ...mapActions('Products', {
-      getAllProducts: 'getAll',
+    ...mapActions("Inventory", {
+      getAllInventory: "getAll",
     }),
-    ...mapActions('SKU', {
-      getAllSKU: 'getAll',
-    }),
-    ...mapActions('Inventory', {
-      getAllInventory: 'getAll',
-    }),
-    ...mapActions('Stock', {
-      getAllStock: 'getAll',
+    ...mapActions("Stock", {
+      getAllStock: "getAll",
     }),
     Reserved(id) {
       var total = 0;
