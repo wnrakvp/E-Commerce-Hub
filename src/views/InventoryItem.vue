@@ -12,7 +12,7 @@
     <div class="offcanvas-body">
     <form @submit.prevent="submit">
       <fieldset :disabled="disabled">
-        <div class="mb-3">
+        <div class="mb-3" v-show="id==='add'">
           <label for="dateToAction" class="form-label">Date</label>
           <input type="date" class="form-control" id="dateToAction" placeholder="Name" v-model="date">
         </div>
@@ -23,6 +23,14 @@
             <option v-for="(sku, idx) in skus" :key="idx" :value="sku.id">{{sku.name}}</option>
           </select>
           </div> -->
+          <div class="mb-3" :hidden="id==='add'">
+           <label for="showProduct" class="form-label">Product</label>
+          <input type="text" class="form-control" id="product" :value="product" disabled>
+          </div>
+          <div class="mb-3" :hidden="id==='add'">
+           <label for="showSKU" class="form-label">SKU</label>
+          <input type="text" class="form-control" id="sku" :value="sku" disabled>
+          </div>
           <div class="mb-3">
            <label for="selectWarehouse" class="form-label">Warehouse </label>
           <select class="form-select" id="marketplace" v-model="warehouseType">
@@ -30,6 +38,10 @@
             <option>Internal</option>
             <option>External Warehouse</option>
           </select>
+          </div>
+          <div class="mb-3" :hidden="id==='add'">
+           <label for="editAmount" class="form-label">Amount</label>
+          <input type="number" class="form-control" id="amount" :value="amount" :disabled="warehouseType === 'External Warehouse'">
           </div>
           <!-- <div class="mb-3">
           <label for="originalAmount" class="form-label" :hidden="warehouseType==''">Amount</label>
@@ -106,9 +118,13 @@ export default {
   data() {
     return {
       _offcanvas: null,
+      date: null,
+      product: '',
+      sku: '',
+      warehouseType: '',
+      amount: 0,
       productId: null,
       skuId: null,
-      warehouseType: '',
     };
   },
   computed: {
@@ -127,8 +143,10 @@ export default {
     }
     else {
       this.get(Number(this.id)).then(o => {
-        // this.productId = o.product.id;
+        this.product = o.sku.product.name;
+        this.sku = o.sku.name;
         this.warehouseType = o.type;
+        this.amount = o.amount;
       });
       this._offcanvas = new Offcanvas(this.$refs.InventoryItem);
       this._offcanvas.show();
@@ -136,6 +154,7 @@ export default {
         'hidden.bs.offcanvas',
         this.close
       );
+      // }).catch(console.error)
     }
   },
   methods: {
@@ -146,5 +165,11 @@ export default {
       this.$router.replace({ name: 'inventory' });
     },
   },
+  // ...mapActions('SKU', {
+  //     draft: 'draft',
+  //     get: 'get',
+  //     save: 'save',
+  //     delete: 'delete'
+  //   })
 };
 </script>

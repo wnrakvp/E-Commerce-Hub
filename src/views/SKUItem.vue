@@ -226,9 +226,9 @@ export default {
         this._offcanvas.hide()
       }).catch(console.error)
     },
-    resetAmount() {
-      this.amount = 0;
-    },
+    // resetAmount() {
+    //   this.amount = 0;
+    // },
     ...mapActions('SKU', {
       draft: 'draft',
       get: 'get',

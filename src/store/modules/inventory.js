@@ -74,8 +74,8 @@ export default {
     },
     get(context, id) {
       return api.getInventory(id).then(({result}) => {
-        console.log(
-          {result})
+        // console.log(
+        //   {result})
         let {_id, skuId, sku, product, type, amount} = result
         const model = new InventoryModel(
           _id,

@@ -17,6 +17,7 @@
       <table class="table text-center align-middle">
         <thead>
           <tr>
+            <!-- <th scope="col">Date</th> -->
             <th scope="col">Warehouse</th>
             <th colspan="2">Product</th>
             <th scope="col">SKU</th>
@@ -29,6 +30,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, i) in inventoryList" :key="i">
+            <!-- <td></td> -->
             <td>
               <strong>{{ item.type }}</strong>
             </td>
@@ -41,10 +43,10 @@
             </td>
             <td>{{ item.sku.product.name }}</td>
             <td>{{ item.sku.name }}</td>
+            <td></td>
+            <td></td>
             <td>{{ item.amount }}</td>
-            <td>{{ Reserved(item.skuId) }}</td>
-            <td>{{ item.sku.amount - Reserved(item.skuId) }}</td>
-            <td>x</td>
+            <td></td>
             <router-link
               :to="{
                 name: 'inventory-item',
@@ -72,7 +74,7 @@
   <router-view></router-view>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   mounted() {
@@ -86,22 +88,22 @@ export default {
       .catch(console.error);
   },
   computed: {
-    ...mapGetters('Inventory', {
-      inventoryList: 'all',
+    ...mapGetters("Inventory", {
+      inventoryList: "all",
     }),
-    ...mapGetters('Stock', {
-      stockList: 'all',
+    ...mapGetters("Stock", {
+      stockList: "all",
     }),
   },
   data() {
     return {};
   },
   methods: {
-    ...mapActions('Inventory', {
-      getAllInventory: 'getAll',
+    ...mapActions("Inventory", {
+      getAllInventory: "getAll",
     }),
-    ...mapActions('Stock', {
-      getAllStock: 'getAll',
+    ...mapActions("Stock", {
+      getAllStock: "getAll",
     }),
     Reserved(id) {
       var total = 0;

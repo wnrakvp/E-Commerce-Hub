@@ -161,7 +161,7 @@
                     class="btn btn-primary"
                     v-else
                     v-show="isLogin"
-                    @click="noOTP()"
+                    @click.prevent="noOTP()"
                   >
                     Verify
                   </button>
@@ -184,7 +184,7 @@
   </section>
 </template>
 <script>
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser";
 export default {
   data() {
     return {
@@ -249,7 +249,7 @@ export default {
       // -----------------------------
     },
     noOTP() {
-      alert('Please Input Correct OTP or Your OTP has timed out.');
+      alert("Please Input Correct OTP or Your OTP has timed out.");
     },
     Login() {
       this.$store.commit("setAuth",true);
