@@ -33,7 +33,7 @@
             <th scope="col">Order No</th>
             <th scope="col">Tracking</th>
             <th scope="col">Status</th>
-            <th scope="col">Delivery</th>
+            <th scope="col">Courier</th>
             <!-- <th scope="col">SKU Name</th> -->
             <!-- <th scope="col">Price</th> -->
             <th scope="col">Item</th>
