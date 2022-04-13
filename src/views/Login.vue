@@ -60,6 +60,7 @@
                       setOTP();
                     "
                     v-bind:hidden="isLogin == true"
+                    :disabled="isLogin == true"
                   >
                     Login
                   </button>

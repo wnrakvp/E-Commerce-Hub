@@ -157,48 +157,63 @@ const masterdata = {
     {
       _id: 1,
       skuId: 1,
-      amountInWH: 0,
+      type: 'Internal',
+      amount: 20,
     },
     {
       _id: 2,
       skuId: 2,
-      amountInWH: 0,
+      type: 'Internal',
+      amount: 20,
     },
     {
       _id: 3,
       skuId: 3,
-      amountInWH: 0,
+      type: 'Internal',
+      amount: 20,
     },
     {
       _id: 4,
       skuId: 4,
-      amountInWH: 0,
+      type: 'Internal',
+      amount: 20,
     },
     {
       _id: 5,
       skuId: 5,
-      amountInWH: 0,
+      type: 'Internal',
+      amount: 20,
     },
     {
       _id: 6,
       skuId: 6,
-      amountInWH: 0,
+      type: 'Internal',
+      amount: 20,
     },
     {
       _id: 7,
       skuId: 7,
-      amountInWH: 0,
+      type: 'Internal',
+      amount: 20,
     },
     {
       _id: 8,
       skuId: 8,
-      amountInWH: 0,
+      type: 'Internal',
+      amount: 20,
     },
     {
       _id: 9,
       skuId: 9,
-      amountInWH: 0,
-    }
+      type: 'Internal',
+      amount: 20,
+    },
+    {
+      _id: 10,
+      skuId: 1,
+      type: 'External Warehouse',
+      amount: 30,
+    },
   ],
   orderList: [
     {
@@ -422,6 +437,15 @@ function Mockup () {
         result.push({...inventory, sku, product})
       }
       return Promise.resolve({ reason: 'OK', result })
+    },
+    getInventory (id) {
+      const result = [];
+      const inventory = masterdata.inventoryList.find(x => x._id === id)
+      const sku = masterdata.skuList.find(({_id}) => _id === inventory.skuId)
+      const product = masterdata.productList.find(({_id}) => _id === sku.productId)
+        // const stockLineItem = masterdata.stockList.items.find(({_id}) => _id === inventory.skuId)
+        result.push({inventory, sku, product})
+      return Promise.resolve({ reason: 'OK', result: {...inventory, sku, product} })
     },
     getAllOrder () {
       const list = masterdata.orderList

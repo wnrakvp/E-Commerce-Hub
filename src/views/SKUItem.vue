@@ -15,9 +15,9 @@
             :key="idx"
             :value="item.id">{{item.name}}</option>
           </select>
-          <div class="invalid-feedback">
+          <!-- <div class="invalid-feedback">
           Please select a Product.
-          </div>
+          </div> -->
         </div>
         <div class="mb-3">
           <label for="skuName" class="form-label">SKU Name <i class="bi-question-circle"></i></label>
@@ -40,7 +40,7 @@
           placeholder="How much does it cost?"
           v-model="price">
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label for="originalAmount" class="form-label">Warehouse Type</label>
           <select class="form-select" id="selectWarehouse" v-model="type" required>
           <option selected disabled value="">Select a warehouse</option>
@@ -58,7 +58,7 @@
           :disabled="type=='External Warehouse'"
           :hidden="type==''"
           v-model="amount">
-        </div>
+        </div> -->
       </fieldset>
       <fieldset class="mb-3" :disabled="disabled">
         <legend class="form-label">Marketplace</legend>
@@ -134,8 +134,8 @@ export default {
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
-        this.type = o.type
-        this.amount = o.amount
+        // this.type = o.type
+        // this.amount = o.amount
         this.image = o.image
         this.marketplaces = o.marketplaces
         this.isAllMarketplace = this.marketplaces.size === 2
@@ -149,8 +149,8 @@ export default {
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
-        this.type = o.type
-        this.amount = o.amount
+        // this.type = o.type
+        // this.amount = o.amount
         this.image = o.image
         this.marketplaces = o.marketplaces
         this.isAllMarketplace = this.marketplaces.size === 2

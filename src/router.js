@@ -18,11 +18,11 @@ const routes = [
     name: 'console',
     component: ConsoleView,
     // -----Per-Route Guard------
-    beforeEnter: (to, from) => {
-      if (store.state.auth == false) {
-      return router.replace({name: 'login'})
-      }
-    },
+    // beforeEnter: (to, from) => {
+    //   if (store.state.auth == false) {
+    //   return router.replace({name: 'login'})
+    //   }
+    // },
     // --------------------------
     children: [
       {

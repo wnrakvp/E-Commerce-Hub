@@ -6,29 +6,90 @@
     aria-labelledby="InventoryItemLabel"
   >
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title">
-        {{ productName }} <br />
-        ({{ skuName }})
-      </h5>
-      <button
-        type="button"
-        class="btn-close text-reset"
-        data-bs-dismiss="offcanvas"
-        aria-label="Close"
-      ></button>
+     <h5 class="offcanvas-title" id="InventoryItemLabel">{{id==='add'?'Add':'Edit'}} Inventory Item</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
     <form @submit.prevent="submit">
       <fieldset :disabled="disabled">
         <div class="mb-3">
-          <label for="orderNoToAction" class="form-label">Inventory No.</label>
-          <input
-            type="text"
-            class="form-control"
-            id="InventoryNo"
-            placeholder="Inventory Number"
-          />
-          <br />
+          <label for="dateToAction" class="form-label">Date</label>
+          <input type="date" class="form-control" id="dateToAction" placeholder="Name" v-model="date">
+        </div>
+          <!-- <div class="mb-3">
+           <label for="selectSKU" class="form-label">SKU </label>
+          <select class="form-select" id="marketplace" v-model="skuId">
+            <option selected disabled value="">Select SKU</option>
+            <option v-for="(sku, idx) in skus" :key="idx" :value="sku.id">{{sku.name}}</option>
+          </select>
+          </div> -->
+          <div class="mb-3">
+           <label for="selectWarehouse" class="form-label">Warehouse </label>
+          <select class="form-select" id="marketplace" v-model="warehouseType">
+            <option selected disabled value="">Select Warehouse</option>
+            <option>Internal</option>
+            <option>External Warehouse</option>
+          </select>
+          </div>
+          <!-- <div class="mb-3">
+          <label for="originalAmount" class="form-label" :hidden="warehouseType==''">Amount</label>
+          <input type="number"
+          min="0"
+          class="form-control"
+          id="originalAmount"
+          placeholder="How many do you have?"
+          :disabled="warehouseType=='External Warehouse'"
+          :hidden="warehouseType==''"
+          v-model="amount">
+        </div> -->
+        <div class="mb-3">
+          <label class="form-label">Line Items</label>
+          <div class="responsive-table">
+            <table class="table table-sm table-striped text-center">
+              <col>
+              <col width="100">
+              <col width="100">
+              <col width="65">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Product</th>
+                  <th>SKU</th>
+                  <th>Amount</th>
+                  <th v-if="id === 'add'"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td v-if="id === 'add'"><button type="button" class="btn-close" aria-label="Close" @click="removeItem(idx)"></button></td>
+                </tr>
+              </tbody>
+              <tfoot v-if="id === 'add'">
+                <tr>
+                  <td colspan="2">
+                    <select class="form-select" id="marketplace" v-model="productId">
+                      <option value="">Product</option>
+                      <option></option>
+                    </select>
+                  </td>
+                  <td>
+                    <select class="form-select" id="marketplace" v-model="skuId">
+                      <option value="">SKU</option>
+                      <option></option>
+                    </select>
+                  </td>
+                  <td><input type="number" class="form-control " id="amount" placeholder="#" v-model="amount"></td>
+                  <td><button type="button" class="btn btn-sm btn-outline-secondary" @click="addItem()"><i class="bi-plus-circle"></i></button></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div v-if="id === 'add'" class="mb-3 text-end">
+          <button type="submit" class="btn btn-primary">Add</button>
         </div>
       </fieldset>
     </form>
@@ -37,19 +98,38 @@
 </template>
 <script>
 import { Offcanvas } from 'bootstrap';
+import { mapActions } from 'vuex';
 export default {
   props: {
     id: String,
-    productName: String,
-    skuName: String,
   },
   data() {
     return {
       _offcanvas: null,
+      productId: null,
+      skuId: null,
+      warehouseType: '',
     };
   },
+  computed: {
+    // skus () {
+    //   return this.skuList.filter(x => x.marketplaces.has(this.productId))
+    // }
+  },
   mounted() {
-    if (this.id) {
+    if (this.id === 'add') {
+      this._offcanvas = new Offcanvas(this.$refs.InventoryItem);
+      this._offcanvas.show();
+      this.$refs.InventoryItem.addEventListener(
+        'hidden.bs.offcanvas',
+        this.close
+      );
+    }
+    else {
+      this.get(Number(this.id)).then(o => {
+        // this.productId = o.product.id;
+        this.warehouseType = o.type;
+      });
       this._offcanvas = new Offcanvas(this.$refs.InventoryItem);
       this._offcanvas.show();
       this.$refs.InventoryItem.addEventListener(
@@ -59,6 +139,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions('Inventory', {
+      get: 'get',
+    }),
     close() {
       this.$router.replace({ name: 'inventory' });
     },

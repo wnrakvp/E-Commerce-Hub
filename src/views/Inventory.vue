@@ -7,6 +7,11 @@
       <button class="btn btn-sm btn-outline-secondary" @click="Logger">
         <i class="bi-plus-circle"></i> Logger
       </button>
+      <router-link :to="{ name: 'inventory-item', params: { id: 'add' } }" custom v-slot="{ navigate }">
+      <button class="btn btn-sm btn-outline-secondary" @click="navigate">
+        <i class="bi-plus-circle"></i> Add
+      </button>
+      </router-link>
     </div>
     <div class="table-responsive">
       <table class="table text-center align-middle">
@@ -18,13 +23,14 @@
             <th scope="col">Total</th>
             <th scope="col">Reserved</th>
             <th scope="col">Available</th>
+            <th scope="col">Sold</th>
             <th scope="col">Views</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, i) in inventoryList" :key="i">
             <td>
-              <strong>{{ item.sku.type }}</strong>
+              <strong>{{ item.type }}</strong>
             </td>
             <td>
               <img
@@ -33,18 +39,17 @@
                 :src="item.sku.image"
               />
             </td>
-            <td>{{ item.product.name }}</td>
+            <td>{{ item.sku.product.name }}</td>
             <td>{{ item.sku.name }}</td>
-            <td>{{ item.sku.amount }}</td>
+            <td>{{ item.amount }}</td>
             <td>{{ Reserved(item.skuId) }}</td>
             <td>{{ item.sku.amount - Reserved(item.skuId) }}</td>
+            <td>x</td>
             <router-link
               :to="{
                 name: 'inventory-item',
                 params: {
-                  id: item._id,
-                  productName: item.product.name,
-                  skuName: item.sku.name,
+                  id: item.id,
                 },
               }"
               custom
