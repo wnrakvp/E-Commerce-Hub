@@ -152,7 +152,11 @@
                       otp != null
                     "
                   >
-                    <button type="submit" class="btn btn-primary" @click="Login()">
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      @click="Login()"
+                    >
                       Verify
                     </button>
                   </router-link>
@@ -184,7 +188,8 @@
   </section>
 </template>
 <script>
-import emailjs from "@emailjs/browser";
+import emailjs from '@emailjs/browser';
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -201,6 +206,21 @@ export default {
       isLogging: false,
     };
   },
+  // updated() {
+  //   if (this.isLogging == true) {
+  //     axios
+  //       .post('http://localhost:5000/api/v1/user/login', {
+  //         email: this.email,
+  //         password: this.password,
+  //       })
+  //       .then(function (response) {
+  //         console.log(response)
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+  //   }
+  // },
   methods: {
     validateUser() {
       const regEx =
@@ -249,10 +269,10 @@ export default {
       // -----------------------------
     },
     noOTP() {
-      alert("Please Input Correct OTP or Your OTP has timed out.");
+      alert('Please Input Correct OTP or Your OTP has timed out.');
     },
     Login() {
-      this.$store.commit("setAuth",true);
+      this.$store.commit('setAuth', true);
     },
   },
 };

@@ -447,6 +447,18 @@ function Mockup () {
         result.push({inventory, sku, product})
       return Promise.resolve({ reason: 'OK', result: {...inventory, sku, product} })
     },
+    deleteInventory (id) {
+      alert('Deleting Inventory id ' + id)
+      return delay(1000).then(() => {
+        return Promise.resolve({ reason: 'OK', result: 'Deleted Inventory ' + id })
+      });
+    },
+    updateInventory (id) {
+      alert('Updating Inventory id ' + id)
+      return delay(1000).then(() => {
+        return Promise.resolve({ reason: 'OK', result: 'Updated Inventory ' + id })
+      });
+    },
     getAllOrder () {
       const list = masterdata.orderList
       const result = []

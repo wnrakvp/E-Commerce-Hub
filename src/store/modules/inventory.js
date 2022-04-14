@@ -37,7 +37,7 @@ export default {
         .then(({ result }) => {
           const inventoryList = [];
           // const inventoryList = result.result;
-          result.forEach(({ _id, skuId, sku, product , type, amount }) => {
+          result.forEach(({ _id, skuId, sku, product, type, amount }) => {
             inventoryList.push(
               new InventoryModel(
                 _id,
@@ -73,39 +73,66 @@ export default {
         });
     },
     get(context, id) {
-      return api.getInventory(id).then(({result}) => {
-        // console.log(
-        //   {result})
-        let {_id, skuId, sku, product, type, amount} = result
-        const model = new InventoryModel(
-          _id,
-          skuId,
-          new SKUModel(
-            sku._id,
-            sku.productId,
-            new ProductModel(
-              product._id,
-              product.name,
-              product.desc,
-              product.image
+      return api
+        .getInventory(id)
+        .then(({ result }) => {
+          // console.log(
+          //   {result})
+          let { _id, skuId, sku, product, type, amount } = result;
+          const model = new InventoryModel(
+            _id,
+            skuId,
+            new SKUModel(
+              sku._id,
+              sku.productId,
+              new ProductModel(
+                product._id,
+                product.name,
+                product.desc,
+                product.image
+              ),
+              sku.name,
+              sku.desc,
+              sku.price,
+              sku.type,
+              sku.amount,
+              sku.image,
+              null
             ),
-            sku.name,
-            sku.desc,
-            sku.price,
-            sku.type,
-            sku.amount,
-            sku.image,
-            null
-          ),
-          type,
-          amount
-        )
-        console.log(model)
-        return Promise.resolve(model)
+            type,
+            amount
+          );
+          console.log(model);
+          return Promise.resolve(model);
+        })
+        .catch((err) => {
+          console.error(err);
+          Promise.reject(err.message);
+        });
+    },
+    save({ commit }, { id, type, amount }) {
+      if (id) {
+        return api.updateInventory(id)
+        .then(() => {
+          // commit('EDIT_ALL', model)
+          return Promise.resolve();
+        });
+      } else {
+        return alert('Creating new Inventory').then(() => {
+          // commit('UNSHIFT_ALL',model)
+          return Promise.resolve();
+        });
+      }
+    },
+    delete({ commit }, id) {
+      return api.deleteInventory(id).then(({result}) => {
+        commit('DELETE_ALL', id)
+        alert('Deleted')
+        return Promise.resolve(id);
       }).catch(err => {
         console.error(err)
         Promise.reject(err.message)
       })
-    }
+    },
   },
 };
