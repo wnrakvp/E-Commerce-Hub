@@ -109,7 +109,8 @@ export default {
        return count
      },
      Logout() {
-       this.$store.commit('setAuth',false);
+       this.$store.commit('SET_AUTH',false);
+       this.$store.commit('LOGIN',false);
      }
   }
 }

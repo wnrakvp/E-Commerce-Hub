@@ -189,7 +189,6 @@
 </template>
 <script>
 import emailjs from '@emailjs/browser';
-import axios from 'axios';
 export default {
   data() {
     return {
@@ -204,40 +203,23 @@ export default {
       sixth: null,
       isLogin: false,
       isLogging: false,
+      error: '',
     };
   },
-  // updated() {
-  //   if (this.isLogging == true) {
-  //     axios
-  //       .post('http://localhost:5000/api/v1/user/login', {
-  //         email: this.email,
-  //         password: this.password,
-  //       })
-  //       .then(function (response) {
-  //         console.log(response)
-  //       })
-  //       .catch(function (error) {
-  //         console.log(error);
-  //       });
-  //   }
-  // },
   methods: {
     validateUser() {
-      const regEx =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (this.email == null) {
-        return alert('Please Input Email');
-      }
-      if (!this.email.match(regEx)) {
-        return alert('Please Input valid Email');
-      }
-      if (this.password != 123456789) {
-        return alert('Please input correct password');
-      }
       this.isLogging = true;
+      this.$store.dispatch('validateUser', {
+        email: this.email,
+        password: this.password,
+      });
       setTimeout(() => {
-        this.isLogin = true;
-        this.isLogging = false;
+        if (this.$store.state.login == true) {
+          this.isLogging = false;
+          this.isLogin = true;
+        } else {
+          this.isLogging = false;
+        }
       }, 2000);
     },
     setOTP() {
@@ -272,7 +254,7 @@ export default {
       alert('Please Input Correct OTP or Your OTP has timed out.');
     },
     Login() {
-      this.$store.commit('setAuth', true);
+      this.$store.commit('SET_AUTH', true);
     },
   },
 };
