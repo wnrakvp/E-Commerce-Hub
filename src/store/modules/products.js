@@ -57,7 +57,6 @@ export default {
           const model = new ProductModel(id, name, desc, image);
           // TODO: throw something to router for handle state
           console.log('Viewing...')
-          console.log(model);
           return Promise.resolve(model);
         })
         .catch(Promise.reject);
@@ -87,7 +86,7 @@ export default {
           })
           .then((res) => {
             console.log('Edit Success!!');
-            console.log(res.data);
+            let {id, name, desc, image} = res.data
             const model = new ProductModel(id, name, desc, image);
             commit('EDIT_ALL', model);
             return Promise.resolve(model);
@@ -107,8 +106,8 @@ export default {
           })
           .then((res) => {
             console.log('Create Success!!');
-            console.log(res.data);
-            const model = new ProductModel(res.data.id, name, desc, image);
+            let {id, name, desc, image} = res.data
+            const model = new ProductModel(id, name, desc, image);
             commit('UNSHIFT_ALL', model);
             return Promise.resolve(model);
           })
