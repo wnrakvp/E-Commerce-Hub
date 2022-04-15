@@ -46,16 +46,12 @@ export default {
   },
   mounted () {
     Promise.all([
-      this.getAllProducts(),
       this.getAllSKU()
     ]).then(result => {
       console.debug(result)
     }).catch(console.error)
   },
   computed: {
-    ...mapGetters('Products', {
-      productList: 'all'
-    }),
     ...mapGetters('SKU', {
       skuList: 'all'
     })
@@ -65,9 +61,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions('Products', {
-      getAllProducts: 'getAll'
-    }),
     ...mapActions('SKU', {
       getAllSKU: 'getAll',
       filterById: 'filterById'

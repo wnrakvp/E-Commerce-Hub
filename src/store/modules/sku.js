@@ -1,4 +1,5 @@
 import api from '../../api'
+import axios from 'axios'
 import ProductModel from '../../models/product'
 import SKUModel from '../../models/sku'
 export default {
@@ -32,25 +33,42 @@ export default {
   },
   actions: {
     getAll ({commit}) {
-      return api.getAllSKU().then(({result}) => {
+      // return api.getAllSKU().then(({result}) => {
+      //   const skuList = []
+      //   result.forEach(({id, productId, product, name, desc, price, type , amount, image, marketplaces}) => {
+      //     console.debug(product.name)
+          // skuList.push(
+          //   new SKUModel(
+          //     _id,
+          //     productId,
+          //     new ProductModel(product._id, product.name, product.desc, product.image),
+          //     name,
+          //     desc,
+          //     price,
+          //     type,
+          //     amount,
+          //     image,
+          //     new Set(marketplaces)
+          //   )
+          // )
+      //   })
+      return axios.get('http://localhost:3000/skuList').then((res) => {
         const skuList = []
-        result.forEach(({_id, productId, product, name, desc, price, type , amount, image, marketplaces}) => {
-          console.debug(product.name)
+        res.data.forEach(({id, productId, product, name, desc, price, image, marketplaces}) => {
           skuList.push(
             new SKUModel(
-              _id,
+              id,
               productId,
-              new ProductModel(product._id, product.name, product.desc, product.image),
+              new ProductModel(product.id, product.name, product.desc, product.image),
               name,
               desc,
               price,
-              type,
-              amount,
               image,
               new Set(marketplaces)
             )
           )
-        })
+        });
+        console.log(skuList)
         commit('SET_ALL', skuList)
         // TODO: throw something to router for handle state
         return Promise.resolve(skuList)
@@ -75,6 +93,7 @@ export default {
           image,
           new Set(marketplaces)
         )
+      // return axios.get('http://localhost:3000/skuList/'+id).then((res) => {
         // TODO: throw something to router for handle state
         return Promise.resolve(model)
       }).catch(err => {
