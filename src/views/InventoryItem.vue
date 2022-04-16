@@ -51,7 +51,7 @@
           </div>
           <div class="mb-3">
             <label for="selectWarehouse" class="form-label">Warehouse </label>
-            <select class="form-select" id="marketplace" v-model="type">
+            <select class="form-select" id="marketplace" v-model="type" @change="changeWarehouse">
               <option selected disabled value="">Select Warehouse</option>
               <option>Internal</option>
               <option>External Warehouse</option>
@@ -85,15 +85,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                  <tr v-for="(item, idx) in items" :key="idx">
+                    <td>{{idx + 1}}</td>
+                    <td>{{item.sku.product.name}}</td>
+                    <td>{{item.sku.name}}</td>
+                    <td>{{item.amount}}</td>
                     <td v-if="id === 'add'">
                       <button
                         type="button"
                         class="btn-close"
                         aria-label="Close"
+                        @click="removeItem"
                       ></button>
                     </td>
                   </tr>
@@ -103,16 +105,20 @@
                     <td colspan="2">
                       <select
                         class="form-select"
-                        id="marketplace"
+                        id="product"
+                        v-model="productId"
+                        @change="changeProduct"
                       >
                         <option value="">Product</option>
-                        <option></option>
+                        <option v-for="(product, idx) in productList" :key="idx" :value="product.id">{{product.name}}</option>
                       </select>
                     </td>
                     <td>
                       <select
                         class="form-select"
-                        id="marketplace"
+                        id="sku"
+                        v-model="skuId"
+                        :disabled="productId==''"
                       >
                       <option value="">SKU</option>
                       <option v-for="(sku, idx) in skus" :key="idx" :value="sku.id">{{sku.name}}</option>
@@ -124,6 +130,8 @@
                         class="form-control"
                         id="amount"
                         placeholder="#"
+                        v-model="amount"
+                        :disabled="type === 'External Warehouse' || skuId === '' || productId === ''"
                       />
                     </td>
                     <td>
@@ -149,7 +157,7 @@
               ></span>
               Saving...
             </button>
-            <button v-else type="submit" class="btn btn-primary" @click="add">
+            <button v-else type="submit" class="btn btn-primary" @click="addInventory">
               Add Inventory
             </button>
           </div>
@@ -203,13 +211,15 @@ export default {
       _offcanvas: null,
       disabled: false,
       isSaving: false,
-      date: null,
-      productId: null,
-      product: "",
-      skuId: null,
-      sku: "",
-      type: "",
+      isDeleting: false,
+      date: new Date(),
+      productId: '',
+      product: '',
+      skuId: '',
+      sku: '',
+      type: '',
       amount: 0,
+      items: [],
     };
   },
   computed: {
@@ -220,11 +230,16 @@ export default {
       skuList: "all",
     }),
     skus () {
-      return this.skuList.filter(x => x.productId.has(this.productId))
+      return this.skuList.filter(x => {
+        const skus = [];
+        if(x.productId === this.productId) {
+          return skus.push(x);
+        }
+      })
     }
   },
-  mounted() {
-    Promise.all([this.GetAllSKU(), this.GetAllProducts()])
+  async mounted() {
+    await Promise.all([this.GetAllSKU(), this.GetAllProducts()])
       .then((result) => {
         console.debug(result);
       })
@@ -260,6 +275,7 @@ export default {
       get: "get",
       save: "save",
       delete: "delete",
+      add: "add",
     }),
     ...mapActions("SKU", {
       GetAllSKU: "getAll",
@@ -298,17 +314,41 @@ export default {
         })
         .catch(console.error);
     },
-    add() {
+    addInventory() {
       this.disabled = true;
       this.isDeleting = true;
-      alert("Add Inventory");
+      console.time('Add Item')
+      this.items.forEach(item => this.add(item))
+      console.timeEnd('Add Item')
       this.disabled = false;
       this.isDeleting = false;
       this._offcanvas.hide();
     },
     addItem() {
-      alert("Add Item");
-    }
+      const sku = this.skuList.find(x => x.id === this.skuId)
+      const check = this.items.filter(x => x.sku.id === sku.id)
+      // console.log(check)
+      if(check.length == 0) {
+        this.items.push({
+          id: Number(this.id),
+          skuId: this.skuId,
+          sku,
+          type: this.type,
+          amount: this.amount
+        })
+      } else {
+        this.items.find(x => x.sku.id === sku.id).amount += this.amount
+      }
+    },
+    removeItem(idx) {
+      this.items.splice(idx, 1)
+    },
+    changeProduct () {
+      this.skuId ='';
+    },
+    changeWarehouse () {
+      this.items.splice(0, this.items.length)
+    },
   },
 };
 </script>

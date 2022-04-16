@@ -33,7 +33,9 @@
       "price": 9200,
       "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg",
       "desc": "50 ML",
-      "marketplaces": ["shopee"]
+      "marketplaces": [
+        "shopee"
+      ]
     },
     {
       "id": 2,
@@ -48,7 +50,9 @@
       "desc": "100 ML",
       "price": 12400,
       "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dwa2e15b39/images/large/0000102334.jpg",
-      "marketplaces": ["shopee"]
+      "marketplaces": [
+        "shopee"
+      ]
     },
     {
       "id": 3,
@@ -63,7 +67,9 @@
       "price": 22000,
       "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw42fc54f8/images/large/0000102607.jpg",
       "desc": "250 ML",
-      "marketplaces": ["shopee"]
+      "marketplaces": [
+        "shopee"
+      ]
     },
     {
       "id": 4,
@@ -78,7 +84,9 @@
       "desc": "Batch หายาก ปี 2018",
       "price": 12000,
       "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
-      "marketplaces": ["lazada"]
+      "marketplaces": [
+        "lazada"
+      ]
     },
     {
       "id": 5,
@@ -93,7 +101,9 @@
       "price": 12000,
       "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
       "desc": "Batch หายาก ปี 2019",
-      "marketplaces": ["lazada"]
+      "marketplaces": [
+        "lazada"
+      ]
     },
     {
       "id": 6,
@@ -108,7 +118,9 @@
       "price": 12000,
       "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
       "desc": "Batch ใหม่ ผลิตต้นปี 2020",
-      "marketplaces": ["lazada"]
+      "marketplaces": [
+        "lazada"
+      ]
     },
     {
       "id": 7,
@@ -123,7 +135,9 @@
       "price": 12000,
       "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
       "desc": "Batch ใหม่ ผลิตต้นปี 2021",
-      "marketplaces": ["lazada"]
+      "marketplaces": [
+        "lazada"
+      ]
     },
     {
       "id": 8,
@@ -138,7 +152,10 @@
       "desc": "ป้าย สคบ.ไทย (SEAL) + กล่องโบว์",
       "price": 5600,
       "image": "https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg",
-      "marketplaces": ["shopee", "lazada"]
+      "marketplaces": [
+        "shopee",
+        "lazada"
+      ]
     },
     {
       "id": 9,
@@ -153,7 +170,10 @@
       "price": 4675,
       "image": "https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg",
       "desc": "ป้าย King Power (SEAL) + กล่องโบว์",
-      "marketplaces": ["shopee", "lazada"]
+      "marketplaces": [
+        "shopee",
+        "lazada"
+      ]
     }
   ],
   "inventoryList": [
@@ -170,13 +190,181 @@
           "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg"
         },
         "name": "tfndn-50",
+        "desc": "50 ML",
         "price": 9200,
         "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg",
-        "desc": "50 ML",
-        "marketplaces": ["shopee"]
+        "marketplaces": {}
       },
-      "type" : "Internal",
-      "amount" : 25
+      "type": "Internal",
+      "amount": 20
+    },
+    {
+      "id": 2,
+      "skuId": 2,
+      "sku": {
+        "id": 2,
+        "productId": 1,
+        "product": {
+          "id": 1,
+          "name": "Tom Ford : Noir de Noir",
+          "desc": "Noir de Noir is dark, sexy and indulgent. Yin collides with Yang featuring black rose, black truffle and patchouli for an intense, sensual awakening.—TOM FORD",
+          "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg"
+        },
+        "name": "tfndn-100",
+        "desc": "100 ML",
+        "price": 12400,
+        "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dwa2e15b39/images/large/0000102334.jpg",
+        "marketplaces": {}
+      },
+      "type": "Internal",
+      "amount": 20
+    },
+    {
+      "id": 3,
+      "skuId": 3,
+      "sku": {
+        "id": 3,
+        "productId": 1,
+        "product": {
+          "id": 1,
+          "name": "Tom Ford : Noir de Noir",
+          "desc": "Noir de Noir is dark, sexy and indulgent. Yin collides with Yang featuring black rose, black truffle and patchouli for an intense, sensual awakening.—TOM FORD",
+          "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg"
+        },
+        "name": "tfndn-250",
+        "desc": "250 ML",
+        "price": 22000,
+        "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw42fc54f8/images/large/0000102607.jpg",
+        "marketplaces": {}
+      },
+      "type": "Internal",
+      "amount": 20
+    },
+    {
+      "id": 4,
+      "skuId": 4,
+      "sku": {
+        "id": 4,
+        "productId": 2,
+        "product": {
+          "id": 2,
+          "name": "Creed : Aventus",
+          "desc": "Aventus celebrates strength, vision and success, inspired by the dramatic life of war, peace and romance lived by Emperor Napoleon. The bottle is emblazoned with a silver emblem of a horse and rider.",
+          "image": "https://fimgs.net/mdimg/perfume/375x500.9828.jpg"
+        },
+        "name": "aventus18n01",
+        "desc": "Batch หายาก ปี 2018",
+        "price": 12000,
+        "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
+        "marketplaces": {}
+      },
+      "type": "External Warehouse",
+      "amount": 0
+    },
+    {
+      "id": 5,
+      "skuId": 5,
+      "sku": {
+        "id": 5,
+        "productId": 2,
+        "product": {
+          "id": 2,
+          "name": "Creed : Aventus",
+          "desc": "Aventus celebrates strength, vision and success, inspired by the dramatic life of war, peace and romance lived by Emperor Napoleon. The bottle is emblazoned with a silver emblem of a horse and rider.",
+          "image": "https://fimgs.net/mdimg/perfume/375x500.9828.jpg"
+        },
+        "name": "aventus19n01",
+        "desc": "Batch หายาก ปี 2019",
+        "price": 12000,
+        "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
+        "marketplaces": {}
+      },
+      "type": "External Warehouse",
+      "amount": 0
+    },
+    {
+      "id": 6,
+      "skuId": 7,
+      "sku": {
+        "id": 7,
+        "productId": 2,
+        "product": {
+          "id": 2,
+          "name": "Creed : Aventus",
+          "desc": "Aventus celebrates strength, vision and success, inspired by the dramatic life of war, peace and romance lived by Emperor Napoleon. The bottle is emblazoned with a silver emblem of a horse and rider.",
+          "image": "https://fimgs.net/mdimg/perfume/375x500.9828.jpg"
+        },
+        "name": "aventus21p01",
+        "desc": "Batch ใหม่ ผลิตต้นปี 2021",
+        "price": 12000,
+        "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
+        "marketplaces": {}
+      },
+      "type": "External Warehouse",
+      "amount": 0
+    },
+    {
+      "id": 7,
+      "skuId": 6,
+      "sku": {
+        "id": 6,
+        "productId": 2,
+        "product": {
+          "id": 2,
+          "name": "Creed : Aventus",
+          "desc": "Aventus celebrates strength, vision and success, inspired by the dramatic life of war, peace and romance lived by Emperor Napoleon. The bottle is emblazoned with a silver emblem of a horse and rider.",
+          "image": "https://fimgs.net/mdimg/perfume/375x500.9828.jpg"
+        },
+        "name": "aventus20m01",
+        "desc": "Batch ใหม่ ผลิตต้นปี 2020",
+        "price": 12000,
+        "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
+        "marketplaces": {}
+      },
+      "type": "External Warehouse",
+      "amount": 0
+    },
+    {
+      "id": 8,
+      "skuId": 8,
+      "sku": {
+        "id": 8,
+        "productId": 3,
+        "product": {
+          "id": 3,
+          "name": "Jo Malone : Wood Sage & Sea Salt",
+          "desc": "Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.",
+          "image": "https://fimgs.net/mdimg/perfume/375x500.25529.jpg"
+        },
+        "name": "woodsage-th",
+        "desc": "ป้าย สคบ.ไทย (SEAL) + กล่องโบว์",
+        "price": 5600,
+        "image": "https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg",
+        "marketplaces": {}
+      },
+      "type": "Internal",
+      "amount": 40
+    },
+    {
+      "id": 9,
+      "skuId": 9,
+      "sku": {
+        "id": 9,
+        "productId": 3,
+        "product": {
+          "id": 3,
+          "name": "Jo Malone : Wood Sage & Sea Salt",
+          "desc": "Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.",
+          "image": "https://fimgs.net/mdimg/perfume/375x500.25529.jpg"
+        },
+        "name": "woodsage-king",
+        "desc": "ป้าย King Power (SEAL) + กล่องโบว์",
+        "price": 4675,
+        "image": "https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg",
+        "marketplaces": {}
+      },
+      "type": "Internal",
+      "amount": 20
     }
   ]
 }
