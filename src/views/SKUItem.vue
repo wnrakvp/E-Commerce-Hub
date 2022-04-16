@@ -146,6 +146,7 @@ export default {
     } else {
       this.get(Number(this.id)).then(o => {
         this.productId = o.product.id
+        this.product = o.product
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
@@ -172,11 +173,12 @@ export default {
       isSaving: false,
       isDeleting: false,
       productId: '',
+      product: new Object(),
       name: '',
       desc: '',
       price: 0,
-      amount: 0,
-      type: '',
+      // amount: 0,
+      // type: '',
       image: '',
       marketplaces: new Set(),
       isAllMarketplace: false
@@ -201,19 +203,23 @@ export default {
         else this.isAllMarketplace = false
       }
     },
-    submit () {
+    async submit () {
       this.disabled = true
       this.isSaving = true
-      const {id, productId, name, desc, price, type, amount, image, marketplaces} = this
+      // find Product by Using productID
+      console.time("Get Product by ID")
+      const product = await this.GetProductsbyID(this.productId)
+      console.timeEnd("Get Product by ID")
+      const {id, productId, name, desc, price, image, marketplaces} = this
       // Object.values(this).forEach((value) => {
       //   if(!value){
       //     alert(`Please input ${value} field`);
       //   }
       // })
-        this.save({id: Number(id), productId, name, desc, price, type, amount, image, marketplaces}).then(() => {
-        this.disabled = false
-        this.isSaving = false
-        this._offcanvas.hide()
+      this.save({id: Number(id), productId, product, name, desc, price, image, marketplaces}).then(() => {
+      this.disabled = false
+      this.isSaving = false
+      this._offcanvas.hide()
       }).catch(console.error)
     },
     remove () {
@@ -234,7 +240,10 @@ export default {
       get: 'get',
       save: 'save',
       delete: 'delete'
-    })
+    }),
+    ...mapActions('Products', {
+      GetProductsbyID: 'get',
+    }),
   }
 }
 </script>

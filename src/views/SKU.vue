@@ -44,17 +44,20 @@ export default {
   components: {
     SKUItem
   },
-  mounted () {
+  mounted() {
     Promise.all([
-      this.getAllSKU()
+      this.getAllSKU(),this.getAllProducts()
     ]).then(result => {
       console.debug(result)
     }).catch(console.error)
   },
   computed: {
+    ...mapGetters('Products', {
+      productList: 'all',
+    }),
     ...mapGetters('SKU', {
       skuList: 'all'
-    })
+    }),
   },
   data () {
     return {
@@ -64,7 +67,10 @@ export default {
     ...mapActions('SKU', {
       getAllSKU: 'getAll',
       filterById: 'filterById'
-    })
+    }),
+    ...mapActions('Products', {
+      getAllProducts: 'getAll',
+    }),
   }
 }
 </script>

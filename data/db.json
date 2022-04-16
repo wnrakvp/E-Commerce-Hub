@@ -33,7 +33,9 @@
       "price": 9200,
       "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg",
       "desc": "50 ML",
-      "marketplaces": ["shopee"]
+      "marketplaces": [
+        "shopee"
+      ]
     },
     {
       "id": 2,
@@ -45,10 +47,12 @@
         "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg"
       },
       "name": "tfndn-100",
+      "desc": "100 ML",
       "price": 12400,
       "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dwa2e15b39/images/large/0000102334.jpg",
-      "desc": "100 ML",
-      "marketplaces": ["shopee"]
+      "marketplaces": [
+        "shopee"
+      ]
     },
     {
       "id": 3,
@@ -63,7 +67,9 @@
       "price": 22000,
       "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw42fc54f8/images/large/0000102607.jpg",
       "desc": "250 ML",
-      "marketplaces": ["shopee"]
+      "marketplaces": [
+        "shopee"
+      ]
     },
     {
       "id": 4,
@@ -75,10 +81,12 @@
         "image": "https://fimgs.net/mdimg/perfume/375x500.9828.jpg"
       },
       "name": "aventus18n01",
+      "desc": "Batch หายาก ปี 2018",
       "price": 12000,
       "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
-      "desc": "Batch หายาก ปี 2018",
-      "marketplaces": ["lazada"]
+      "marketplaces": [
+        "lazada"
+      ]
     },
     {
       "id": 5,
@@ -93,7 +101,9 @@
       "price": 12000,
       "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
       "desc": "Batch หายาก ปี 2019",
-      "marketplaces": ["lazada"]
+      "marketplaces": [
+        "lazada"
+      ]
     },
     {
       "id": 6,
@@ -108,7 +118,9 @@
       "price": 12000,
       "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
       "desc": "Batch ใหม่ ผลิตต้นปี 2020",
-      "marketplaces": ["lazada"]
+      "marketplaces": [
+        "lazada"
+      ]
     },
     {
       "id": 7,
@@ -123,7 +135,9 @@
       "price": 12000,
       "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
       "desc": "Batch ใหม่ ผลิตต้นปี 2021",
-      "marketplaces": ["lazada"]
+      "marketplaces": [
+        "lazada"
+      ]
     },
     {
       "id": 8,
@@ -135,10 +149,13 @@
         "image": "https://fimgs.net/mdimg/perfume/375x500.25529.jpg"
       },
       "name": "woodsage-th",
+      "desc": "ป้าย สคบ.ไทย (SEAL) + กล่องโบว์",
       "price": 5600,
       "image": "https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg",
-      "desc": "ป้าย สคบ.ไทย (SEAL) + กล่องโบว์",
-      "marketplaces": ["shopee", "lazada"]
+      "marketplaces": [
+        "shopee",
+        "lazada"
+      ]
     },
     {
       "id": 9,
@@ -153,7 +170,10 @@
       "price": 4675,
       "image": "https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg",
       "desc": "ป้าย King Power (SEAL) + กล่องโบว์",
-      "marketplaces": ["shopee", "lazada"]
+      "marketplaces": [
+        "shopee",
+        "lazada"
+      ]
     }
   ]
 }

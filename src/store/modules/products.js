@@ -41,8 +41,9 @@ export default {
             productList.push(new ProductModel(id, name, desc, image))
           })
           commit('SET_ALL', productList);
+          // console.log(productList)
+          return Promise.resolve(productList)
           // TODO: throw something to router for handle state
-          return Promise.resolve('200');
         })
         .catch((err) => {
           console.error(err);
@@ -50,7 +51,7 @@ export default {
         });
     },
     get(context, id) {
-      return axios
+        return axios
         .get('http://localhost:3000/productList/' + id)
         .then((res) => {
           let { id, name, desc, image } = res.data;
