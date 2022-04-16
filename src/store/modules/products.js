@@ -27,13 +27,14 @@ export default {
     },
   },
   actions: {
-    getAll({ commit }) {
+    async getAll({ commit }) {
       // return api.getAllProducts().then(({result}) => {
       //   const productList = []
       //   result.forEach(({_id, name, desc, image}) => {
       //     productList.push(new ProductModel(_id, name, desc, image))
       //   })
-      return axios
+      console.time("Get All Products")
+      return await axios
         .get('http://localhost:3000/productList')
         .then((res) => {
           const productList = [];
@@ -42,6 +43,7 @@ export default {
           })
           commit('SET_ALL', productList);
           // console.log(productList)
+          console.timeEnd("Get All Products")
           return Promise.resolve(productList)
           // TODO: throw something to router for handle state
         })

@@ -35,7 +35,7 @@ export default {
     },
   },
   actions: {
-    getAll({ commit }) {
+    async getAll({ commit }) {
       // return api.getAllSKU().then(({result}) => {
       //   const skuList = []
       //   result.forEach(({id, productId, product, name, desc, price, type , amount, image, marketplaces}) => {
@@ -55,7 +55,8 @@ export default {
       //   )
       // )
       //   })
-      return axios
+      console.time("Get All SKUs")
+      return await axios
         .get("http://localhost:3000/skuList")
         .then((res) => {
           const skuList = [];
@@ -90,6 +91,7 @@ export default {
             }
           );
           commit("SET_ALL", skuList);
+          console.timeEnd("Get All SKUs")
           // TODO: throw something to router for handle state
           return Promise.resolve(skuList);
         })

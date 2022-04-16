@@ -145,11 +145,6 @@ export default {
           console.log('Edit Success!!')
           return Promise.resolve();
         });
-      } else {
-        return alert('Creating new Inventory').then(() => {
-          commit('UNSHIFT_ALL',model)
-          return Promise.resolve();
-        });
       }
     },
     delete({ commit }, id) {
