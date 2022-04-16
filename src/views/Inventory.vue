@@ -106,20 +106,20 @@ export default {
       getAllStock: "getAll",
     }),
     Reserved(id) {
-      var total = 0;
-      var item;
-      for (let i = 0; i < this.stockList.length; i++) {
-        // console.trace();
-        item = this.stockList[i].items;
-        // console.log(i);
-        for (let j = 0; j < item.length; j++) {
-          // console.log(j);
-          if (id == item[j].skuId) {
-            total = total + item[j].amountOnSell;
-          }
-        }
-      }
-      return total;
+      // var total = 0;
+      // var item;
+      // for (let i = 0; i < this.stockList.length; i++) {
+      //   // console.trace();
+      //   item = this.stockList[i].items;
+      //   // console.log(i);
+      //   for (let j = 0; j < item.length; j++) {
+      //     // console.log(j);
+      //     if (id == item[j].skuId) {
+      //       total = total + item[j].amountOnSell;
+      //     }
+      //   }
+      // }
+      // return total;
     },
     Logger() {
       console.log(this.inventoryList);

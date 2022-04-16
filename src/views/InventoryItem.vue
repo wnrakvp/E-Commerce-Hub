@@ -63,7 +63,7 @@
               type="number"
               class="form-control"
               id="amount"
-              :value="amount"
+              v-model="amount"
               :disabled="type === 'External Warehouse'"
             />
           </div>
@@ -182,11 +182,10 @@ export default {
       isSaving: false,
       date: null,
       product: '',
+      skuId: null,
       sku: '',
       type: '',
       amount: 0,
-      productId: null,
-      skuId: null,
     };
   },
   computed: {
@@ -205,7 +204,8 @@ export default {
     } else {
       this.get(Number(this.id)).then((o) => {
         this.product = o.sku.product.name;
-        this.sku = o.sku.name;
+        this.skuId = o.sku.id;
+        this.sku = o.sku.name
         this.type = o.type;
         this.amount = o.amount;
       });
@@ -224,14 +224,20 @@ export default {
       save: 'save',
       delete: 'delete',
     }),
+    ...mapActions('SKU', {
+      GetSKU: 'get',
+    }),
     close() {
       this.$router.replace({ name: 'inventory' });
     },
-    submit() {
+    async submit() {
       this.disabled = true
       this.isSaving = true
-      const { id, type, amount } = this;
-      this.save({ id: Number(id), type, amount }).then(() => {
+      console.time("Get SKU by ID")
+      const sku = await this.GetSKU(this.skuId)
+      console.timeEnd("Get SKU by ID")
+      const { id, skuId , type, amount } = this;
+      this.save({ id: Number(id),skuId ,sku, type, amount }).then(() => {
         this.disabled = false;
         this.isSaving = false;
         this._offcanvas.hide();

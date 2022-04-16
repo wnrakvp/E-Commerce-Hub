@@ -175,5 +175,28 @@
         "lazada"
       ]
     }
+  ],
+  "inventoryList": [
+    {
+      "id": 1,
+      "skuId": 1,
+      "sku": {
+        "id": 1,
+        "productId": 1,
+        "product": {
+          "id": 1,
+          "name": "Tom Ford : Noir de Noir",
+          "desc": "Noir de Noir is dark, sexy and indulgent. Yin collides with Yang featuring black rose, black truffle and patchouli for an intense, sensual awakening.—TOM FORD",
+          "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg"
+        },
+        "name": "tfndn-50",
+        "desc": "50 ML",
+        "price": 9200,
+        "image": "https://www.fenwick.co.uk/dw/image/v2/BBKK_PRD/on/demandware.static/-/Sites-fenwick-master-catalog/default/dw46146d85/images/large/0000102333.jpg",
+        "marketplaces": {}
+      },
+      "type": "Internal",
+      "amount": 600
+    }
   ]
 }

@@ -1,4 +1,4 @@
-import api from "../../api";
+// import api from "../../api";
 import axios from "axios";
 import ProductModel from "../../models/product";
 import SKUModel from "../../models/sku";

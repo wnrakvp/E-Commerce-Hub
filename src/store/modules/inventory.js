@@ -1,4 +1,5 @@
 import api from '../../api';
+import axios from 'axios';
 import InventoryModel from '../../models/inventory';
 import ProductModel from '../../models/product';
 import SKUModel from '../../models/sku';
@@ -32,32 +33,30 @@ export default {
   },
   actions: {
     getAll({ commit }) {
-      return api
-        .getAllInventory()
-        .then(({ result }) => {
+      console.time("Get All Inventory")
+      return axios.get('http://localhost:3000/inventoryList')
+        .then(( result ) => {
           const inventoryList = [];
           // const inventoryList = result.result;
-          result.forEach(({ _id, skuId, sku, product, type, amount }) => {
+          result.data.forEach(({ id, skuId, sku, type, amount }) => {
             inventoryList.push(
               new InventoryModel(
-                _id,
+                id,
                 skuId,
                 new SKUModel(
-                  sku._id,
+                  sku.id,
                   sku.productId,
                   new ProductModel(
-                    product._id,
-                    product.name,
-                    product.desc,
-                    product.image
+                    sku.product.id,
+                    sku.product.name,
+                    sku.product.desc,
+                    sku.product.image
                   ),
                   sku.name,
                   sku.desc,
                   sku.price,
-                  sku.type,
-                  sku.amount,
                   sku.image,
-                  null
+                  sku.marketplaces,
                 ),
                 type,
                 amount
@@ -65,6 +64,7 @@ export default {
             );
           });
           commit('SET_ALL', inventoryList);
+          console.timeEnd("Get All Inventory")
           return Promise.resolve(inventoryList);
         })
         .catch((err) => {
@@ -73,36 +73,35 @@ export default {
         });
     },
     get(context, id) {
-      return api
-        .getInventory(id)
-        .then(({ result }) => {
+      console.time("Get Inventory by ID")
+      return axios.get(`http://localhost:3000/inventoryList/${id}`)
+        .then(( result ) => {
           // console.log(
           //   {result})
-          let { _id, skuId, sku, product, type, amount } = result;
+          let { id, skuId, sku, type, amount } = result.data;
           const model = new InventoryModel(
-            _id,
+            id,
             skuId,
             new SKUModel(
-              sku._id,
+              sku.id,
               sku.productId,
               new ProductModel(
-                product._id,
-                product.name,
-                product.desc,
-                product.image
+                sku.product.id,
+                sku.product.name,
+                sku.product.desc,
+                sku.product.image
               ),
               sku.name,
               sku.desc,
               sku.price,
-              sku.type,
-              sku.amount,
               sku.image,
-              null
+              sku.marketplaces,
             ),
             type,
             amount
           );
           console.log(model);
+          console.timeEnd("Get Inventory by ID")
           return Promise.resolve(model);
         })
         .catch((err) => {
@@ -110,24 +109,55 @@ export default {
           Promise.reject(err.message);
         });
     },
-    save({ commit }, { id, type, amount }) {
+    save({ commit }, { id, skuId, sku, type, amount }) {
       if (id) {
-        return api.updateInventory(id)
-        .then(() => {
-          // commit('EDIT_ALL', model)
+        return axios.put(`http://localhost:3000/inventoryList/${id}`, {
+          id,
+          skuId,
+          sku,
+          type,
+          amount,
+        })
+        .then((result) => {
+          let { id, skuId, sku, type, amount } = result.data;
+          const model = new InventoryModel(
+            id,
+            skuId,
+            new SKUModel(
+              sku.id,
+              sku.productId,
+              new ProductModel(
+                sku.product.id,
+                sku.product.name,
+                sku.product.desc,
+                sku.product.image
+              ),
+              sku.name,
+              sku.desc,
+              sku.price,
+              sku.image,
+              sku.marketplaces,
+            ),
+            type,
+            amount,
+          );
+          commit('EDIT_ALL', model)
+          console.log('Edit Success!!')
           return Promise.resolve();
         });
       } else {
         return alert('Creating new Inventory').then(() => {
-          // commit('UNSHIFT_ALL',model)
+          commit('UNSHIFT_ALL',model)
           return Promise.resolve();
         });
       }
     },
     delete({ commit }, id) {
-      return api.deleteInventory(id).then(({result}) => {
+      console.time('Delete by ID')
+      return axios.delete(`http://localhost:3000/inventoryList/${id}`).then((result) => {
+        console.log('Delete Success!!')
         commit('DELETE_ALL', id)
-        alert('Deleted')
+        console.timeEnd('Delete by ID')
         return Promise.resolve(id);
       }).catch(err => {
         console.error(err)
