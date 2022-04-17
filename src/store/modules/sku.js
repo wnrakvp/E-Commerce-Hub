@@ -36,108 +36,155 @@ export default {
   },
   actions: {
     async getAll({ commit }) {
-      // return api.getAllSKU().then(({result}) => {
-      //   const skuList = []
-      //   result.forEach(({id, productId, product, name, desc, price, type , amount, image, marketplaces}) => {
-      //     console.debug(product.name)
-      // skuList.push(
-      //   new SKUModel(
-      //     _id,
-      //     productId,
-      //     new ProductModel(product._id, product.name, product.desc, product.image),
-      //     name,
-      //     desc,
-      //     price,
-      //     type,
-      //     amount,
-      //     image,
-      //     new Set(marketplaces)
-      //   )
-      // )
+      // // -------------------------Mock Json-Server-----------------------------
+      // console.time("Get All SKUs")
+      // return await axios
+      //   .get("http://localhost:3000/skuList")
+      //   .then((res) => {
+      //     const skuList = [];
+      //     res.data.forEach(
+      //       ({
+      //         id,
+      //         productId,
+      //         product,
+      //         name,
+      //         desc,
+      //         price,
+      //         image,
+      //         marketplaces,
+      //       }) => {
+      //         skuList.push(
+      //           new SKUModel(
+      //             id,
+      //             productId,
+      //             new ProductModel(
+      //               product.id,
+      //               product.name,
+      //               product.desc,
+      //               product.image
+      //             ),
+      //             name,
+      //             desc,
+      //             price,
+      //             image,
+      //             new Set(marketplaces)
+      //           )
+      //         );
+      //       }
+      //     );
+      //     commit("SET_ALL", skuList);
+      //     console.timeEnd("Get All SKUs")
+      //     // TODO: throw something to router for handle state
+      //     return Promise.resolve(skuList);
       //   })
-      console.time("Get All SKUs")
+      //   .catch((err) => {
+      //     console.error(err);
+      //     return Promise.resolve("200");
+      //   });
+      //   // ---------------------------------------------------------------------------
+      // -----------------------------NodeJS Server----------------------------------------------
       return await axios
-        .get("http://localhost:3000/skuList")
-        .then((res) => {
+        .get("http://localhost:5000/api/v1/skus")
+        .then((result) => {
+          console.log(result.data.data)
           const skuList = [];
-          res.data.forEach(
-            ({
-              id,
-              productId,
-              product,
-              name,
-              desc,
-              price,
-              image,
-              marketplaces,
-            }) => {
+          result.data.data.forEach(
+            ({ _id, product, name, attributes, price, url, marketplaces }) => {
               skuList.push(
                 new SKUModel(
-                  id,
-                  productId,
+                  _id,
                   new ProductModel(
-                    product.id,
+                    product._id,
                     product.name,
-                    product.desc,
-                    product.image
+                    product.description,
+                    product.url
                   ),
                   name,
-                  desc,
+                  attributes,
                   price,
-                  image,
+                  url,
                   new Set(marketplaces)
                 )
               );
             }
           );
           commit("SET_ALL", skuList);
-          console.timeEnd("Get All SKUs")
-          // TODO: throw something to router for handle state
           return Promise.resolve(skuList);
         })
         .catch((err) => {
           console.error(err);
           return Promise.resolve("200");
         });
+      // ----------------------------------------------------------------------------------------
     },
-    get(context, id) {
-      return axios
-        .get("http://localhost:3000/skuList/" + id)
-        .then((result) => {
-          let {
-            id,
-            productId,
-            product,
-            name,
-            desc,
-            price,
-            image,
-            marketplaces,
-          } = result.data;
-          console.debug(id, product, name, desc, price, image, marketplaces);
-          const model = new SKUModel(
-            id,
-            productId,
-            new ProductModel(
-              product.id,
-              product.name,
-              product.desc,
-              product.image
-            ),
-            name,
-            desc,
-            price,
-            image,
-            new Set(marketplaces)
-          );
-          // return axios.get('http://localhost:3000/skuList/'+id).then((res) => {
-          // TODO: throw something to router for handle state
-          return Promise.resolve(model);
-        })
-        .catch((err) => {
-          console.error(err);
-          Promise.reject(err.message);
-        });
+    async get(context, id) {
+      // // -------------------------Mock Json-Server-----------------------------
+      // return axios
+      //   .get("http://localhost:3000/skuList/" + id)
+      //   .then((result) => {
+      //     let {
+      //       id,
+      //       productId,
+      //       product,
+      //       name,
+      //       desc,
+      //       price,
+      //       image,
+      //       marketplaces,
+      //     } = result.data;
+      //     console.debug(id, product, name, desc, price, image, marketplaces);
+      //     const model = new SKUModel(
+      //       id,
+      //       productId,
+      //       new ProductModel(
+      //         product.id,
+      //         product.name,
+      //         product.desc,
+      //         product.image
+      //       ),
+      //       name,
+      //       desc,
+      //       price,
+      //       image,
+      //       new Set(marketplaces)
+      //     );
+      //     // return axios.get('http://localhost:3000/skuList/'+id).then((res) => {
+      //     // TODO: throw something to router for handle state
+      //     return Promise.resolve(model);
+      //   })
+      //   .catch((err) => {
+      //     console.error(err);
+      //     Promise.reject(err.message);
+      //   });
+      //   // --------------------------------------------------------------------
+       // -----------------------------NodeJS Server----------------------------------------------
+       console.log(id)
+       return await axios
+       .get(`http://localhost:5000/api/v1/sku/${id}`)
+       .then((result) => {
+        let { _id, product, name, attributes, price, url, marketplaces } = result.data.data;
+         const model = 
+               new SKUModel(
+                 _id,
+                 new ProductModel(
+                   product._id,
+                   product.name,
+                   product.description,
+                   product.url
+                 ),
+                 name,
+                 attributes,
+                 price,
+                 url,
+                 new Set(marketplaces)
+               )
+         return Promise.resolve(model);
+       })
+       .catch((err) => {
+         console.error(err);
+         return Promise.resolve(err.message);
+       });
+     // ----------------------------------------------------------------------------------------
     },
     filterById({ commit }, productId) {
       commit("SET_PRODUCT_ID", productId);
@@ -162,7 +209,7 @@ export default {
       { id, productId, product, name, desc, price, image, marketplaces }
     ) {
       if (id) {
-        console.log(product)
+        console.log(product);
         return axios
           .put("http://localhost:3000/skuList/" + id, {
             id,
@@ -252,7 +299,7 @@ export default {
       return axios
         .delete("http://localhost:3000/skuList/" + id)
         .then(({ result }) => {
-          console.log('Delete Success!!')
+          console.log("Delete Success!!");
           commit("DELETE_ALL", id);
           return Promise.resolve(id);
         })

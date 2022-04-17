@@ -144,7 +144,7 @@ export default {
         this.$refs.SKUItem.addEventListener('hidden.bs.offcanvas', this.close)
       }).catch(console.error)
     } else {
-      this.get(Number(this.id)).then(o => {
+      this.get(this.id).then(o => {
         this.productId = o.product.id
         this.product = o.product
         this.name = o.name
