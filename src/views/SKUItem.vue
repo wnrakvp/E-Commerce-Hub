@@ -172,8 +172,6 @@ export default {
       name: '',
       desc: '',
       price: 0,
-      // amount: 0,
-      // type: '',
       image: '',
       marketplaces: new Set(),
       isAllMarketplace: false
@@ -198,20 +196,16 @@ export default {
         else this.isAllMarketplace = false
       }
     },
-    async submit () {
+    submit () {
       this.disabled = true
       this.isSaving = true
-      // find Product by Using productID
-      console.time("Get Product by ID")
-      const product = await this.GetProductsbyID(this.productId)
-      console.timeEnd("Get Product by ID")
       const {id, productId, name, desc, price, image, marketplaces} = this
       // Object.values(this).forEach((value) => {
       //   if(!value){
       //     alert(`Please input ${value} field`);
       //   }
       // })
-      this.save({id: Number(id), productId, product, name, desc, price, image, marketplaces}).then(() => {
+      this.save({id, productId, name, desc, price, image, marketplaces}).then(() => {
       this.disabled = false
       this.isSaving = false
       this._offcanvas.hide()
@@ -221,7 +215,7 @@ export default {
       this.disabled = true
       this.isDeleting = true
       const {id} = this
-      this.delete(Number(id)).then(() => {
+      this.delete(id).then(() => {
         this.disabled = false
         this.isDeleting = false
         this._offcanvas.hide()
