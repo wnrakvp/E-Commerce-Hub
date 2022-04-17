@@ -134,8 +134,6 @@ export default {
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
-        // this.type = o.type
-        // this.amount = o.amount
         this.image = o.image
         this.marketplaces = o.marketplaces
         this.isAllMarketplace = this.marketplaces.size === 2
@@ -146,12 +144,9 @@ export default {
     } else {
       this.get(this.id).then(o => {
         this.productId = o.product.id
-        this.product = o.product
         this.name = o.name
         this.desc = o.desc
         this.price = o.price
-        // this.type = o.type
-        // this.amount = o.amount
         this.image = o.image
         this.marketplaces = o.marketplaces
         this.isAllMarketplace = this.marketplaces.size === 2

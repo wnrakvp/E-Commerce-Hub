@@ -86,7 +86,7 @@ export default {
       return await axios
         .get("http://localhost:5000/api/v1/skus")
         .then((result) => {
-          console.log(result.data.data)
+          console.log(result.data);
           const skuList = [];
           result.data.data.forEach(
             ({ _id, product, name, attributes, price, url, marketplaces }) => {
@@ -102,7 +102,7 @@ export default {
                   name,
                   attributes,
                   price,
-                  url,
+                  null,
                   new Set(marketplaces)
                 )
               );
@@ -157,34 +157,35 @@ export default {
       //     Promise.reject(err.message);
       //   });
       //   // --------------------------------------------------------------------
-       // -----------------------------NodeJS Server----------------------------------------------
-       console.log(id)
-       return await axios
-       .get(`http://localhost:5000/api/v1/sku/${id}`)
-       .then((result) => {
-        let { _id, product, name, attributes, price, url, marketplaces } = result.data.data;
-         const model = 
-               new SKUModel(
-                 _id,
-                 new ProductModel(
-                   product._id,
-                   product.name,
-                   product.description,
-                   product.url
-                 ),
-                 name,
-                 attributes,
-                 price,
-                 url,
-                 new Set(marketplaces)
-               )
-         return Promise.resolve(model);
-       })
-       .catch((err) => {
-         console.error(err);
-         return Promise.resolve(err.message);
-       });
-     // ----------------------------------------------------------------------------------------
+      // -----------------------------NodeJS Server----------------------------------------------
+      console.log(id);
+      return await axios
+        .get(`http://localhost:5000/api/v1/skus/${id}`)
+        .then((result) => {
+          let { _id, product, name, attributes, price, url, marketplaces } =
+            result.data.data;
+          const model = new SKUModel(
+            _id,
+            new ProductModel(
+              product._id,
+              product.name,
+              product.description,
+              product.url
+            ),
+            name,
+            attributes,
+            price,
+            null,
+            new Set(marketplaces)
+          );
+          console.log(model);
+          return Promise.resolve(model);
+        })
+        .catch((err) => {
+          console.error(err);
+          return Promise.resolve(err.message);
+        });
+      // ----------------------------------------------------------------------------------------
     },
     filterById({ commit }, productId) {
       commit("SET_PRODUCT_ID", productId);
