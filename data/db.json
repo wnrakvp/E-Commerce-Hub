@@ -196,7 +196,7 @@
         "marketplaces": {}
       },
       "type": "Internal",
-      "amount": 20
+      "amount": 3
     },
     {
       "id": 2,
@@ -238,10 +238,31 @@
         "marketplaces": {}
       },
       "type": "Internal",
-      "amount": 20
+      "amount": 250
     },
     {
-      "id": 4,
+      "id": 7,
+      "skuId": 8,
+      "sku": {
+        "id": 8,
+        "productId": 3,
+        "product": {
+          "id": 3,
+          "name": "Jo Malone : Wood Sage & Sea Salt",
+          "desc": "Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.",
+          "image": "https://fimgs.net/mdimg/perfume/375x500.25529.jpg"
+        },
+        "name": "woodsage-th",
+        "desc": "ป้าย สคบ.ไทย (SEAL) + กล่องโบว์",
+        "price": 5600,
+        "image": "https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg",
+        "marketplaces": {}
+      },
+      "type": "Internal",
+      "amount": 2
+    },
+    {
+      "id": 8,
       "skuId": 4,
       "sku": {
         "id": 4,
@@ -262,7 +283,7 @@
       "amount": 0
     },
     {
-      "id": 5,
+      "id": 9,
       "skuId": 5,
       "sku": {
         "id": 5,
@@ -281,90 +302,6 @@
       },
       "type": "External Warehouse",
       "amount": 0
-    },
-    {
-      "id": 6,
-      "skuId": 7,
-      "sku": {
-        "id": 7,
-        "productId": 2,
-        "product": {
-          "id": 2,
-          "name": "Creed : Aventus",
-          "desc": "Aventus celebrates strength, vision and success, inspired by the dramatic life of war, peace and romance lived by Emperor Napoleon. The bottle is emblazoned with a silver emblem of a horse and rider.",
-          "image": "https://fimgs.net/mdimg/perfume/375x500.9828.jpg"
-        },
-        "name": "aventus21p01",
-        "desc": "Batch ใหม่ ผลิตต้นปี 2021",
-        "price": 12000,
-        "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
-        "marketplaces": {}
-      },
-      "type": "External Warehouse",
-      "amount": 0
-    },
-    {
-      "id": 7,
-      "skuId": 6,
-      "sku": {
-        "id": 6,
-        "productId": 2,
-        "product": {
-          "id": 2,
-          "name": "Creed : Aventus",
-          "desc": "Aventus celebrates strength, vision and success, inspired by the dramatic life of war, peace and romance lived by Emperor Napoleon. The bottle is emblazoned with a silver emblem of a horse and rider.",
-          "image": "https://fimgs.net/mdimg/perfume/375x500.9828.jpg"
-        },
-        "name": "aventus20m01",
-        "desc": "Batch ใหม่ ผลิตต้นปี 2020",
-        "price": 12000,
-        "image": "https://plummour.com/wp-content/uploads/2021/06/Creed-Aventus-1.jpg",
-        "marketplaces": {}
-      },
-      "type": "External Warehouse",
-      "amount": 0
-    },
-    {
-      "id": 8,
-      "skuId": 8,
-      "sku": {
-        "id": 8,
-        "productId": 3,
-        "product": {
-          "id": 3,
-          "name": "Jo Malone : Wood Sage & Sea Salt",
-          "desc": "Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.",
-          "image": "https://fimgs.net/mdimg/perfume/375x500.25529.jpg"
-        },
-        "name": "woodsage-th",
-        "desc": "ป้าย สคบ.ไทย (SEAL) + กล่องโบว์",
-        "price": 5600,
-        "image": "https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg",
-        "marketplaces": {}
-      },
-      "type": "Internal",
-      "amount": 40
-    },
-    {
-      "id": 9,
-      "skuId": 9,
-      "sku": {
-        "id": 9,
-        "productId": 3,
-        "product": {
-          "id": 3,
-          "name": "Jo Malone : Wood Sage & Sea Salt",
-          "desc": "Sea air is mixed with salty and mineral texture of sand and stones. As the scent of driftwood it has natural and fresh sophistication. A complex combination of wood and sea is in its essence. It provides the feeling of freedom and natural spirit.",
-          "image": "https://fimgs.net/mdimg/perfume/375x500.25529.jpg"
-        },
-        "name": "woodsage-king",
-        "desc": "ป้าย King Power (SEAL) + กล่องโบว์",
-        "price": 4675,
-        "image": "https://n.nordstrommedia.com/id/sr3/db7f9c7f-86cb-4828-a303-379d00c30831.jpeg",
-        "marketplaces": {}
-      },
-      "type": "Internal",
-      "amount": 20
     }
   ]
 }

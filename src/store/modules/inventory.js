@@ -32,9 +32,9 @@ export default {
     },
   },
   actions: {
-    getAll({ commit }) {
+    async getAll({ commit }) {
       console.time('Get All Inventory');
-      return axios
+      return await axios
         .get('http://localhost:3000/inventoryList')
         .then((result) => {
           const inventoryList = [];
@@ -73,9 +73,9 @@ export default {
           return Promise.resolve('200');
         });
     },
-    get(context, id) {
+    async get(context, id) {
       console.time('Get Inventory by ID');
-      return axios
+      return await axios
         .get(`http://localhost:3000/inventoryList/${id}`)
         .then((result) => {
           // console.log(
@@ -111,9 +111,10 @@ export default {
           Promise.reject(err.message);
         });
     },
-    save({ commit }, { id, skuId, sku, type, amount }) {
+    async save({ commit }, { id, skuId, sku, type, amount }) {
       if (id) {
-        return axios
+        console.log(sku)
+        return await axios
           .put(`http://localhost:3000/inventoryList/${id}`, {
             id,
             skuId,
@@ -150,9 +151,9 @@ export default {
           });
       }
     },
-    delete({ commit }, id) {
+    async delete({ commit }, id) {
       console.time('Delete by ID');
-      return axios
+      return await axios
         .delete(`http://localhost:3000/inventoryList/${id}`)
         .then((result) => {
           console.log('Delete Success!!');
@@ -165,14 +166,14 @@ export default {
           Promise.reject(err.message);
         });
     },
-    add({ commit }, item) {
+    async add({ commit }, item) {
       let { id, skuId, sku, type, amount } = item;
-      axios
+      await axios
         .get(`http://localhost:3000/inventoryList?skuId=${skuId}&type=${type}`)
-        .then((result) => {
-          console.log(result.data);
+        .then(async (result) => {
+          // console.log(result.data);
           if (result.data.length == 0) {
-            return axios
+            return await axios
               .post('http://localhost:3000/inventoryList', {
                 id,
                 skuId,
@@ -212,7 +213,7 @@ export default {
               });
           } else {
             const inventoryData = result.data[0];
-            return axios
+            return await axios
               .put(`http://localhost:3000/inventoryList/${inventoryData.id}`, {
                 id,
                 skuId,

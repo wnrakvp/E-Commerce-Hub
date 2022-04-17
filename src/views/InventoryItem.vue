@@ -45,13 +45,13 @@
               type="text"
               class="form-control"
               id="sku"
-              :value="sku"
+              :value="sku.name"
               disabled
             />
           </div>
           <div class="mb-3">
             <label for="selectWarehouse" class="form-label">Warehouse </label>
-            <select class="form-select" id="marketplace" v-model="type" @change="changeWarehouse">
+            <select class="form-select" id="marketplace" v-model="type" required @change="changeWarehouse">
               <option selected disabled value="">Select Warehouse</option>
               <option>Internal</option>
               <option>External Warehouse</option>
@@ -64,6 +64,7 @@
               class="form-control"
               id="amount"
               v-model="amount"
+              required
               :disabled="type === 'External Warehouse'"
             />
           </div>
@@ -107,6 +108,7 @@
                         class="form-select"
                         id="product"
                         v-model="productId"
+                        required
                         @change="changeProduct"
                       >
                         <option value="">Product</option>
@@ -118,6 +120,7 @@
                         class="form-select"
                         id="sku"
                         v-model="skuId"
+                        required
                         :disabled="productId==''"
                       >
                       <option value="">SKU</option>
@@ -130,6 +133,7 @@
                         class="form-control"
                         id="amount"
                         placeholder="#"
+                        required
                         v-model="amount"
                         :disabled="type === 'External Warehouse' || skuId === '' || productId === ''"
                       />
@@ -257,7 +261,7 @@ export default {
       this.get(Number(this.id)).then((o) => {
         this.product = o.sku.product.name;
         this.skuId = o.sku.id;
-        this.sku = o.sku.name;
+        this.sku = o.sku;
         this.type = o.type;
         this.amount = o.amount;
       });
@@ -347,6 +351,7 @@ export default {
       this.skuId ='';
     },
     changeWarehouse () {
+      this.amount = 0;
       this.items.splice(0, this.items.length)
     },
   },
