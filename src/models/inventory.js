@@ -1,7 +1,7 @@
 class InventoryModel {
-  constructor (id, skuId, sku, type, amount) {
+  constructor (id, date, sku, type, amount) {
     this.id = id
-    this.skuId = skuId
+    this.date = date
     this.sku = sku
     this.type = type
     this.amount = amount

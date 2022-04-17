@@ -19,6 +19,7 @@
     <div class="offcanvas-body">
       <form @submit.prevent="submit">
         <fieldset :disabled="disabled">
+          <p class="text-end" v-if="id !== 'add'">Last Updated : <span class="badge bg-primary text-wrap" style="width: 6rem;">{{date.slice(0,10)}}</span></p>
           <div class="mb-3" v-show="id === 'add'">
             <label for="dateToAction" class="form-label">Date</label>
             <input
@@ -68,7 +69,7 @@
               :disabled="type === 'External Warehouse'"
             />
           </div>
-          <div class="mb-3">
+          <div class="mb-3" v-if="id === 'add'">
             <label class="form-label">Line Items</label>
             <div class="responsive-table">
               <table class="table table-sm table-striped text-center">
@@ -216,7 +217,7 @@ export default {
       disabled: false,
       isSaving: false,
       isDeleting: false,
-      date: new Date(),
+      date: new Date().toISOString().slice(0,10),
       productId: '',
       product: '',
       skuId: '',
@@ -236,7 +237,7 @@ export default {
     skus () {
       return this.skuList.filter(x => {
         const skus = [];
-        if(x.productId === this.productId) {
+        if(x.productId === this.product.id) {
           return skus.push(x);
         }
       })
@@ -258,9 +259,9 @@ export default {
         this.close
       );
     } else {
-      this.get(Number(this.id)).then((o) => {
+      this.get(this.id).then((o) => {
+        this.date = o.date;
         this.product = o.sku.product.name;
-        this.skuId = o.sku.id;
         this.sku = o.sku;
         this.type = o.type;
         this.amount = o.amount;
@@ -291,14 +292,11 @@ export default {
     close() {
       this.$router.replace({ name: "inventory" });
     },
-    async submit() {
+    submit() {
       this.disabled = true;
       this.isSaving = true;
-      console.time("Get SKU by ID");
-      const sku = await this.GetSKU(this.skuId);
-      console.timeEnd("Get SKU by ID");
-      const { id, skuId, type, amount } = this;
-      this.save({ id: Number(id), skuId, sku, type, amount })
+      const { id, date, type, amount } = this;
+      this.save({ id, date, type, amount })
         .then(() => {
           this.disabled = false;
           this.isSaving = false;
@@ -310,7 +308,7 @@ export default {
       this.disabled = true;
       this.isDeleting = true;
       const { id } = this;
-      this.delete(Number(id))
+      this.delete(id)
         .then(() => {
           this.disabled = false;
           this.isDeleting = false;
