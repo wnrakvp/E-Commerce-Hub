@@ -1,6 +1,5 @@
-// import api from '../../api';
-import axios from 'axios';
-import ProductModel from '../../models/product';
+import axios from "axios";
+import ProductModel from "../../models/product";
 export default {
   namespaced: true,
   state() {
@@ -33,100 +32,166 @@ export default {
       //   result.forEach(({_id, name, desc, image}) => {
       //     productList.push(new ProductModel(_id, name, desc, image))
       //   })
-      console.time("Get All Products")
+      // // ------------------MOCK Json-Server-------------------
+      // console.time("Get All Products")
+      // return await axios
+      //   .get('http://localhost:3000/productList')
+      //   .then((res) => {
+      //     const productList = [];
+      //     res.data.forEach(({id,name,desc,image}) => {
+      //       productList.push(new ProductModel(id, name, desc, image))
+      //     })
+      //     commit('SET_ALL', productList);
+      //     // console.log(productList)
+      //     console.timeEnd("Get All Products")
+      //     return Promise.resolve(productList)
+      //     // TODO: throw something to router for handle state
+      //   })
+      //   .catch((err) => {
+      //     console.error(err);
+      //     return Promise.resolve('200');
+      //   });
+      //   // -----------------------------------------------
+      // ---------------------------------NodeJS Server-----------------------------------------
       return await axios
-        .get('http://localhost:3000/productList')
-        .then((res) => {
+        .get("http://localhost:5000/api/v1/products")
+        .then((result) => {
           const productList = [];
-          res.data.forEach(({id,name,desc,image}) => {
-            productList.push(new ProductModel(id, name, desc, image))
-          })
-          commit('SET_ALL', productList);
-          // console.log(productList)
-          console.timeEnd("Get All Products")
-          return Promise.resolve(productList)
-          // TODO: throw something to router for handle state
+          result.data.data.forEach(({ _id, name, description, url }) => {
+            productList.push(new ProductModel(_id, name, description, url));
+          });
+          commit("SET_ALL", productList);
+          return Promise.resolve(productList);
         })
         .catch((err) => {
           console.error(err);
-          return Promise.resolve('200');
+          return Promise.resolve("200");
         });
+      // --------------------------------------------------------------------------------------
     },
-    get(context, id) {
-        return axios
-        .get('http://localhost:3000/productList/' + id)
-        .then((res) => {
-          let { id, name, desc, image } = res.data;
-          const model = new ProductModel(id, name, desc, image);
-          // TODO: throw something to router for handle state
-          console.log('Viewing...')
+    async get(context, id) {
+      // // ------------------MOCK Json-Server-------------------
+      //   return axios
+      //   .get('http://localhost:3000/productList/' + id)
+      //   .then((res) => {
+      //     let { id, name, desc, image } = res.data;
+      //     const model = new ProductModel(id, name, desc, image);
+      //     // TODO: throw something to router for handle state
+      //     console.log('Viewing...')
+      //     return Promise.resolve(model);
+      //   })
+      //   .catch(Promise.reject);
+      //   // ---------------------------------------------------
+      // ------------------------NodeJS Server---------------------------
+      return await axios
+        .get(`http://localhost:5000/api/v1/products/${id}`)
+        .then((result) => {
+          let { _id, name, description, url } = result.data.data;
+          const model = new ProductModel(_id, name, description, url);
           return Promise.resolve(model);
         })
         .catch(Promise.reject);
+      // ----------------------------------------------------------------
     },
     draft() {
       return Promise.resolve(
         new ProductModel(
-          '',
-          '',
-          '',
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdT-CMjPc50R-jKEvJl_rcn3mBMvkcUwERg'
+          "",
+          "",
+          "",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdT-CMjPc50R-jKEvJl_rcn3mBMvkcUwERg"
         )
       );
     },
-    save({ commit }, { id, name, desc, image }) {
-      if (id) {
-        // return api
-        //   .updateProduct(id, name, desc, image)
-        //   .then(({ result }) => {
-        //     const { _id } = result;
-        return axios
-          .put('http://localhost:3000/productList/' + id, {
-            id: id,
+    async save({ commit }, { id, name, desc, image }) {
+      if (id != "add") {
+        // // ------------------MOCK Json-Server-------------------
+        // return axios
+        //   .put("http://localhost:3000/productList/" + id, {
+        //     id: id,
+        //     name: name,
+        //     desc: desc,
+        //     image: image,
+        //   })
+        //   .then((res) => {
+        //     console.log("Edit Success!!");
+        //     let { id, name, desc, image } = res.data;
+        //     const model = new ProductModel(id, name, desc, image);
+        //     commit("EDIT_ALL", model);
+        //     return Promise.resolve(model);
+        //   })
+        //   .catch(Promise.reject);
+        // // ---------------------------------------------------
+        // ----------------------NodeJS Server-----------------------------
+        return await axios
+          .put(`http://localhost:5000/api/v1/products/${id}`, {
             name: name,
-            desc: desc,
-            image: image,
+            description: desc,
+            url: image,
           })
-          .then((res) => {
-            console.log('Edit Success!!');
-            let {id, name, desc, image} = res.data
-            const model = new ProductModel(id, name, desc, image);
-            commit('EDIT_ALL', model);
+          .then((result) => {
+            let { _id, name, description, url } = result.data.data;
+            const model = new ProductModel(_id, name, description, url);
+            commit("EDIT_ALL", model);
             return Promise.resolve(model);
           })
           .catch(Promise.reject);
+        // ----------------------------------------------------------------
       } else {
-        // return api
-        //   .createProduct(name, desc, image)
-        //   .then(({ result }) => {
-        //     const { _id } = result;
-        return axios
-          .post('http://localhost:3000/productList/', {
-            id: id,
+        // // ------------------MOCK Json-Server-------------------
+        // return axios
+        //   .post("http://localhost:3000/productList/", {
+        //     id: id,
+        //     name: name,
+        //     desc: desc,
+        //     image: image,
+        //   })
+        //   .then((res) => {
+        //     console.log("Create Success!!");
+        //     let { id, name, desc, image } = res.data;
+        //     const model = new ProductModel(id, name, desc, image);
+        //     commit("UNSHIFT_ALL", model);
+        //     return Promise.resolve(model);
+        //   })
+        //   .catch(Promise.reject);
+        //   // ---------------------------------------------------
+        // ----------------------NodeJS Server-----------------------------
+        return await axios
+          .post(`http://localhost:5000/api/v1/products`, {
             name: name,
-            desc: desc,
-            image: image,
+            description: desc,
+            url: image,
           })
-          .then((res) => {
-            console.log('Create Success!!');
-            let {id, name, desc, image} = res.data
-            const model = new ProductModel(id, name, desc, image);
-            commit('UNSHIFT_ALL', model);
+          .then((result) => {
+            let { _id, name, description, url } = result.data.data;
+            const model = new ProductModel(_id, name, description, url);
+            commit("UNSHIFT_ALL", model);
             return Promise.resolve(model);
           })
           .catch(Promise.reject);
+        // ----------------------------------------------------------------
       }
     },
-    delete({ commit }, id) {
-      // return api
-      //   .deleteProduct(id)
-      //   .then(({ result }) => {
-        return axios.delete('http://localhost:3000/productList/'+id).then(res => {
-          console.log('Delete Success!!')
-          commit('DELETE_ALL', id);
+    async delete({ commit }, id) {
+      // // ------------------MOCK Json-Server-------------------
+      // return await axios
+      //   .delete("http://localhost:3000/productList/" + id)
+      //   .then((res) => {
+      //     console.log("Delete Success!!");
+      //     commit("DELETE_ALL", id);
+      //     return Promise.resolve(id);
+      //   })
+      //   .catch(Promise.reject);
+      // // -----------------------------------------------------
+      // ----------------------NodeJS Server-----------------------------
+      return await axios
+        .delete(`http://localhost:5000/api/v1/products/${id}`)
+        .then((result) => {
+          commit("DELETE_ALL", id);
           return Promise.resolve(id);
         })
         .catch(Promise.reject);
+      // ----------------------------------------------------------------
     },
   },
 };

@@ -64,7 +64,7 @@ export default {
         this.$refs.ProductItem.addEventListener('hidden.bs.offcanvas', this.close)
       }).catch(console.error)
     } else {
-      this.get(Number(this.id)).then(o => {
+      this.get(this.id).then(o => {
         this.name = o.name
         this.desc = o.desc
         this.image = o.image
@@ -93,7 +93,7 @@ export default {
       this.disabled = true
       this.isSaving = true
       const {id, name, desc, image} = this
-      this.save({id: Number(id), name, desc, image}).then(() => {
+      this.save({id: id, name, desc, image}).then(() => {
         this.disabled = false
         this.isSaving = false
         this._offcanvas.hide()
@@ -103,7 +103,7 @@ export default {
       this.disabled = true
       this.isDeleting = true
       const {id} = this
-      this.delete(Number(id)).then(() => {
+      this.delete(id).then(() => {
         this.disabled = false
         this.isDeleting = false
         this._offcanvas.hide()
