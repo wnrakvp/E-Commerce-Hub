@@ -137,16 +137,20 @@ const masterdata = {
       _id: 1,
       date: new Date('2021-11-30'),
       marketplace: 'shopee',
+      warehouse: 'Internal',
       items: [
         { skuId: 1, price: 9200, amountOnSell: 10 },
         { skuId: 2, price: 12400, amountOnSell: 20 },
-        { skuId: 3, price: 22000, amountOnSell: 30 }
+        { skuId: 3, price: 22000, amountOnSell: 30 },
+        { skuId: 4, price: 22000, amountOnSell: 40 },
+        { skuId: 5, price: 22000, amountOnSell: 50 },
       ]
     },
     {
       _id: 2,
       date: new Date('2021-12-01'),
       marketplace: 'lazada',
+      warehouse: 'External Warehouse',
       items: [
         { skuId: 4, price: 12000, amountOnSell: 40 },
         { skuId: 5, price: 12000, amountOnSell: 50 }
