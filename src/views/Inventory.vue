@@ -7,7 +7,7 @@
       <button class="btn btn-sm btn-outline-secondary" @click="Logger">
         <i class="bi-plus-circle"></i> Logger
       </button>
-      <router-link :to="{ name: 'inventory-item', params: { id: 'add' } }" custom v-slot="{ navigate }">
+      <router-link :to="{ name: 'inventory-item', params: { id: 'add'} }" custom v-slot="{ navigate }">
       <button class="btn btn-sm btn-outline-secondary" @click="navigate">
         <i class="bi-plus-circle"></i> Add
       </button>
@@ -122,7 +122,7 @@ export default {
       // return total;
     },
     Logger() {
-      console.log(this.inventoryList);
+      console.log(this.inventoryId);
     },
   },
 };

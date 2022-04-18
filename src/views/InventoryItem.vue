@@ -7,7 +7,7 @@
   >
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="InventoryItemLabel">
-        {{ id === "add" ? "Add" : "Edit" }} Inventory Item
+        {{ id === 'add' ? 'Add' : 'Edit' }} Inventory Item
       </h5>
       <button
         type="button"
@@ -19,7 +19,12 @@
     <div class="offcanvas-body">
       <form @submit.prevent="submit">
         <fieldset :disabled="disabled">
-          <p class="text-end" v-if="id !== 'add'">Last Updated : <span class="badge bg-primary text-wrap" style="width: 6rem;">{{date.slice(0,10)}}</span></p>
+          <p class="text-end" v-if="id !== 'add'">
+            Last Updated :
+            <span class="badge bg-primary text-wrap" style="width: 6rem">{{
+              date.slice(0, 10)
+            }}</span>
+          </p>
           <div class="mb-3" v-show="id === 'add'">
             <label for="dateToAction" class="form-label">Date</label>
             <input
@@ -27,6 +32,7 @@
               class="form-control"
               id="dateToAction"
               placeholder="Name"
+              disabled
               v-model="date"
             />
           </div>
@@ -52,7 +58,13 @@
           </div>
           <div class="mb-3">
             <label for="selectWarehouse" class="form-label">Warehouse </label>
-            <select class="form-select" id="marketplace" v-model="type" required @change="changeWarehouse">
+            <select
+              class="form-select"
+              id="marketplace"
+              v-model="type"
+              required
+              @change="changeWarehouse"
+            >
               <option selected disabled value="">Select Warehouse</option>
               <option>Internal</option>
               <option>External Warehouse</option>
@@ -88,10 +100,10 @@
                 </thead>
                 <tbody>
                   <tr v-for="(item, idx) in items" :key="idx">
-                    <td>{{idx + 1}}</td>
-                    <td>{{item.sku.product.name}}</td>
-                    <td>{{item.sku.name}}</td>
-                    <td>{{item.amount}}</td>
+                    <td>{{ idx + 1 }}</td>
+                    <td>{{ item.sku.product.name }}</td>
+                    <td>{{ item.sku.name }}</td>
+                    <td>{{ item.amount }}</td>
                     <td v-if="id === 'add'">
                       <button
                         type="button"
@@ -113,7 +125,13 @@
                         @change="changeProduct"
                       >
                         <option value="">Product</option>
-                        <option v-for="(product, idx) in productList" :key="idx" :value="product.id">{{product.name}}</option>
+                        <option
+                          v-for="(product, idx) in productList"
+                          :key="idx"
+                          :value="product.id"
+                        >
+                          {{ product.name }}
+                        </option>
                       </select>
                     </td>
                     <td>
@@ -122,10 +140,16 @@
                         id="sku"
                         v-model="skuId"
                         required
-                        :disabled="productId==''"
+                        :disabled="productId == ''"
                       >
-                      <option value="">SKU</option>
-                      <option v-for="(sku, idx) in skus" :key="idx" :value="sku.id">{{sku.name}}</option>
+                        <option value="">SKU</option>
+                        <option
+                          v-for="(sku, idx) in skus"
+                          :key="idx"
+                          :value="sku.id"
+                        >
+                          {{ sku.name }}
+                        </option>
                       </select>
                     </td>
                     <td>
@@ -136,7 +160,11 @@
                         placeholder="#"
                         required
                         v-model="amount"
-                        :disabled="type === 'External Warehouse' || skuId === '' || productId === ''"
+                        :disabled="
+                          type === 'External Warehouse' ||
+                          skuId === '' ||
+                          productId === ''
+                        "
                       />
                     </td>
                     <td>
@@ -144,6 +172,7 @@
                         type="button"
                         class="btn btn-sm btn-outline-secondary"
                         @click="addItem()"
+                        :disabled="skuId == ''"
                       >
                         <i class="bi-plus-circle"></i>
                       </button>
@@ -162,7 +191,12 @@
               ></span>
               Saving...
             </button>
-            <button v-else type="submit" class="btn btn-primary" @click="addInventory">
+            <button
+              v-else
+              type="button"
+              class="btn btn-primary"
+              @click="addInventory"
+            >
               Add Inventory
             </button>
           </div>
@@ -205,8 +239,8 @@
   </div>
 </template>
 <script>
-import { Offcanvas } from "bootstrap";
-import { mapGetters, mapActions } from "vuex";
+import { Offcanvas } from 'bootstrap';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   props: {
     id: String,
@@ -217,7 +251,7 @@ export default {
       disabled: false,
       isSaving: false,
       isDeleting: false,
-      date: new Date().toISOString().slice(0,10),
+      date: new Date().toISOString().slice(0, 10),
       productId: '',
       product: '',
       skuId: '',
@@ -228,34 +262,39 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("Products", {
-      productList: "all",
+    ...mapGetters('Products', {
+      productList: 'all',
     }),
-    ...mapGetters("SKU", {
-      skuList: "all",
+    ...mapGetters('SKU', {
+      skuList: 'all',
     }),
-    skus () {
-      return this.skuList.filter(x => {
+    ...mapGetters('Inventory', {
+      inventoryList: 'all',
+    }),
+    skus() {
+      return this.skuList.filter((sku) => {
         const skus = [];
-        if(x.productId === this.product.id) {
-          return skus.push(x);
+        if (sku.product.id === this.productId) {
+          return skus.push(sku);
         }
-      })
-    }
+      });
+    },
   },
   async mounted() {
-    await Promise.all([this.GetAllSKU(), this.GetAllProducts()])
+    await Promise.all([
+      this.GetAllSKU(),
+      this.GetAllProducts(),
+      this.GetAllInventory(),
+    ])
       .then((result) => {
         console.debug(result);
       })
       .catch(console.error);
-    if (this.id === "add") {
-      console.log(this.productList);
-      console.log(this.skuList);
+    if (this.id === 'add') {
       this._offcanvas = new Offcanvas(this.$refs.InventoryItem);
       this._offcanvas.show();
       this.$refs.InventoryItem.addEventListener(
-        "hidden.bs.offcanvas",
+        'hidden.bs.offcanvas',
         this.close
       );
     } else {
@@ -269,28 +308,29 @@ export default {
       this._offcanvas = new Offcanvas(this.$refs.InventoryItem);
       this._offcanvas.show();
       this.$refs.InventoryItem.addEventListener(
-        "hidden.bs.offcanvas",
+        'hidden.bs.offcanvas',
         this.close
       );
       // }).catch(console.error)
     }
   },
   methods: {
-    ...mapActions("Inventory", {
-      get: "get",
-      save: "save",
-      delete: "delete",
-      add: "add",
+    ...mapActions('Inventory', {
+      GetAllInventory: 'getAll',
+      get: 'get',
+      save: 'save',
+      delete: 'delete',
+      add: 'add',
     }),
-    ...mapActions("SKU", {
-      GetAllSKU: "getAll",
-      GetSKU: "get",
+    ...mapActions('SKU', {
+      GetAllSKU: 'getAll',
+      GetSKU: 'get',
     }),
-    ...mapActions("Products", {
-      GetAllProducts: "getAll",
+    ...mapActions('Products', {
+      GetAllProducts: 'getAll',
     }),
     close() {
-      this.$router.replace({ name: "inventory" });
+      this.$router.replace({ name: 'inventory' });
     },
     submit() {
       this.disabled = true;
@@ -319,38 +359,41 @@ export default {
     addInventory() {
       this.disabled = true;
       this.isDeleting = true;
-      console.time('Add Item')
-      this.items.forEach(item => this.add(item))
-      console.timeEnd('Add Item')
+      console.time('Adding Inventories');
+      this.items.forEach((item) => this.add(item));
+      console.timeEnd('Adding Inventories');
       this.disabled = false;
       this.isDeleting = false;
       this._offcanvas.hide();
     },
     addItem() {
-      const sku = this.skuList.find(x => x.id === this.skuId)
-      const check = this.items.filter(x => x.sku.id === sku.id)
-      // console.log(check)
-      if(check.length == 0) {
+      const sku = this.skuList.find((x) => x.id === this.skuId);
+      const inventory = this.inventoryList.find(
+        (x) => x.sku.id === sku.id && x.type === this.type
+      );
+      const check = this.items.filter((x) => x.sku.id === sku.id);
+      if (check.length == 0) {
         this.items.push({
-          id: Number(this.id),
-          skuId: this.skuId,
-          sku,
+          id: inventory? inventory.id:null,
+          date: this.date,
+          sku: sku,
           type: this.type,
-          amount: this.amount
-        })
+          oldAmount: inventory? inventory.amount:0,
+          amount: this.amount,
+        });
       } else {
-        this.items.find(x => x.sku.id === sku.id).amount += this.amount
+        this.items.find((x) => x.sku.id === sku.id).amount += this.amount;
       }
     },
     removeItem(idx) {
-      this.items.splice(idx, 1)
+      this.items.splice(idx, 1);
     },
-    changeProduct () {
-      this.skuId ='';
+    changeProduct() {
+      this.skuId = '';
     },
-    changeWarehouse () {
+    changeWarehouse() {
       this.amount = 0;
-      this.items.splice(0, this.items.length)
+      this.items.splice(0, this.items.length);
     },
   },
 };
