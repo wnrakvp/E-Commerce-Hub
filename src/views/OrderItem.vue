@@ -35,9 +35,9 @@
           <br>
         
           <div v-if="orderStatus != 'READY_TO_SHIP'" >
-              <label for="delivery" class="form-label">Delivery :</label>
+              <label for="courier" class="form-label">Delivery :</label>
               <br> 
-              <!-- For update delivery detail -->
+              <!-- For update courier detail -->
               <!-- Radior button -->
               <div v-if="orderStatus === 'ON_DELIVERY'" >
                 <input type="radio" id="Self" value="Self" v-model="deliveryBy" >
@@ -51,8 +51,8 @@
 
                 <br>
                 <!-- Dropdown List -->
-                <select class="form-select" id="delivery" v-model="delivery" @change="changeDelivery">
-                  <option value="">Open this to select delivery</option>
+                <select class="form-select" id="courier" v-model="courier" @change="changeDelivery">
+                  <option value="">Open this to select courier</option>
                   <option value="EMS">EMS</option>
                   <option value="KERRY">KERRY</option>
                   <option value="FLASH">FLASH</option>
@@ -77,8 +77,8 @@
 
                   <br>
                   <!-- Dropdown List -->
-                  <select class="form-select" id="delivery" v-model="delivery" @change="changeDelivery">
-                    <option value="">Open this to select delivery</option>
+                  <select class="form-select" id="courier" v-model="courier" @change="changeCourier">
+                    <option value="">Open this to select courier</option>
                     <option value="EMS">EMS</option>
                     <option value="KERRY">KERRY</option>
                     <option value="FLASH">FLASH</option>
@@ -181,7 +181,7 @@ export default {
         this.trackNo = o.trackNo
         this.orderStatus = o.orderStatus
         this.deliveryBy = o.deliveryBy
-        this.delivery = o.delivery
+        this.courier = o.courier
         this.items = o.items 
         this._offcanvas = new Offcanvas(this.$refs.OrderItem)
         this.disabled = false
@@ -197,7 +197,7 @@ export default {
         this.trackNo = o.trackNo
         this.orderStatus = o.orderStatus
         this.deliveryBy = o.deliveryBy
-        this.delivery = o.delivery
+        this.courier = o.courier
         this.items = o.items 
         this._offcanvas = new Offcanvas(this.$refs.OrderItem)
         this.disabled = true
@@ -229,7 +229,7 @@ export default {
       trackNo: '',
       orderStatus: '',
       deliveryBy: '',
-      delivery: '',
+      courier: '',
       marketplace: '',
       skuList: [],
       items: [],
@@ -278,8 +278,8 @@ export default {
     updateStatus() {
       this.disabled = true
       this.isSaving = true
-      const {trackNo, orderStatus, delivery, deliveryBy} = this
-      this.update({trackNo, orderStatus, delivery, deliveryBy}).then(() => {
+      const {trackNo, orderStatus, courier, deliveryBy} = this
+      this.update({trackNo, orderStatus, courier, deliveryBy}).then(() => {
         this.disabled = false              
         this.isSaving = false
         this._offcanvas.hide()

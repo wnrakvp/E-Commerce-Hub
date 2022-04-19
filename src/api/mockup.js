@@ -223,7 +223,7 @@ const masterdata = {
       orderNo: 'No001',
       trackNo: 'RE123456780TH',
       orderStatus: 'READY_TO_SHIP',
-      delivery: 'KERRY',
+      courier: 'KERRY',
       deliveryBy: 'Warehouse',
       items: [
         { skuId: 1, price: 9200, amount: 1 },
@@ -238,7 +238,7 @@ const masterdata = {
       orderNo: 'No002',
       trackNo: 'RE123456788TH',
       orderStatus: 'ON_DELIVERY',
-      delivery: 'EMS',
+      courier: 'EMS',
       deliveryBy: 'Self',
       items: [
         { skuId: 4, price: 12000, amount: 2,},
@@ -252,7 +252,7 @@ const masterdata = {
       orderNo: 'No003',
       trackNo: 'RE1234567777TH',
       orderStatus: 'SHIPPED',
-      delivery: 'FLASH',
+      courier: 'FLASH',
       deliveryBy: 'Courier',
       items: [
         { skuId: 6, price: 3000, amount: 3,},
@@ -500,11 +500,11 @@ function Mockup () {
         })
       })
     },
-    updateOrder (id, trackNo, orderStatus, delivery, deliveryBy) {
+    updateOrder (id, trackNo, orderStatus, courier, deliveryBy) {
       return delay(700).then(() => {
         const order = masterdata.order.find(({_id}) => _id === id)
         if (order) {
-          Object.assign(order, { _id: id, trackNo, orderStatus, delivery, deliveryBy })
+          Object.assign(order, { _id: id, trackNo, orderStatus, courier, deliveryBy })
           return Promise.resolve({
             reason: 'OK',
             result: { _id: id }

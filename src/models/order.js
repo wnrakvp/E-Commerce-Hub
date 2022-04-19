@@ -1,5 +1,5 @@
 class OrderModel {
-  constructor (id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, items) {
+  constructor (id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, courier, items) {
     this.id = id
     this.date = date
     this.marketplace = marketplace
@@ -7,7 +7,7 @@ class OrderModel {
     this.trackNo = trackNo
     this.orderStatus = orderStatus
     this.deliveryBy = deliveryBy
-    this.delivery = delivery
+    this.courier = courier
     this.items = items
   }
 }

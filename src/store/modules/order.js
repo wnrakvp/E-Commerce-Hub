@@ -16,6 +16,9 @@ export default {
     SET_ALL (state, value) {
       state.all = value
     },
+    SET_ORDERSTATUS(state, value) {
+      state.orderStatus = value;
+    },
     EDIT_ALL (state, value) {
       const item = state.all.find(({id}) => id === value.id)
       Object.assign(item, value)
@@ -34,7 +37,7 @@ export default {
     getAll ({commit}) {
       return api.getAllOrder().then(({result}) => {
         const list = []
-        result.forEach(({_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, items: lineItems}) => {
+        result.forEach(({_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, courier, items: lineItems}) => {
           const items = []
           lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
             const sku = new SKUModel(
@@ -49,7 +52,7 @@ export default {
             )
             items.push(new OrderLineItemModel(skuId, sku, price, amount))
           })
-          list.push(new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery ,items))
+          list.push(new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, courier ,items))
         })
         console.debug(list)
         commit('SET_ALL', list)
@@ -62,8 +65,8 @@ export default {
     },
     get (context, id) {
       return api.getOrder(id).then(({result}) => {
-        let {_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, items: lineItems} = result
-        console.debug(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, lineItems)
+        let {_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, courier, items: lineItems} = result
+        console.debug(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, courier, lineItems)
         const items = []
         lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
           const sku = new SKUModel(
@@ -78,7 +81,7 @@ export default {
           )
           items.push(new OrderLineItemModel(skuId, sku, price, amount))
         })
-        const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, items)
+        const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, courier, items)
         return Promise.resolve(model)
       }).catch(err => {
         console.error(err)
@@ -87,6 +90,9 @@ export default {
     },
     filterById ({commit}, productId) {
       commit('SET_PRODUCT_ID', productId)
+    },
+    filterByOrderStatus ({commit}, orderStatus) {
+      commit('SET_ORDERSTATUS', orderStatus)
     },
     draft () {
       const model = new OrderModel('', new Date(), '', [])
@@ -114,23 +120,23 @@ export default {
           )
           items.push(new OrderLineItemModel(skuId, sku, price, amount))
         })
-        const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, delivery, items)
+        const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, courier, items)
         commit('PUSH_ALL', model)
         return Promise.resolve(model)
       }).catch(Promise.reject)
     },
-    update ({commit}, {id, trackNo, orderStatus, delivery, deliveryBy}) {
+    update ({commit}, {id, trackNo, orderStatus, courier, deliveryBy}) {
       if (id) {
-        return api.updateOrder( _id, trackNo, orderStatus, delivery, deliveryBy ).then(({result}) => {
+        return api.updateOrder( _id, trackNo, orderStatus, courier, deliveryBy ).then(({result}) => {
           const { _id } = result
-          const model = new OrderModel(_id, trackNo, orderStatus, delivery, deliveryBy)
+          const model = new OrderModel(_id, trackNo, orderStatus, courier, deliveryBy)
           commit('EDIT_ALL', model)
           return Promise.resolve(model)
         }).catch(Promise.reject)
       } else {
-        return api.createOrder( trackNo, orderStatus, delivery, deliveryBy).then(({result}) => {
+        return api.createOrder( trackNo, orderStatus, courier, deliveryBy).then(({result}) => {
           const { _id } = result
-          const model = new OrderModel(_id, trackNo, orderStatus, delivery, deliveryBy)
+          const model = new OrderModel(_id, trackNo, orderStatus, courier, deliveryBy)
           commit('UNSHIFT_ALL', model)
           return Promise.resolve(model)
         }).catch(Promise.reject)
