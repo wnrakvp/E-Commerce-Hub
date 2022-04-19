@@ -62,7 +62,7 @@
                   <td colspan="2">
                     <select class="form-select" id="marketplace" v-model="skuId">
                       <option value="">SKU</option>
-                      <option v-for="(sku, idx) in skus" :key="idx" :value="sku.id">{{sku.name}}</option>
+                      <option v-for="(sku, idx) in skus" :key="idx" :value="sku.id">{{sku.sku.name}}</option>
                     </select>
                   </td>
                   <td><input type="number" class="form-control form-control-sm" id="price" placeholder="Price" v-model="price"></td>
@@ -140,9 +140,9 @@ export default {
   },
   mounted() {
     if (this.id === 'add') {
-      Promise.all([this.getAllSKU(),this.draft()]).then(([skuList, o]) => {
-        console.debug(skuList, o)
-        this.skuList = skuList
+      Promise.all([this.getAllInventory(),this.draft()]).then(([inventoryList, o]) => {
+        console.debug(inventoryList, o)
+        console.log(inventoryList)
         this.date = this.formatDate(o.date)
         this.marketplace = o.marketplace
         this.warehouse = o.warehouse
@@ -167,11 +167,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('Stock', {
-      stockList: 'all'
+    ...mapGetters('Inventory', {
+      inventoryList: 'all'
     }),
     skus () {
-      return this.skuList.filter(x => x.marketplaces.has(this.marketplace))
+      return this.inventoryList.filter(x => {
+        if (x.type === this.warehouse && x.sku.marketplaces.has(this.marketplace)) {
+          return x
+        }
+      })
     }
   },
   data() {
@@ -237,8 +241,8 @@ export default {
       save: 'save',
       delete: 'delete'
     }),
-    ...mapActions('SKU', {
-      getAllSKU: 'getAll'
+    ...mapActions('Inventory', {
+      getAllInventory: 'getAll'
     })
   }
 }
