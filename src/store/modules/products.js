@@ -1,5 +1,7 @@
 import axios from "axios";
 import ProductModel from "../../models/product";
+const PORT = 5000
+const endpoint="http://localhost:" + PORT + "/api/v1/products"
 export default {
   namespaced: true,
   state() {
@@ -54,7 +56,7 @@ export default {
       //   // -----------------------------------------------
       // ---------------------------------NodeJS Server-----------------------------------------
       return await axios
-        .get("http://localhost:5000/api/v1/products")
+        .get(endpoint)
         .then((result) => {
           const productList = [];
           result.data.data.forEach(({ _id, name, description, url }) => {
@@ -84,7 +86,7 @@ export default {
       //   // ---------------------------------------------------
       // ------------------------NodeJS Server---------------------------
       return await axios
-        .get(`http://localhost:5000/api/v1/products/${id}`)
+        .get(endpoint)
         .then((result) => {
           let { _id, name, description, url } = result.data.data;
           const model = new ProductModel(_id, name, description, url);
@@ -124,7 +126,7 @@ export default {
         // // ---------------------------------------------------
         // ----------------------NodeJS Server-----------------------------
         return await axios
-          .put(`http://localhost:5000/api/v1/products/${id}`, {
+          .put(endpoint + "/${id}", {
             name: name,
             description: desc,
             url: image,
@@ -157,7 +159,7 @@ export default {
         //   // ---------------------------------------------------
         // ----------------------NodeJS Server-----------------------------
         return await axios
-          .post(`http://localhost:5000/api/v1/products`, {
+          .post(endpoint, {
             name: name,
             description: desc,
             url: image,
@@ -185,7 +187,7 @@ export default {
       // // -----------------------------------------------------
       // ----------------------NodeJS Server-----------------------------
       return await axios
-        .delete(`http://localhost:5000/api/v1/products/${id}`)
+        .delete(endpoint + "/${id}")
         .then((result) => {
           commit("DELETE_ALL", id);
           return Promise.resolve(id);
