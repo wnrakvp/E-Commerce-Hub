@@ -14,11 +14,23 @@
         <div class="mb-3">
           <label for="marketplace" class="form-label">Marketplace</label>
           <select class="form-select" id="marketplace" v-model="marketplace" @change="changeMarketplace">
-            <option value="">Open this to select marketplace</option>
+            <option selected disabled value="">Select Marketplace</option>
             <option value="shopee">Shopee</option>
             <option value="lazada">Lazada</option>
           </select>
         </div>
+        <div class="mb-3">
+            <label for="selectWarehouse" class="form-label">Warehouse </label>
+            <select
+              class="form-select"
+              id="warehouse"
+              v-model="warehouse"
+            >
+              <option selected disabled value="">Select Warehouse</option>
+              <option>Internal</option>
+              <option>External Warehouse</option>
+            </select>
+          </div>
         <div class="mb-3">
           <label class="form-label">Line Items</label>
           <div class="responsive-table">
@@ -39,9 +51,9 @@
               <tbody>
                 <tr v-for="(item, idx) in items" :key="idx">
                   <td>{{idx + 1}}</td>
-                  <td>{{item.sku.name}}</td>
+                  <td>{{item.inventory.sku.name}}</td>
                   <td>{{item.price}}</td>
-                  <td>{{item.amountOnSell}}</td>
+                  <td>{{item.amountonsell}}</td>
                   <td v-if="id === 'add'"><button type="button" class="btn-close" aria-label="Close" @click="removeItem(idx)"></button></td>
                 </tr>
               </tbody>
@@ -63,8 +75,55 @@
         </div>
         <hr>
         <div v-if="id === 'add'" class="mb-3 text-end">
-          <button type="submit" class="btn btn-primary">Publish</button>
-        </div>
+            <button v-if="isSaving" type="submit" class="btn btn-primary">
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Saving...
+            </button>
+            <button
+              v-else
+              type="button"
+              class="btn btn-primary"
+            >
+              Publish
+            </button>
+          </div>
+          <div v-else class="mb-3 d-flex justify-content-between">
+            <button
+              v-if="isDeleting"
+              type="button"
+              class="btn btn btn-outline-danger"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Deleting...
+            </button>
+            <button
+              v-else
+              type="button"
+              class="btn btn btn-outline-danger"
+              @click="remove"
+            >
+              <i class="bi-trash"></i> Delete
+            </button>
+            <button v-if="isSaving" type="submit" class="btn btn-primary">
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Saving...
+            </button>
+            <button v-else type="submit" class="btn btn-primary">
+              Save Changes
+            </button>
+          </div>
       </fieldset>
     </form>
   </div>
@@ -72,6 +131,7 @@
 </template>
 
 <script>
+
 import {Offcanvas} from 'bootstrap'
 import { mapGetters, mapActions } from 'vuex'
 export default {
@@ -85,6 +145,7 @@ export default {
         this.skuList = skuList
         this.date = this.formatDate(o.date)
         this.marketplace = o.marketplace
+        this.warehouse = o.warehouse
         this.items = o.items 
         this._offcanvas = new Offcanvas(this.$refs.StockItem)
         this.disabled = false
@@ -92,10 +153,11 @@ export default {
         this.$refs.StockItem.addEventListener('hidden.bs.offcanvas', this.close)
       }).catch(console.error)
     } else {
-      this.get(Number(this.id)).then(o => {
+      this.get(this.id).then(o => {
         console.debug(o)
         this.date = this.formatDate(o.date)
         this.marketplace = o.marketplace
+        this.warehouse = o.warehouse
         this.items = o.items 
         this._offcanvas = new Offcanvas(this.$refs.StockItem)
         this.disabled = true
@@ -120,6 +182,7 @@ export default {
       isDeleting: false,
       date: new Date(),
       marketplace: '',
+      warehouse: '',
       skuList: [],
       items: [],
       skuId: '',
@@ -171,7 +234,8 @@ export default {
     ...mapActions('Stock', {
       draft: 'draft',
       get: 'get',
-      save: 'save'
+      save: 'save',
+      delete: 'delete'
     }),
     ...mapActions('SKU', {
       getAllSKU: 'getAll'

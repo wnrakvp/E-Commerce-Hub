@@ -253,44 +253,6 @@ export default {
         }
         // console.log(payload)
         dispatch('save',payload);
-        //   return axios
-        //     .put(`http://localhost:3000/inventoryList/${inventoryData.id}`, {
-        //       id,
-        //       skuId,
-        //       sku,
-        //       type,
-        //       amount: inventoryData.amount + amount,
-        //     })
-        //     .then((result) => {
-        //       let { id, skuId, sku, type, amount } = result.data;
-        //       const model = new InventoryModel(
-        //         id,
-        //         skuId,
-        //         new SKUModel(
-        //           sku.id,
-        //           sku.productId,
-        //           new ProductModel(
-        //             sku.product.id,
-        //             sku.product.name,
-        //             sku.product.desc,
-        //             sku.product.image
-        //           ),
-        //           sku.name,
-        //           sku.desc,
-        //           sku.price,
-        //           sku.image,
-        //           sku.marketplaces
-        //         ),
-        //         type,
-        //         amount
-        //       );
-        //       commit('EDIT_ALL', model);
-        //       return Promise.resolve(model);
-        //     })
-        //     .catch((err) => {
-        //       console.error(err);
-        //       Promise.reject(err.message);
-        //     });
       }
     },
   },
