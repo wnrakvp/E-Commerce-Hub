@@ -79,7 +79,7 @@ export default {
       const model = new StockModel('', new Date(), '', '', []);
       return Promise.resolve(model);
     },
-    save({ commit }, { date, marketplace, items }) {
+    save({ commit }, { }) {d
       // const skus = []
       // items.forEach(({skuId, price, amountOnSell}) => {
       //   skus.push({skuId, price, amountOnSell})
