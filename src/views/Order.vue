@@ -11,20 +11,19 @@
     </div>
 
 
-    <input type="file" accept="image/*" @change="uploadImage($event)" id="file-input">
+    <!-- <input type="file" accept="image/*" @change="uploadImage($event)" id="file-input">
 
     <div id="appImage">
       <div v-if="!image">
-        <!-- <h2>Choose images to upload (PNG, JPG, JPEG)</h2> -->
+        <h2>Choose images to upload (PNG, JPG, JPEG)</h2>
         <input type="file" id="fileImage" name="fileImage" @change="onFileChange" accept="image/.png, .jpe, .jpeg">
        
       </div>
       <div v-else>
         <img :src="image" width="200" height="200"  />
          <button @click="onUpload">Upload!</button>
-        <!-- <button @click="removeImage">Remove image</button> -->
       </div>
-    </div>
+    </div> -->
 
 
     <div class="table">
