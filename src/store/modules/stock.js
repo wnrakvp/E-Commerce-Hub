@@ -55,7 +55,7 @@ export default {
     },
     async get(context, id) {
       try {
-        console.time('Get SKU by ID');
+        console.time('Get Stock by ID');
         const result = await axios.get(
           `http://localhost:5000/api/v1/stocks/${id}`
         );
@@ -67,7 +67,7 @@ export default {
           warehouse,
           items
         );
-        console.timeEnd('Get SKU by ID');
+        console.timeEnd('Get Stock by ID');
         console.log(stockList);
         return Promise.resolve(stockList);
       } catch (err) {
@@ -79,7 +79,41 @@ export default {
       const model = new StockModel('', new Date(), '', '', []);
       return Promise.resolve(model);
     },
-    save({ commit }, { }) {d
+    async save({ commit }, { id, date, marketplace, warehouse, items }) {
+      if (id == 'add') {
+      items.forEach(x => x.inventory = x.inventory.id);
+      // console.log(state.all)
+        console.time('Add Stocks');
+        await axios
+          .post(`http://localhost:5000/api/v1/stocks`, {
+            date: date,
+            marketplaces: marketplace,
+            warehouse: warehouse,
+            items: items,
+          })
+          .then((result) => {
+            console.log(result.data.data)
+            let { _id, date, marketplaces, warehouse, items } =
+              result.data.data;
+            const stockList = new StockModel(
+              _id,
+              date,
+              marketplaces,
+              warehouse,
+              items
+            );
+            console.timeEnd('Add Stocks');
+            commit('PUSH_ALL', stockList);
+            console.log(stockList)
+            return Promise.resolve(stockList);
+          })
+          .catch((err) => {
+            console.error(err);
+            Promise.reject(err.message);
+          });
+        } else {
+
+        }
       // const skus = []
       // items.forEach(({skuId, price, amountOnSell}) => {
       //   skus.push({skuId, price, amountOnSell})
@@ -107,17 +141,19 @@ export default {
       //   return Promise.resolve(model)
       // }).catch(Promise.reject)
     },
-    async delete ({commit}, id) {
+    async delete({ commit }, id) {
       try {
-        console.time('Deleting Stock')
-        const result = await axios.delete(`http://localhost:5000/api/v1/stocks/${id}`)
-        console.debug(result)
-        commit('DELETE_ALL',id)
-        console.timeEnd('Deleting Stock')
+        console.time('Deleting Stock');
+        const result = await axios.delete(
+          `http://localhost:5000/api/v1/stocks/${id}`
+        );
+        console.debug(result);
+        commit('DELETE_ALL', id);
+        console.timeEnd('Deleting Stock');
         return Promise.resolve(id);
       } catch (err) {
-        console.log(err)
-        return Promise.reject
+        console.log(err);
+        return Promise.reject;
       }
     },
   },

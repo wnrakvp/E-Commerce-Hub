@@ -205,6 +205,7 @@ export default {
     },
     add({ commit,dispatch }, item) {
       let { id, date, sku, type, amount, oldAmount } = item;
+      console.log(id)
       if (id == null) {
         return axios
           .post(`http://localhost:5000/api/v1/inventories`, {

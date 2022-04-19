@@ -101,7 +101,7 @@ export default {
                   name,
                   attributes,
                   price,
-                  null,
+                  url,
                   new Set(marketplaces)
                 )
               );
@@ -175,7 +175,7 @@ export default {
             name,
             attributes,
             price,
-            null,
+            url,
             new Set(marketplaces)
           );
           // console.log(model);
@@ -223,6 +223,7 @@ export default {
             console.debug(result);
             const { _id, product, name, attributes, price, url, marketplaces } =
               result.data.data;
+              console.log(result.data.data)
             const model = new SKUModel(
               _id,
               new ProductModel(
@@ -238,6 +239,7 @@ export default {
               new Set(marketplaces)
             );
             commit('UNSHIFT_ALL', model);
+            console.log(model)
             console.timeEnd('Creating SKU...');
             return Promise.resolve(model);
           })

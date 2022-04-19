@@ -1,7 +1,7 @@
 <template>
 <div class="card h-100">
   <div class="row g-0">
-    <div class="col" style="max-width: 6rem;">
+    <div class="col" style="max-width: 6rem">
       <img :src="imageURL" :alt="title" class="img-fluid rounded-start">
     </div>
     <div class="col">

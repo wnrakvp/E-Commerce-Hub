@@ -23,12 +23,12 @@
           <div class="col align-self-stretch">
             <SKUItem @click="navigate" v-bind="{
               title: item.name,
-              product: item.product?.name,
+              product: item.product.name,
               details: item.desc,
               price: item.price,
               imageURL: item.image,
-              isShopee: item.marketplaces.has('shopee'),
-              isLazada: item.marketplaces.has('lazada')
+              isShopee: item.marketplaces.has('Shopee'),
+              isLazada: item.marketplaces.has('Lazada')
             }"/>
           </div>
         </router-link>
