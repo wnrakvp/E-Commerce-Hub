@@ -54,7 +54,7 @@ export default {
   watch: {
     productList: {
       handler(newValue) {
-        console.warn('New productList are:',newValue)
+        // alert('New Product is created')
       },
       deep: true,
     },

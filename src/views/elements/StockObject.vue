@@ -1,21 +1,29 @@
 <template>
-  <div class="card mx-auto mb-3" style="">
+  <div class="card mx-auto mt-3" style="">
     <div class="card-header bg-transparent border-0">
       <div class="d-flex justify-content-between">
-        <div class="badge rounded-pill bg-primary">Stocks No. {{ number }}</div>
-        <div class="me-2 badge rounded-pill bg-primary">Status : Published</div>
+        <div class="badge bg-primary">Stocks No. {{ number }}</div>
+        <router-link
+          :to="{ name: 'stock-item', params: { id: id } }"
+          custom
+          v-slot="{ navigate }"
+        >
+          <i class="bi bi-pencil-square" @click="navigate"></i>
+        </router-link>
       </div>
     </div>
     <div class="row g-0">
       <!-- <div>Stock#1</div> -->
       <div class="col-md-4">
         <div class="table-responsive">
-          <table class="table table-sm table-borderless text-center align-middle">
+          <table
+            class="table table-sm table-borderless text-center align-middle"
+          >
             <thead>
               <tr>
                 <th scope="col" colspan="2">Stock Details</th>
               </tr>
-           </thead>
+            </thead>
             <tbody>
               <tr>
                 <th scope="row" class="align-right">Date</th>
@@ -45,13 +53,21 @@
                 <th scope="row">Warehouse</th>
                 <td align="left">{{ warehouse }}</td>
               </tr>
+              <tr>
+                <th scope="row">Status</th>
+                <td align="left">
+                  <span class="badge rounded-pill bg-success">Published</span>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
       <div class="col-md-8">
         <div class="table-responsive">
-          <table class="table table-sm table-borderless text-center align-middle">
+          <table
+            class="table table-sm table-borderless text-center align-middle"
+          >
             <!-- <caption>List of users</caption> -->
             <thead>
               <tr>
@@ -86,6 +102,7 @@
 export default {
   props: {
     number: Number,
+    id: String,
     date: String,
     marketplaces: String,
     warehouse: String,

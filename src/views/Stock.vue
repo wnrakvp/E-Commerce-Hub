@@ -72,21 +72,22 @@
       </table> -->
       <div class="mt-3">
         <template v-for="(stock, i) in stockList" :key="i">
-          <router-link
+          <!-- <router-link
                   :to="{ name: 'stock-item', params: { id: stock.id } }"
                   custom
                   v-slot="{ navigate }"
-                >
+                > -->
           <StockCard
             v-bind="{
               number: i+1,
+              id: stock.id,
               date: formatDate(stock.date),
               marketplaces: stock.marketplace,
               warehouse: stock.warehouse,
               items: stock.items,
-            }" @click="navigate"
+            }"
           ></StockCard>
-          </router-link>
+          <!-- </router-link> -->
         </template>
       </div>
     <!-- </div> -->
