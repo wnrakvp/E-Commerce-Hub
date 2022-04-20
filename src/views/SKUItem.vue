@@ -75,7 +75,7 @@
             <input type="checkbox"
             class="form-check-input"
             id="checkboxShopee"
-            value="shopee"
+            value="Shopee"
             v-model="marketplaces"
             @change="checkAllMarketplaces">
             <label class="form-check-label" for="checkboxShopee">Shopee</label>
@@ -84,7 +84,7 @@
             <input type="checkbox"
             class="form-check-input"
             id="checkboxLazada"
-            value="lazada"
+            value="Lazada"
             v-model="marketplaces"
             @change="checkAllMarketplaces">
             <label class="form-check-label" for="checkboxLazada">Lazada</label>
@@ -185,11 +185,11 @@ export default {
       console.debug(e.target.id)
       if (e.target.id === 'checkboxAllMarketplace') {
         if (this.isAllMarketplace) {
-          this.marketplaces.add('shopee')
-          this.marketplaces.add('lazada')
+          this.marketplaces.add('Shopee')
+          this.marketplaces.add('Lazada')
         } else {
-          this.marketplaces.delete('shopee')
-          this.marketplaces.delete('lazada')
+          this.marketplaces.delete('Shopee')
+          this.marketplaces.delete('Lazada')
         }
       } else {
         if (this.marketplaces.size === 2) this.isAllMarketplace = true

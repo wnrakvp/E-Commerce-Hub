@@ -34,7 +34,7 @@ export default {
   actions: {
     async getAll({ commit }) {
       try {
-        console.time('Get ALL SKU');
+        console.time('Get ALL Stock');
         const result = await axios.get('http://localhost:5000/api/v1/stocks');
         const stockList = [];
         result.data.data.forEach(
@@ -45,7 +45,7 @@ export default {
           }
         );
         commit('SET_ALL', stockList);
-        console.timeEnd('Get ALL SKU');
+        console.timeEnd('Get ALL Stock');
         console.log(stockList);
         return Promise.resolve(stockList);
       } catch (err) {
@@ -81,15 +81,15 @@ export default {
     },
     async save({ commit }, { id, date, marketplace, warehouse, items }) {
       if (id == 'add') {
-      items.forEach(x => x.inventory = x.inventory.id);
-      // console.log(state.all)
+      const item = items;
+      item.forEach(x => x.inventory = x.inventory.id);
         console.time('Add Stocks');
         await axios
           .post(`http://localhost:5000/api/v1/stocks`, {
             date: date,
             marketplaces: marketplace,
             warehouse: warehouse,
-            items: items,
+            items: item,
           })
           .then((result) => {
             console.log(result.data.data)

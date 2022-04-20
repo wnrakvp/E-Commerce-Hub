@@ -79,6 +79,7 @@
                 >
           <StockCard
             v-bind="{
+              number: i+1,
               date: formatDate(stock.date),
               marketplaces: stock.marketplace,
               warehouse: stock.warehouse,

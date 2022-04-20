@@ -18,7 +18,7 @@
     </div>
     <div class="offcanvas-body">
       <form @submit.prevent="submit">
-        <fieldset :disabled="disabled">
+        <fieldset>
           <div class="mb-3">
             <label for="dateToAction" class="form-label">Date to Action</label>
             <input
