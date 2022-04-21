@@ -1,4 +1,3 @@
-import api from '../../api';
 import StockModel from '../../models/stock';
 import StockLineItemModel from '../../models/stockLineItem';
 import SKUModel from '../../models/sku';
@@ -46,7 +45,7 @@ export default {
         );
         commit('SET_ALL', stockList);
         console.timeEnd('Get ALL Stock');
-        console.log(stockList);
+        // console.log(stockList);
         return Promise.resolve(stockList);
       } catch (err) {
         console.error(err);

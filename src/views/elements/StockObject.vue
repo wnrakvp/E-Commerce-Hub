@@ -27,7 +27,7 @@
             <tbody>
               <tr>
                 <th scope="row" class="align-right">Date</th>
-                <td align="left">{{ date }}</td>
+                <td align="left"><span class="badge rounded-pill bg-light text-dark">{{ date }}</span></td>
               </tr>
               <tr>
                 <th scope="row">Marketplace</th>
@@ -46,17 +46,18 @@
                     width="24"
                     height="24"
                   />
-                  {{ marketplaces }}
+                  <span class="badge rounded-pill bg-light text-dark">{{ marketplaces }}</span>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Warehouse</th>
-                <td align="left">{{ warehouse }}</td>
+                <td align="left"><span class="badge rounded-pill bg-warning text-dark">{{ warehouse }}</span></td>
               </tr>
               <tr>
                 <th scope="row">Status</th>
                 <td align="left">
-                  <span class="badge rounded-pill bg-success">Published</span>
+                  <span class="badge rounded-pill bg-success" v-if="date <= formatDate(Date())" >Published</span>
+                  <span class="badge rounded-pill bg-danger" v-else >Unpublished</span>
                 </td>
               </tr>
             </tbody>
@@ -108,5 +109,16 @@ export default {
     warehouse: String,
     items: Array,
   },
+  methods: {
+    formatDate(date) {
+      let d = new Date(date);
+      let month = '' + (d.getMonth() + 1);
+      let day = '' + d.getDate();
+      let year = d.getFullYear();
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      return [day, month, year].join('-');
+    },
+  }
 };
 </script>

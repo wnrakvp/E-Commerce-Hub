@@ -55,7 +55,7 @@ export default {
       //   });
       //   // -----------------------------------------------
       // ---------------------------------NodeJS Server-----------------------------------------
-      return await axios
+      await axios
         .get(endpoint)
         .then((result) => {
           const productList = [];
@@ -85,8 +85,8 @@ export default {
       //   .catch(Promise.reject);
       //   // ---------------------------------------------------
       // ------------------------NodeJS Server---------------------------
-      return await axios
-        .get(endpoint)
+      await axios
+        .get(endpoint+`/${id}`)
         .then((result) => {
           let { _id, name, description, url } = result.data.data;
           const model = new ProductModel(_id, name, description, url);
@@ -125,8 +125,8 @@ export default {
         //   .catch(Promise.reject);
         // // ---------------------------------------------------
         // ----------------------NodeJS Server-----------------------------
-        return await axios
-          .put(endpoint + "/${id}", {
+        await axios
+          .put(endpoint + `/${id}`, {
             name: name,
             description: desc,
             url: image,
@@ -158,7 +158,7 @@ export default {
         //   .catch(Promise.reject);
         //   // ---------------------------------------------------
         // ----------------------NodeJS Server-----------------------------
-        return await axios
+        await axios
           .post(endpoint, {
             name: name,
             description: desc,
@@ -186,9 +186,10 @@ export default {
       //   .catch(Promise.reject);
       // // -----------------------------------------------------
       // ----------------------NodeJS Server-----------------------------
-      return await axios
-        .delete(endpoint + "/${id}")
+      await axios
+        .delete(endpoint + `/${id}`)
         .then((result) => {
+          console.debug(result)
           commit("DELETE_ALL", id);
           return Promise.resolve(id);
         })

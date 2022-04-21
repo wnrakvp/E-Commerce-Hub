@@ -216,7 +216,6 @@ export default {
       this.get(this.id)
         .then((o) => {
           console.debug(o);
-          console
           this.date = this.formatDate(o.date);
           this.marketplace = o.marketplace;
           this.warehouse = o.warehouse;
@@ -262,6 +261,18 @@ export default {
       price: 0,
       amountonsell: 1,
     };
+  },
+  watch: {
+    amountonsell: {
+      handler(newValue) {
+        const inventory = this.inventoryList.find(x=> x.id === this.inventoryId);
+        if (newValue > inventory.amount) {
+          alert('Exceed Limit')
+          this.amountonsell = inventory.amount;
+        }
+      },
+      deep: true,
+    },
   },
   methods: {
     close() {

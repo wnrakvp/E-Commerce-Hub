@@ -70,33 +70,33 @@
           </template>
         </tbody>
       </table> -->
-      <div class="mt-3">
-        <template v-for="(stock, i) in stockList" :key="i">
-          <!-- <router-link
+    <div class="mt-3">
+      <template v-for="(stock, i) in stockList" :key="i">
+        <!-- <router-link
                   :to="{ name: 'stock-item', params: { id: stock.id } }"
                   custom
                   v-slot="{ navigate }"
                 > -->
-          <StockCard
-            v-bind="{
-              number: i+1,
-              id: stock.id,
-              date: formatDate(stock.date),
-              marketplaces: stock.marketplace,
-              warehouse: stock.warehouse,
-              items: stock.items,
-            }"
-          ></StockCard>
-          <!-- </router-link> -->
-        </template>
-      </div>
+        <StockCard
+          v-bind="{
+            number: i + 1,
+            id: stock.id,
+            date: formatDate(stock.date),
+            marketplaces: stock.marketplace,
+            warehouse: stock.warehouse,
+            items: stock.items,
+          }"
+        ></StockCard>
+        <!-- </router-link> -->
+      </template>
+    </div>
     <!-- </div> -->
   </div>
   <router-view></router-view>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import StockCard from './elements/StockObject.vue';
+import { mapGetters, mapActions } from "vuex";
+import StockCard from "./elements/StockObject.vue";
 export default {
   components: {
     StockCard,
@@ -109,25 +109,25 @@ export default {
       .catch(console.error);
   },
   computed: {
-    ...mapGetters('Stock', {
-      stockList: 'all',
+    ...mapGetters("Stock", {
+      stockList: "all",
     }),
   },
   data() {
     return {};
   },
   methods: {
-    ...mapActions('Stock', {
-      getAllStocks: 'getAll',
+    ...mapActions("Stock", {
+      getAllStocks: "getAll",
     }),
     formatDate(date) {
       let d = new Date(date);
-      let month = '' + (d.getMonth() + 1);
-      let day = '' + d.getDate();
+      let month = "" + (d.getMonth() + 1);
+      let day = "" + d.getDate();
       let year = d.getFullYear();
-      if (month.length < 2) month = '0' + month;
-      if (day.length < 2) day = '0' + day;
-      return [day, month, year].join('-');
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+      return [day, month, year].join("-");
     },
   },
 };
