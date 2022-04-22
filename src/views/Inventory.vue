@@ -50,7 +50,7 @@
             </td>
             <td>{{ item.amount }}</td>
             <td>{{ Reserved(item.id)}}</td>
-            <td>{{ item.amount - Reserved(item.id)}}</td>
+            <td><span :class="{'link-danger': item.amount - Reserved(item.id) < 10}">{{ item.amount - Reserved(item.id)}}</span></td>
             <td></td>
             <router-link
               :to="{

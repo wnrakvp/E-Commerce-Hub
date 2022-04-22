@@ -117,6 +117,7 @@
                         :class="{ 'is-invalid': exceedLimit }"
                         id="amount"
                         placeholder="Amount"
+                        :disabled="inventoryId == ''"
                         v-model="amountonsell"
                       />
                     </td>
@@ -197,7 +198,7 @@ export default {
   },
   mounted() {
     if (this.id === "add") {
-      Promise.all([this.getAllInventory(), this.draft(),this.getAllStock()])
+      Promise.all([this.getAllInventory(), this.draft(), this.getAllStock()])
         .then(([inventoryList, o, stockList]) => {
           console.debug(inventoryList, o, stockList);
           console.log(stockList);
@@ -265,7 +266,7 @@ export default {
       items: [],
       inventoryId: "",
       price: 0,
-      amountonsell: 1,
+      amountonsell: 0,
     };
   },
   watch: {
@@ -276,18 +277,21 @@ export default {
         );
         // ---- NEED TO SUM ALL amount on sell from INVENTORY ID ----
         const stockitems = [];
-        this.stockList.forEach(x => {
-          x.items.forEach(x => stockitems.push(x))
+        this.stockList.forEach((x) => {
+          x.items.forEach((x) => stockitems.push(x));
         });
         // console.log(stockitems)
-        var filterStock = stockitems.filter(x => x.inventory._id === this.inventoryId).map(x=>x.amountonsell);
+        var filterStock = stockitems
+          .filter((x) => x.inventory._id === this.inventoryId)
+          .map((x) => x.amountonsell);
         var totalOnSell = 0;
-        for (let i in filterStock ) {
-            totalOnSell += filterStock[i];
+        for (let i in filterStock) {
+          totalOnSell += filterStock[i];
         }
         // ----------------------------------------------------------
         if (newValue > inventory.amount - totalOnSell) {
           this.exceedLimit = true;
+          alert("The available amount is not enough");
           this.amountonsell = inventory.amount - totalOnSell;
         }
       },
@@ -310,11 +314,19 @@ export default {
       );
       if (inventory) {
         console.debug(inventory);
-        this.items.push({
-          inventory: inventory,
-          price: this.price,
-          amountonsell: this.amountonsell,
-        });
+        if (this.items.find((x) => x.inventory === inventory)) {
+          // this.items.push({
+          //   inventory: inventory,
+          //   price: this.price,
+          //   amountonsell: this.amountonsell,
+          // });
+        } else {
+          this.items.push({
+            inventory: inventory,
+            price: this.price,
+            amountonsell: this.amountonsell,
+          });
+        }
       }
     },
     submit() {

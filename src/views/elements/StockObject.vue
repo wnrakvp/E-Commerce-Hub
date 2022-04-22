@@ -75,6 +75,7 @@
                 <th scope="col">SKU</th>
                 <th scope="col">Price</th>
                 <th scope="col">Amount</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -89,10 +90,14 @@
                     {{ item.inventory.sku.name }}
                   </td>
                   <td>{{ item.price }}</td>
-                  <td>{{ item.amountonsell }}</td>
+                  <td>xx / {{ item.amountonsell }}</td>
+                  <td></td>
                 </tr>
               </template>
             </tbody>
+            <tfoot>
+
+            </tfoot>
           </table>
         </div>
       </div>
