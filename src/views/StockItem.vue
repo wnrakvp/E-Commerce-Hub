@@ -275,12 +275,20 @@ export default {
           (x) => x.id === this.inventoryId
         );
         // ---- NEED TO SUM ALL amount on sell from INVENTORY ID ----
-        const stock = this.stockList.find(x => x.items);
-        console.log(stock)
+        const stockitems = [];
+        this.stockList.forEach(x => {
+          x.items.forEach(x => stockitems.push(x))
+        });
+        // console.log(stockitems)
+        var filterStock = stockitems.filter(x => x.inventory._id === this.inventoryId).map(x=>x.amountonsell);
+        var totalOnSell = 0;
+        for (let i in filterStock ) {
+            totalOnSell += filterStock[i];
+        }
         // ----------------------------------------------------------
-        if (newValue > inventory.amount) {
+        if (newValue > inventory.amount - totalOnSell) {
           this.exceedLimit = true;
-          this.amountonsell = inventory.amount;
+          this.amountonsell = inventory.amount - totalOnSell;
         }
       },
       deep: true,

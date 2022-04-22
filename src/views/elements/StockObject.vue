@@ -1,5 +1,5 @@
 <template>
-  <div class="card mx-auto mt-3" style="">
+  <div class="card shadow mx-auto mt-4" style="">
     <div class="card-header bg-transparent border-0">
       <div class="d-flex justify-content-between">
         <div class="badge bg-primary">Stocks No. {{ number }}</div>
@@ -8,7 +8,7 @@
           custom
           v-slot="{ navigate }"
         >
-          <i class="bi bi-pencil-square" @click="navigate"></i>
+         <a href="#" class="pe-auto"><i class="bi bi-pencil-square" @click="navigate"></i></a>
         </router-link>
       </div>
     </div>
