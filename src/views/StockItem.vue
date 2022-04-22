@@ -7,7 +7,7 @@
   >
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="ProductItemLabel">
-        {{ id === 'add' ? 'Add' : '' }} Stock Item
+        {{ id === "add" ? "Add" : "" }} Stock Item
       </h5>
       <button
         type="button"
@@ -114,6 +114,7 @@
                       <input
                         type="number"
                         class="form-control form-control-sm"
+                        :class="{ 'is-invalid': exceedLimit }"
                         id="amount"
                         placeholder="Amount"
                         v-model="amountonsell"
@@ -133,6 +134,7 @@
               </table>
             </div>
           </div>
+
           <hr />
           <div v-if="id === 'add'" class="mb-3 text-end">
             <button v-if="isSaving" type="submit" class="btn btn-primary">
@@ -143,7 +145,7 @@
               ></span>
               Saving...
             </button>
-            <button v-else type="submit" class="btn btn-primary" >
+            <button v-else type="submit" class="btn btn-primary">
               Publish
             </button>
           </div>
@@ -187,18 +189,18 @@
 </template>
 
 <script>
-import { Offcanvas } from 'bootstrap';
-import { mapGetters, mapActions } from 'vuex';
+import { Offcanvas } from "bootstrap";
+import { mapGetters, mapActions } from "vuex";
 export default {
   props: {
     id: String,
   },
   mounted() {
-    if (this.id === 'add') {
-      Promise.all([this.getAllInventory(), this.draft()])
-        .then(([inventoryList, o]) => {
-          console.debug(inventoryList, o);
-          console.log(inventoryList);
+    if (this.id === "add") {
+      Promise.all([this.getAllInventory(), this.draft(),this.getAllStock()])
+        .then(([inventoryList, o, stockList]) => {
+          console.debug(inventoryList, o, stockList);
+          console.log(stockList);
           this.date = this.formatDate(o.date);
           this.marketplace = o.marketplace;
           this.warehouse = o.warehouse;
@@ -207,7 +209,7 @@ export default {
           this.disabled = false;
           this._offcanvas.show();
           this.$refs.StockItem.addEventListener(
-            'hidden.bs.offcanvas',
+            "hidden.bs.offcanvas",
             this.close
           );
         })
@@ -224,7 +226,7 @@ export default {
           this.disabled = true;
           this._offcanvas.show();
           this.$refs.StockItem.addEventListener(
-            'hidden.bs.offcanvas',
+            "hidden.bs.offcanvas",
             this.close
           );
         })
@@ -232,8 +234,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('Inventory', {
-      inventoryList: 'all',
+    ...mapGetters("Inventory", {
+      inventoryList: "all",
+    }),
+    ...mapGetters("Stock", {
+      stockList: "all",
     }),
     skus() {
       return this.inventoryList.filter((x) => {
@@ -252,12 +257,13 @@ export default {
       disabled: false,
       isSaving: false,
       isDeleting: false,
+      exceedLimit: false,
       date: new Date(),
-      marketplace: '',
-      warehouse: '',
+      marketplace: "",
+      warehouse: "",
       skuList: [],
       items: [],
-      inventoryId: '',
+      inventoryId: "",
       price: 0,
       amountonsell: 1,
     };
@@ -265,9 +271,15 @@ export default {
   watch: {
     amountonsell: {
       handler(newValue) {
-        const inventory = this.inventoryList.find(x=> x.id === this.inventoryId);
+        const inventory = this.inventoryList.find(
+          (x) => x.id === this.inventoryId
+        );
+        // ---- NEED TO SUM ALL amount on sell from INVENTORY ID ----
+        const stock = this.stockList.find(x => x.items);
+        console.log(stock)
+        // ----------------------------------------------------------
         if (newValue > inventory.amount) {
-          alert('Exceed Limit')
+          this.exceedLimit = true;
           this.amountonsell = inventory.amount;
         }
       },
@@ -276,10 +288,10 @@ export default {
   },
   methods: {
     close() {
-      this.$router.replace({ name: 'stock' });
+      this.$router.replace({ name: "stock" });
     },
     changeMarketplace() {
-      this.skuId = '';
+      this.skuId = "";
     },
     removeItem(idx) {
       this.items.splice(idx, 1);
@@ -309,33 +321,36 @@ export default {
         })
         .catch(console.error);
     },
-    remove () {
-      this.disabled = true
-      this.isDeleting = true
-      const {id} = this
-      this.delete(id).then(() => {
-        this.disabled = false
-        this.isDeleting = false
-        this._offcanvas.hide()
-      }).catch(console.error)
+    remove() {
+      this.disabled = true;
+      this.isDeleting = true;
+      const { id } = this;
+      this.delete(id)
+        .then(() => {
+          this.disabled = false;
+          this.isDeleting = false;
+          this._offcanvas.hide();
+        })
+        .catch(console.error);
     },
     formatDate(date) {
       let d = new Date(date);
-      let month = '' + (d.getMonth() + 1);
-      let day = '' + d.getDate();
+      let month = "" + (d.getMonth() + 1);
+      let day = "" + d.getDate();
       let year = d.getFullYear();
-      if (month.length < 2) month = '0' + month;
-      if (day.length < 2) day = '0' + day;
-      return [year, month, day].join('-');
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+      return [year, month, day].join("-");
     },
-    ...mapActions('Stock', {
-      draft: 'draft',
-      get: 'get',
-      save: 'save',
-      delete: 'delete',
+    ...mapActions("Stock", {
+      getAllStock: "getAll",
+      draft: "draft",
+      get: "get",
+      save: "save",
+      delete: "delete",
     }),
-    ...mapActions('Inventory', {
-      getAllInventory: 'getAll',
+    ...mapActions("Inventory", {
+      getAllInventory: "getAll",
     }),
   },
 };

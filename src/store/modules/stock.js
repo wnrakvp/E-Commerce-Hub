@@ -32,8 +32,8 @@ export default {
   },
   actions: {
     async getAll({ commit }) {
+      console.time('Get ALL Stock');
       try {
-        console.time('Get ALL Stock');
         const result = await axios.get('http://localhost:5000/api/v1/stocks');
         const stockList = [];
         result.data.data.forEach(

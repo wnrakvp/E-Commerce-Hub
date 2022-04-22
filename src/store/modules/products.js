@@ -55,7 +55,7 @@ export default {
       //   });
       //   // -----------------------------------------------
       // ---------------------------------NodeJS Server-----------------------------------------
-      await axios
+      return await axios
         .get(endpoint)
         .then((result) => {
           const productList = [];
@@ -85,8 +85,8 @@ export default {
       //   .catch(Promise.reject);
       //   // ---------------------------------------------------
       // ------------------------NodeJS Server---------------------------
-      await axios
-        .get(endpoint+`/${id}`)
+      return await axios
+        .get(endpoint + `/${id}`)
         .then((result) => {
           let { _id, name, description, url } = result.data.data;
           const model = new ProductModel(_id, name, description, url);
@@ -125,7 +125,7 @@ export default {
         //   .catch(Promise.reject);
         // // ---------------------------------------------------
         // ----------------------NodeJS Server-----------------------------
-        await axios
+        return await axios
           .put(endpoint + `/${id}`, {
             name: name,
             description: desc,
@@ -186,7 +186,7 @@ export default {
       //   .catch(Promise.reject);
       // // -----------------------------------------------------
       // ----------------------NodeJS Server-----------------------------
-      await axios
+      return await axios
         .delete(endpoint + `/${id}`)
         .then((result) => {
           console.debug(result)
