@@ -90,7 +90,7 @@
                     {{ item.inventory.sku.name }}
                   </td>
                   <td>{{ item.price }}</td>
-                  <td>xx / {{ item.amountonsell }}</td>
+                  <td>{{ item.amountonsell - 0 }} / {{ item.amountonsell }}</td>
                   <td></td>
                 </tr>
               </template>

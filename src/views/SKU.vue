@@ -49,6 +49,8 @@ export default {
       this.getAllSKU(),this.getAllProducts()
     ]).then(result => {
       console.debug(result)
+      console.log(this.skuList)
+      console.log(this.productList)
     }).catch(console.error)
   },
   computed: {

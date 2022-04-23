@@ -13,7 +13,7 @@ export default {
   getters: {
     all: (state) =>
       state.all.filter((x) =>
-        state.productId === null ? true : x.productId === state.productId
+        state.productId === null ? true : x.product.id === state.productId
       ),
   },
   mutations: {
