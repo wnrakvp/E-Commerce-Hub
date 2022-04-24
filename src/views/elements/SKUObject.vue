@@ -1,5 +1,5 @@
 <template>
-  <div class="card h-100">
+  <div class="card shadow h-100">
     <div class="row">
       <h6 class="card-title clamp mt-3" align="center">{{ title }}</h6>
       <img
