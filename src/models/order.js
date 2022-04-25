@@ -1,13 +1,13 @@
 class OrderModel {
-  constructor (id, date, marketplace, orderNo, trackNo, orderStatus, deliveryBy, courier, items) {
+  constructor (id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items) {
     this.id = id
     this.date = date
     this.marketplace = marketplace
     this.orderNo = orderNo
     this.trackNo = trackNo
     this.orderStatus = orderStatus
-    this.deliveryBy = deliveryBy
     this.courier = courier
+    this.deliveryBy = deliveryBy
     this.items = items
   }
 }
