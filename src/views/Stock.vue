@@ -72,11 +72,6 @@
       </table> -->
     <div class="mt-3">
       <template v-for="(stock, i) in stockList" :key="i">
-        <!-- <router-link
-                  :to="{ name: 'stock-item', params: { id: stock.id } }"
-                  custom
-                  v-slot="{ navigate }"
-                > -->
         <StockCard
           v-bind="{
             number: i + 1,
@@ -85,9 +80,9 @@
             marketplaces: stock.marketplace,
             warehouse: stock.warehouse,
             items: stock.items,
+            soldList: orderList,
           }"
         ></StockCard>
-        <!-- </router-link> -->
       </template>
     </div>
     <!-- </div> -->
@@ -102,15 +97,19 @@ export default {
     StockCard,
   },
   mounted() {
-    this.getAllStocks()
+    Promise.all([this.getAllStocks(), this.getAllOrders()])
       .then((o) => {
         console.debug(o);
+        // console.log(this.orderList.filter(x => x.orderStatus === 'READY_TO_SHIP'))
       })
       .catch(console.error);
   },
   computed: {
     ...mapGetters("Stock", {
       stockList: "all",
+    }),
+    ...mapGetters("Order", {
+      orderList: "all",
     }),
   },
   data() {
@@ -119,6 +118,9 @@ export default {
   methods: {
     ...mapActions("Stock", {
       getAllStocks: "getAll",
+    }),
+    ...mapActions("Stock", {
+      getAllOrders: "getAll",
     }),
     formatDate(date) {
       let d = new Date(date);

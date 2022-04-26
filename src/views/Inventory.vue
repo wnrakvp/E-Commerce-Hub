@@ -4,11 +4,11 @@
       class="d-flex justify-content-between align-items-center border-bottom pb-1"
     >
       <h6 class="h6 my-0">Inventory Management</h6>
-      <button class="btn btn-sm btn-outline-secondary" @click="Logger">
-        <i class="bi-plus-circle"></i> Logger
+      <button class="btn btn-sm btn-link ms-auto">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
       </button>
       <router-link :to="{ name: 'inventory-item', params: { id: 'add'} }" custom v-slot="{ navigate }">
-      <button class="btn btn-sm btn-outline-secondary" @click="navigate">
+      <button class="btn btn-sm btn-outline-secondary ms-3" @click="navigate">
         <i class="bi-plus-circle"></i> Add
       </button>
       </router-link>

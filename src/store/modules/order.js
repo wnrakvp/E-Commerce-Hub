@@ -4,7 +4,7 @@ import OrderModel from '../../models/order'
 import OrderLineItemModel from '../../models/orderLineItem'
 import SKUModel from '../../models/sku'
 
-const PORT = 5001
+const PORT = 5000
 const endpoint="http://localhost:" + PORT + "/api/v1/Orders"
 
 export default {
@@ -40,7 +40,7 @@ export default {
   },
   actions: {
     getAll({ commit }) {
-      console.log('getAll Order ...');
+      console.time('GET All Order');
       return axios     
         .get(endpoint)
         .then((result) => {
@@ -52,7 +52,7 @@ export default {
                 _id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items));
           });
           // console.log('getAll OrderList ...'+orderList);
-
+          console.timeEnd('GET All Order');
           commit("SET_ALL", orderList);
           return Promise.resolve(orderList);
         })
@@ -64,24 +64,24 @@ export default {
     async get (context, id) {
       console.log('get by id...');
       return await axios
-      .get(endpoint + "/${id}")
+      .get(endpoint + `/${id}`)
       .then((result) => {     
-        let {_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items: lineItems} = result
-        console.debug(_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, lineItems)
-        const items = []
-        lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
-          const sku = new SKUModel(
-            skuDetails._id,
-            skuDetails.productId,
-            null,
-            skuDetails.name,
-            skuDetails.desc,
-            skuDetails.price,
-            skuDetails.image,
-            new Set(skuDetails.marketplaces)
-          )
-          items.push(new OrderLineItemModel(skuId, sku, price, amount))
-        })
+        let {_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items} = result.data.data
+        console.debug(_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items)
+        // const items = []
+        // lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
+        //   const sku = new SKUModel(
+        //     skuDetails._id,
+        //     skuDetails.productId,
+        //     null,
+        //     skuDetails.name,
+        //     skuDetails.desc,
+        //     skuDetails.price,
+        //     skuDetails.image,
+        //     new Set(skuDetails.marketplaces)
+        //   )
+        //   items.push(new OrderLineItemModel(skuId, sku, price, amount))
+        // })
         const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items)
         return Promise.resolve(model)
       }).catch(err => {

@@ -8,7 +8,9 @@
           custom
           v-slot="{ navigate }"
         >
-         <a href="#" class="pe-auto"><i class="bi bi-pencil-square" @click="navigate"></i></a>
+          <a href="#" class="pe-auto"
+            ><i class="bi bi-pencil-square" @click="navigate"></i
+          ></a>
         </router-link>
       </div>
     </div>
@@ -27,7 +29,11 @@
             <tbody>
               <tr>
                 <th scope="row" class="align-right">Date</th>
-                <td align="left"><span class="badge rounded-pill bg-light text-dark">{{ date }}</span></td>
+                <td align="left">
+                  <span class="badge rounded-pill bg-light text-dark">{{
+                    date
+                  }}</span>
+                </td>
               </tr>
               <tr>
                 <th scope="row">Marketplace</th>
@@ -46,18 +52,30 @@
                     width="24"
                     height="24"
                   />
-                  <span class="badge rounded-pill bg-light text-dark">{{ marketplaces }}</span>
+                  <span class="badge rounded-pill bg-light text-dark">{{
+                    marketplaces
+                  }}</span>
                 </td>
               </tr>
               <tr>
                 <th scope="row">Warehouse</th>
-                <td align="left"><span class="badge rounded-pill bg-warning text-dark">{{ warehouse }}</span></td>
+                <td align="left">
+                  <span class="badge rounded-pill bg-warning text-dark">{{
+                    warehouse
+                  }}</span>
+                </td>
               </tr>
               <tr>
                 <th scope="row">Status</th>
                 <td align="left">
-                  <span class="badge rounded-pill bg-success" v-if="date <= formatDate(Date())" >Published</span>
-                  <span class="badge rounded-pill bg-danger" v-else >Unpublished</span>
+                  <span
+                    class="badge rounded-pill bg-success"
+                    v-if="date <= formatDate(Date())"
+                    >Published</span
+                  >
+                  <span class="badge rounded-pill bg-danger" v-else
+                    >Unpublished</span
+                  >
                 </td>
               </tr>
             </tbody>
@@ -90,14 +108,17 @@
                     {{ item.inventory.sku.name }}
                   </td>
                   <td>{{ item.price }}</td>
-                  <td>{{ item.amountonsell - 0 }} / {{ item.amountonsell }}</td>
+                  <td>
+                    {{
+                      item.amountonsell - alreadySold(item.inventory.sku._id)
+                    }}
+                    / {{ item.amountonsell }}
+                  </td>
                   <td></td>
                 </tr>
               </template>
             </tbody>
-            <tfoot>
-
-            </tfoot>
+            <tfoot></tfoot>
           </table>
         </div>
       </div>
@@ -113,17 +134,25 @@ export default {
     marketplaces: String,
     warehouse: String,
     items: Array,
+    soldList: Array,
   },
   methods: {
     formatDate(date) {
       let d = new Date(date);
-      let month = '' + (d.getMonth() + 1);
-      let day = '' + d.getDate();
+      let month = "" + (d.getMonth() + 1);
+      let day = "" + d.getDate();
       let year = d.getFullYear();
-      if (month.length < 2) month = '0' + month;
-      if (day.length < 2) day = '0' + day;
-      return [day, month, year].join('-');
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+      return [day, month, year].join("-");
     },
-  }
+    alreadySold(id) {
+      console.log(
+        this.soldList
+          .filter((x) => x.orderStatus === "READY_TO_SHIP")
+          .map((x) => x.items)
+      );
+    },
+  },
 };
 </script>
