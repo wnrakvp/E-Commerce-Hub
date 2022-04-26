@@ -18,7 +18,7 @@
         </div>
         <div class="mb-3">
           <label for="productImage" class="form-label">Image</label>
-          <input class="form-control" type="file" id="productImage">
+          <input class="form-control" type="file" id="productImage" @change="previewFiles">
         </div>
         <hr>
         <div v-if="id === 'add'" class="mb-3 text-end">
@@ -109,6 +109,10 @@ export default {
         this._offcanvas.hide()
       }).catch(console.error)
     },
+    previewFiles(event) {
+      console.log(event.target.files);
+      this.image = event.target.files[0];
+   },
     ...mapActions('Products', {
       draft: 'draft',
       get: 'get',

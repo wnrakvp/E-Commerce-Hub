@@ -1,7 +1,7 @@
-import axios from "axios";
-import ProductModel from "../../models/product";
-const PORT = 5000
-const endpoint="http://localhost:" + PORT + "/api/v1/products"
+import axios from 'axios';
+import ProductModel from '../../models/product';
+const PORT = 5000;
+const endpoint = 'http://localhost:' + PORT + '/api/v1/products';
 export default {
   namespaced: true,
   state() {
@@ -62,12 +62,12 @@ export default {
           result.data.data.forEach(({ _id, name, description, url }) => {
             productList.push(new ProductModel(_id, name, description, url));
           });
-          commit("SET_ALL", productList);
+          commit('SET_ALL', productList);
           return Promise.resolve(productList);
         })
         .catch((err) => {
           console.error(err);
-          return Promise.resolve("200");
+          return Promise.resolve('200');
         });
       // --------------------------------------------------------------------------------------
     },
@@ -98,15 +98,15 @@ export default {
     draft() {
       return Promise.resolve(
         new ProductModel(
-          "",
-          "",
-          "",
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdT-CMjPc50R-jKEvJl_rcn3mBMvkcUwERg"
+          '',
+          '',
+          '',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdT-CMjPc50R-jKEvJl_rcn3mBMvkcUwERg'
         )
       );
     },
     async save({ commit }, { id, name, desc, image }) {
-      if (id != "add") {
+      if (id != 'add') {
         // // ------------------MOCK Json-Server-------------------
         // return axios
         //   .put("http://localhost:3000/productList/" + id, {
@@ -134,7 +134,7 @@ export default {
           .then((result) => {
             let { _id, name, description, url } = result.data.data;
             const model = new ProductModel(_id, name, description, url);
-            commit("EDIT_ALL", model);
+            commit('EDIT_ALL', model);
             return Promise.resolve(model);
           })
           .catch(Promise.reject);
@@ -158,13 +158,28 @@ export default {
         //   .catch(Promise.reject);
         //   // ---------------------------------------------------
         // ----------------------NodeJS Server-----------------------------
+        let url = null;
+        if (image !== 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdT-CMjPc50R-jKEvJl_rcn3mBMvkcUwERg' ){
+        const formData = new FormData();
+        formData.append('file', image);
+        await axios
+          .post(`http://localhost:5000/api/v1/uploads`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data; boundary=----',
+            },
+          })
+          .then((result) => {
+            url = `http://localhost:5000/uploads/${result.data.data.filename}`
+          });
+        }
         await axios
           .post(endpoint, {
             name: name,
             description: desc,
-            url: image,
+            url: url? url:image,
           })
           .then((result) => {
+            console.log(result.data.data)
             let { _id, name, description, url } = result.data.data;
             const model = new ProductModel(_id, name, description, url);
             commit("UNSHIFT_ALL", model);
@@ -189,8 +204,8 @@ export default {
       return await axios
         .delete(endpoint + `/${id}`)
         .then((result) => {
-          console.debug(result)
-          commit("DELETE_ALL", id);
+          console.debug(result);
+          commit('DELETE_ALL', id);
           return Promise.resolve(id);
         })
         .catch(Promise.reject);
