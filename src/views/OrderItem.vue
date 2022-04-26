@@ -8,16 +8,16 @@
     <form @submit.prevent="submit">
       <fieldset>        
         <div class="mb-1">
-          <div v-if="orderStatus === 'READY_TO_SHIP'">
+          <div v-if="orderStatus === 'READY_TO_SHIP' || orderStatus === 'ready_to_ship'">
             <p class="badge bg-danger">{{ getStatus(orderStatus) }}</p>
           </div>
-          <div v-if="orderStatus === 'ON_DELIVERY'">
+          <div v-else-if="orderStatus === 'ON_DELIVERY' || orderStatus === 'on_delivery'">
             <p class="badge bg-warning">{{ getStatus(orderStatus) }}</p>
           </div>
-          <div v-if="orderStatus === 'SHIPPED'">
+          <div v-else-if="orderStatus === 'SHIPPED' || orderStatus.toLowerCase() === 'shipped'">
             <p class="badge bg-info">{{ getStatus(orderStatus) }}</p>
           </div>
-          <div v-if="orderStatus === 'COMPLETED'">
+          <div v-else-if="orderStatus === 'COMPLETED' || orderStatus.toLowerCase() === 'completed'">
             <p class="badge bg-success">{{ getStatus(orderStatus) }}</p>
           </div>
           <label for="orderNoToAction" class="form-label">Order No.</label>
@@ -28,34 +28,73 @@
           <br>
           <label for="marketplace" class="form-label">Marketplace</label>
           <select class="form-select" id="marketplace" v-model="marketplace" @change="changeMarketplace" :disabled="disabled">
-            <option value="">Open this to select marketplace</option>
+            <option value="">Select marketplace</option>
             <option value="shopee">Shopee</option>
             <option value="lazada">Lazada</option>
           </select>
+       
           <br>
         
-          <div v-if="orderStatus != 'READY_TO_SHIP'" >
-              <label for="courier" class="form-label">Delivery :</label>
+          <div >
+              <label class="form-label">Delivery </label>
+              <label v-if="orderStatus === 'READY_TO_SHIP' || orderStatus === 'ready_to_ship'" class="form-label small text-danger"> &nbsp;&nbsp;*please fill out delivery detail</label>
               <br> 
               <!-- For update courier detail -->
               <!-- Radior button -->
-              <div v-if="orderStatus === 'ON_DELIVERY'" >
-                <input type="radio" id="Self" value="Self" v-model="deliveryBy" >
-                <label for="one">Self</label><br>
+              <div v-if="orderStatus === 'READY_TO_SHIP' || orderStatus === 'ready_to_ship'" >  
+                <div v-if="deliveryBy==='Self'">
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
 
-                <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" > 
-                <label for="one">Warehouse</label><br> 
+                <div v-else-if="deliveryBy==='self'">
+                  <input type="radio" id="self" value="self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
 
-                <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" >
-                <label for="two">Courier</label><br>   
+                <div v-else-if="deliveryBy==='Warehouse'">
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
 
+                <div v-else-if="deliveryBy==='warehouse'">
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="warehouse" value="warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
+
+                <div v-else-if="deliveryBy==='Courier'">
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
+
+                <div v-else-if="deliveryBy==='courier'">
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="courier" value="courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
+
+                <div v-else>
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
+
+                
                 <br>
                 <!-- Dropdown List -->
                 <select class="form-select" id="courier" v-model="courier" @change="changeDelivery">
-                  <option value="">Open this to select courier</option>
-                  <option value="EMS">EMS</option>
-                  <option value="KERRY">KERRY</option>
-                  <option value="FLASH">FLASH</option>
+                  <option value="">Select courier</option>
+                  <option v-if="value='ems'" value="ems">EMS</option>
+                  <option v-else-if="value='EMS'" value="ems">EMS</option>
+                  <option v-if="value='kerry'" value="kerry">KERRY</option>
+                  <option v-else-if="value='KERRY'" value="kerry">KERRY</option>
+                  <option v-if="value='flash'" value="flash">FLASH</option>
+                  <option v-else-if="value='FLASH'" value="flash">FLASH</option>
                 </select> 
 
                 <label for="trackToAction" class="form-label">Tracking No.</label>
@@ -64,24 +103,62 @@
 
               <!-- For View Only -->
                <!-- Radior button -->
-              <div v-else-if="orderStatus != 'ON_DELIVERY'" >
+              <div v-else-if="orderStatus != 'READY_TO_SHIP' && orderStatus != 'ready_to_ship'" >
                 <fieldset :disabled="disabled">
-                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" >
-                  <label for="one">Self</label><br>
+                <div v-if="deliveryBy==='Self'">
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
 
-                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" > 
-                  <label for="one">Warehouse</label><br> 
+                <div v-else-if="deliveryBy ==='self'">
+                  <input type="radio" id="self" value="self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
 
-                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" >
-                  <label for="two">Courier</label><br> 
+                <div v-else-if="deliveryBy==='Warehouse'">
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
+
+                <div v-else-if="deliveryBy==='warehouse'">
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="warehouse" value="warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
+
+                <div v-else-if="deliveryBy==='Courier'">
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
+
+                <div v-else-if="deliveryBy==='courier'">
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="courier" value="courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
+
+                <div v-else>
+                  <input type="radio" id="Self" value="Self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
+                  <input type="radio" id="Warehouse" value="Warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
+                  <input type="radio" id="Courier" value="Courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
+                </div>
 
                   <br>
-                  <!-- Dropdown List -->
+               
+                  Courier: 
                   <select class="form-select" id="courier" v-model="courier" @change="changeCourier">
                     <option value="">Open this to select courier</option>
-                    <option value="EMS">EMS</option>
-                    <option value="KERRY">KERRY</option>
-                    <option value="FLASH">FLASH</option>
+                      <option value="">Select courier</option>
+                      <option v-if="value='ems'" value="ems">EMS</option>
+                      <option v-else-if="value='EMS'" value="ems">EMS</option>
+                      <option v-if="value='kerry'" value="kerry">KERRY</option>
+                      <option v-else-if="value='KERRY'" value="kerry">KERRY</option>
+                      <option v-if="value='flash'" value="flash">FLASH</option>
+                      <option v-else-if="value='FLASH'" value="flash">FLASH</option>
                   </select>  
 
                   <br>
@@ -115,7 +192,7 @@
               <tbody>
                 <tr v-for="(item, idx) in items" :key="idx">
                   <td>{{idx + 1}}</td>
-                  <td>{{item.sku.name}}</td>                   
+                  <td>{{item.skuId.name}}</td>                   
                   <td>{{item.price.toLocaleString()}}</td>  
                   <td>{{item.amount}}</td>          
                   <td>{{getSubTotal(item.price,item.amount).toLocaleString()}}</td>
@@ -132,12 +209,12 @@
               </tbody>
               <tfoot v-if="id === 'add'">
                 <tr>
-                  <td colspan="2">
+                  <!-- <td colspan="2">
                     <select class="form-select" id="marketplace" v-model="skuId">
                       <option value="">SKU</option>
                       <option v-for="(sku, idx) in skus" :key="idx" :value="sku.id">{{sku.name}}</option>
                     </select>
-                  </td>
+                  </td> -->
                   <td><input type="number" class="form-control form-control-sm" id="price" placeholder="Price" v-model="price"></td>
                   <td><input type="number" class="form-control form-control-sm" id="amount" placeholder="Amount" v-model="amount"></td>
                   <td><button type="button" class="btn btn-sm btn-outline-secondary" @click="addItem()"><i class="bi-plus-circle"></i></button></td>
@@ -148,11 +225,17 @@
         </div>
         <hr>
         <!-- Button for Update Status -->
-        <div v-if="orderStatus === 'READY_TO_SHIP'" class="mb-3 text-end">
-          <button type="updateStatus" class="btn btn-primary">Click to Prepare</button>
-        </div>
-        <div v-if="orderStatus === 'ON_DELIVERY'" class="mb-3 text-end">
-          <button type="updateStatus" class="btn btn-primary">Confirm to Send Order</button>
+        <!-- <div v-if="orderStatus === 'ON_DELIVERY'" class="mb-3 text-end">
+          <button type="updateStatus" class="btn btn-primary">Already Send Order</button>
+        </div> -->
+        <div v-if="orderStatus === 'READY_TO_SHIP' || orderStatus === 'ready_to_ship'" class="mb-3 text-end">
+          <div v-if="trackNo != '' && deliveryBy !='' && courier !=''" >
+             <button type="updateStatus" class="btn btn-primary" @click="update()">Confirm to Send Order</button>
+          </div>
+          <div v-else >
+             <button type="updateStatus" class="btn btn-secondary disable" >Confirm to Send Order</button>            
+          </div>
+         
         </div>
         <!-- <div v-if="id === 'add'" class="mb-3 text-end">
           <button type="submit" class="btn btn-primary">Publish</button>
@@ -171,8 +254,17 @@ export default {
     id: String
   },
   mounted() {
+      Promise.all([
+        this.getAllOrder(),
+        this.getAllSKU()
+      ])
+        .then(result => {
+          console.debug(result)
+      })
+        .catch(console.error)
+    
     if (this.id === 'add') {
-      Promise.all([this.getAllSKU(),this.draft()]).then(([skuList, o]) => {
+      Promise.all([this.getAllOrder(),this.draft()]).then(([skuList, o]) => {
         console.debug(skuList, o)
         this.skuList = skuList
         this.date = this.formatDate(o.date)
@@ -188,9 +280,13 @@ export default {
         this._offcanvas.show()
         this.$refs.OrderItem.addEventListener('hidden.bs.offcanvas', this.close)
       }).catch(console.error)
-    } else {
-      this.get(Number(this.id)).then(o => {
+    } else {      
+      this.get(this.id).then(o => {
+        console.log(this.id)
+        console.log(this.orderNo)
+        console.log(this.items)
         console.debug(o)
+
         this.date = this.formatDate(o.date)
         this.marketplace = o.marketplace
         this.orderNo = o.orderNo
@@ -235,21 +331,27 @@ export default {
       items: [],
       skuId: '',
       price: 0,
-      amount: 1
+      amount: 0
     }
   },
   methods: {
+     ...mapActions('Order', {
+      draft: 'draft',
+      get: 'get',
+      save: 'save'
+    }),
+    ...mapActions('SKU', {
+      getAllSKU: 'getAll'
+    }),
+    ...mapActions('Order', {
+      getAllOrder: 'getAll'
+    }),
     close() {
       this.$router.replace({ name: 'order' })
     },
     changeMarketplace () {
       this.skuId = ''
     },
-    // checkRadio (e) {      
-    //   console.log('radioboxSelf.value: '+radioboxSelf.value);
-    //   console.debug('e.target.id: '+e.target.id)
-
-    // },
     removeItem (idx) {
       this.items.splice(idx, 1)
     },
@@ -285,6 +387,22 @@ export default {
         this._offcanvas.hide()
       }).catch(console.error)
     },
+    update() {
+      // alert('deliveryby: '+this.deliveryBy+': Update! trackNo: '+this.trackNo +'Update! courier: '+this.courier +'Update! deliveryBy: '+this.deliveryBy )
+
+      if (this.trackNo == '' ||this.courier == '' ||this.deliveryBy ==''){        
+        alert('Please complete the information!')
+      } else {
+        this.disabled = true
+        this.isSaving = true
+        const {trackNo, orderStatus, courier, deliveryBy} = this
+        this.update({trackNo, orderStatus, courier, deliveryBy}).then(() => {
+          this.disabled = false              
+          this.isSaving = false
+          this._offcanvas.hide()
+        }).catch(console.error)
+      }
+    },
     formatDate(date) {
       let d = new Date(date)
       let month = '' + (d.getMonth() + 1)
@@ -294,23 +412,15 @@ export default {
       if (day.length < 2) day = '0' + day
       return [year, month, day].join('-')
     },
-    ...mapActions('Order', {
-      draft: 'draft',
-      get: 'get',
-      save: 'save'
-    }),
-    ...mapActions('SKU', {
-      getAllSKU: 'getAll'
-    }),
     getStatus(orderStatus){
       var textStatus = ""
-      if (orderStatus == 'READY_TO_SHIP'){
+      if (orderStatus === 'READY_TO_SHIP' || orderStatus === 'ready_to_ship'){
         textStatus= 'Ready to ship'
-      } else if (orderStatus == 'ON_DELIVERY') {
+      } else if (orderStatus === 'ON_DELIVERY' || orderStatus === 'on_delivery') {
         textStatus= 'On delivery'
-      } else if (orderStatus == 'SHIPPED') {
+      } else if (orderStatus === 'SHIPPED' || orderStatus === 'shipped') {
         textStatus= 'Shipped'
-      } else if (orderStatus == 'COMPLETED') {
+      } else if (orderStatus === 'COMPLETED' || orderStatus === 'completed') {
         textStatus= 'Completed'
       } 
       return textStatus
