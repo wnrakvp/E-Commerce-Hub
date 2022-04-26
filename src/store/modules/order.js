@@ -64,6 +64,7 @@ export default {
     async get (context, id) {
       console.log('get by id...');
       return await axios
+<<<<<<< HEAD
       .get(endpoint + `/${id}`)
       .then((result) => {     
         let {_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items} = result.data.data
@@ -82,6 +83,13 @@ export default {
         //   )
         //   items.push(new OrderLineItemModel(skuId, sku, price, amount))
         // })
+=======
+      .get(`${endpoint}/${id}`)
+      .then((result) => {     
+        let {_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items} = result.data.data
+        console.debug(_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items)    
+
+>>>>>>> 595a82299af3371b51b3599441b264c71625ef84
         const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items)
         return Promise.resolve(model)
       }).catch(err => {
@@ -94,6 +102,8 @@ export default {
     },
     filterByOrderStatus ({commit}, orderStatus) {
       commit('SET_ORDERSTATUS', orderStatus)
+      console.log('filterByOrderStatus')
+      console.log(orderStatus)
     },
     draft () {
       const model = new OrderModel('', new Date(), '', [])
@@ -185,5 +195,53 @@ export default {
           Promise.reject(err.message);
         });
     },
+    fetch({ commit }) {
+      console.log('fetch Order ...');
+      return axios     
+        .get(endpoint)
+        .then((result) => {
+          const orderList = [];
+          result.data.data.forEach(({ _id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items }) => {
+            orderList.push(
+              new OrderModel(
+                _id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items));
+          });
+
+          commit("SET_ALL", orderList);
+          return Promise.resolve(orderList);
+        })
+        .catch((err) => {
+          console.error(err);
+          return Promise.resolve("200");
+        });   
+    },
+    async myFetch(statusValue) {
+      try {
+         const response = await fetch(endpoint);
+         console.log('Fetch - Got response:', response);
+   
+         const data = await response.json();
+         console.log('Fetch - Got data:', data);
+         console.log('data.data', data.data);
+         console.log('data.data.orderNo', data.data[0].orderNo);
+
+         const orderList = [];
+          data.data.forEach(({ _id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items }) => {
+            console.log('status: ',statusValue)
+            console.log('order status: ',orderStatus)
+
+            if (statusValue === orderStatus) {
+              orderList.push(new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items));
+            }
+          });
+
+          console.log('Fetch - Got orderList:', orderList);
+         return { orderList, orderStatus: response.orderStatus }
+      }
+      catch (e) {
+         console.error(`An error has occured while calling the API. ${e}`);
+         throw e;
+      }
+   },
   }
 }
