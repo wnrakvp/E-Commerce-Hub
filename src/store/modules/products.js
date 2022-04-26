@@ -125,6 +125,19 @@ export default {
         //   .catch(Promise.reject);
         // // ---------------------------------------------------
         // ----------------------NodeJS Server-----------------------------
+        if(typeof image != "string") {
+        const formData = new FormData();
+        formData.append('file', image);
+        await axios
+          .post(`http://localhost:5000/api/v1/uploads`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data; boundary=----',
+            },
+          })
+          .then((result) => {
+            image = `http://localhost:5000/uploads/${result.data.data.filename}`
+          });
+        }
         return await axios
           .put(endpoint + `/${id}`, {
             name: name,
@@ -158,8 +171,7 @@ export default {
         //   .catch(Promise.reject);
         //   // ---------------------------------------------------
         // ----------------------NodeJS Server-----------------------------
-        let url = null;
-        if (image !== 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSdT-CMjPc50R-jKEvJl_rcn3mBMvkcUwERg' ){
+        if (typeof image != "string"){
         const formData = new FormData();
         formData.append('file', image);
         await axios
@@ -169,14 +181,14 @@ export default {
             },
           })
           .then((result) => {
-            url = `http://localhost:5000/uploads/${result.data.data.filename}`
+            image = `http://localhost:5000/uploads/${result.data.data.filename}`
           });
         }
         await axios
           .post(endpoint, {
             name: name,
             description: desc,
-            url: url? url:image,
+            url: image,
           })
           .then((result) => {
             console.log(result.data.data)

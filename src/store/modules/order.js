@@ -64,32 +64,11 @@ export default {
     async get (context, id) {
       console.log('get by id...');
       return await axios
-<<<<<<< HEAD
-      .get(endpoint + `/${id}`)
-      .then((result) => {     
-        let {_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items} = result.data.data
-        console.debug(_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items)
-        // const items = []
-        // lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
-        //   const sku = new SKUModel(
-        //     skuDetails._id,
-        //     skuDetails.productId,
-        //     null,
-        //     skuDetails.name,
-        //     skuDetails.desc,
-        //     skuDetails.price,
-        //     skuDetails.image,
-        //     new Set(skuDetails.marketplaces)
-        //   )
-        //   items.push(new OrderLineItemModel(skuId, sku, price, amount))
-        // })
-=======
       .get(`${endpoint}/${id}`)
       .then((result) => {     
         let {_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items} = result.data.data
         console.debug(_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items)    
 
->>>>>>> 595a82299af3371b51b3599441b264c71625ef84
         const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items)
         return Promise.resolve(model)
       }).catch(err => {

@@ -185,11 +185,11 @@ export default {
       console.debug(e.target.id)
       if (e.target.id === 'checkboxAllMarketplace') {
         if (this.isAllMarketplace) {
-          this.marketplaces.add('Shopee')
-          this.marketplaces.add('Lazada')
+          this.marketplaces.add('shopee')
+          this.marketplaces.add('lazada')
         } else {
-          this.marketplaces.delete('Shopee')
-          this.marketplaces.delete('Lazada')
+          this.marketplaces.delete('shopee')
+          this.marketplaces.delete('lazada')
         }
       } else {
         if (this.marketplaces.size === 2) this.isAllMarketplace = true

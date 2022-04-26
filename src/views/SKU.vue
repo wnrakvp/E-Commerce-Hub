@@ -27,8 +27,8 @@
               details: item.desc,
               price: item.price,
               imageURL: item.image,
-              isShopee: item.marketplaces.has('Shopee'),
-              isLazada: item.marketplaces.has('Lazada')
+              isShopee: item.marketplaces.has('shopee'),
+              isLazada: item.marketplaces.has('lazada')
             }"/>
           </div>
         </router-link>
