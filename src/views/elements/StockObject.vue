@@ -147,11 +147,19 @@ export default {
       return [day, month, year].join("-");
     },
     alreadySold(id) {
-      console.log(
-        this.soldList
-          .filter((x) => x.orderStatus === "READY_TO_SHIP")
+      const items = this.soldList
+          .filter((x) => x.orderStatus === "COMPLETED")
           .map((x) => x.items)
-      );
+      let itemList = [];
+      items.forEach((item) => {
+        item.forEach((x) => itemList.push(x))
+      })
+      const onSold = itemList.filter(i => i.skuId._id === id).map(item => item.amount)
+      let sum = 0;
+      for (let i in onSold) {
+        sum += onSold[i];
+      }
+      return sum
     },
   },
 };

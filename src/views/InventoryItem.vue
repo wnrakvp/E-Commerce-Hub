@@ -67,7 +67,7 @@
             >
               <option selected disabled value="">Select Warehouse</option>
               <option>Internal</option>
-              <option>External Warehouse</option>
+              <option>External</option>
             </select>
           </div>
           <div class="mb-3" :hidden="id === 'add'">
@@ -78,7 +78,7 @@
               id="amount"
               v-model="amount"
               required
-              :disabled="type === 'External Warehouse'"
+              :disabled="type === 'External'"
             />
           </div>
           <div class="mb-3" v-if="id === 'add'">
@@ -161,7 +161,7 @@
                         required
                         v-model="amount"
                         :disabled="
-                          type === 'External Warehouse' ||
+                          type === 'External' ||
                           skuId === '' ||
                           productId === ''
                         "

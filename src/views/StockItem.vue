@@ -38,8 +38,8 @@
               @change="changeMarketplace"
             >
               <option selected disabled value="">Select Marketplace</option>
-              <option value="Shopee">Shopee</option>
-              <option value="Lazada">Lazada</option>
+              <option value="shopee">Shopee</option>
+              <option value="lazada">Lazada</option>
             </select>
           </div>
           <div class="mb-3">
@@ -47,7 +47,7 @@
             <select class="form-select" id="warehouse" v-model="warehouse">
               <option selected disabled value="">Select Warehouse</option>
               <option>Internal</option>
-              <option>External Warehouse</option>
+              <option>External</option>
             </select>
           </div>
           <div class="mb-3">
