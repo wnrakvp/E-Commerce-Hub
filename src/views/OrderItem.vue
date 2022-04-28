@@ -70,6 +70,7 @@
                <!-- Radior button -->
               <div v-else-if="orderStatus != 'READY_TO_SHIP' && orderStatus != 'ready_to_ship'" >
                 <fieldset :disabled="disabled">
+                  <label class="form-label">Delivery by: </label><br>
                   <input type="radio" id="self" value="self" v-model="deliveryBy" ><label for="one">Self</label><br>                  
                   <input type="radio" id="warehouse" value="warehouse" v-model="deliveryBy" ><label for="two">Warehouse</label><br> 
                   <input type="radio" id="courier" value="courier" v-model="deliveryBy" ><label for="two">Courier</label><br>   
@@ -142,8 +143,7 @@
           </div>
         </div>
         <hr>
-        <div v-if="orderStatus === 'READY_TO_SHIP'" class="mb-3 text-end">
-         
+        <div v-if="orderStatus === 'READY_TO_SHIP'" class="mb-3 text-end">         
         <button type="button" 
           class="btn btn-primary" 
           @click="updateItem()"
@@ -289,9 +289,19 @@ export default {
     updateItem() {  
 
       console.log(this.orderStatus)
+      let isNoti = false
 
       if (this.orderStatus == 'READY_TO_SHIP') {
-        this.orderStatus = 'ON_DELIVERY'
+       
+
+        if (this.deliveryBy  == "self"){
+          if(!this.trackNo  == "" && !this.trackNo == "undefined"  && !this.trackNo == ''
+            && !this.courier == "" && !this.courier == "undefined"  && !this.courier == ''){
+               this.orderStatus = 'ON_DELIVERY'
+            }
+            else  isNoti = true
+
+        }   
       } else if (this.orderStatus = 'ON_DELIVERY') {
         this.orderStatus = 'SHIPPED'
       } else if (this.orderStatus = 'SHIPPED') {
@@ -311,7 +321,7 @@ export default {
 
           console.log('else if updateItem')  
           console.log(this.trackNo + this.deliveryBy + this.courier)
-          alert('Please complete the information!' )
+          isNoti = true
 
       } else {    
         console.log('else updateItem')  
@@ -327,6 +337,12 @@ export default {
             this._offcanvas.hide()
           }).catch(console.error)
       }
+
+        if (isNoti)
+          alert('Please complete or check the information completely!' )
+        else 
+          alert('Done!' )
+
     },
     formatDate(date) {
       let d = new Date(date)
