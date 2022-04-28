@@ -75,7 +75,7 @@
             <input type="checkbox"
             class="form-check-input"
             id="checkboxShopee"
-            value="Shopee"
+            value="shopee"
             v-model="marketplaces"
             @change="checkAllMarketplaces">
             <label class="form-check-label" for="checkboxShopee">Shopee</label>
@@ -84,7 +84,7 @@
             <input type="checkbox"
             class="form-check-input"
             id="checkboxLazada"
-            value="Lazada"
+            value="lazada"
             v-model="marketplaces"
             @change="checkAllMarketplaces">
             <label class="form-check-label" for="checkboxLazada">Lazada</label>
