@@ -3,10 +3,6 @@
     <div class="d-flex justify-content-between align-items-center border-bottom pb-1">
       <h6 class="h6 my-0">Order Management</h6>
 
-      <!-- <button class="btn btn-sm btn-outline-secondary" @click="Logger">
-        <i class="bi-plus-circle"></i> Logger
-      </button>  -->
-
       <button class="btn btn-sm btn-outline-primary" @click="fetchALL">
         <i class=" bi-arrow-repeat" style="font-size:20px"></i> Fetch
       </button> 
@@ -17,11 +13,11 @@
       <table class="table text-center align-middle">
         <thead>
           <tr>
-            <th><button class="btn btn-sm text-primary" @click="fetchALL"><i>Total({{getCountTotal()}})</i></button></th>
-            <th><button class="btn btn-sm text-danger" @click="fetchReadyToShip"><i>Rady to ship({{getCountStatus('READY_TO_SHIP')}})</i></button></th>
-            <th><button class="btn btn-sm text-warning" @click="fetchOnDelivery"><i>On Delivery({{getCountStatus('ON_DELIVERY')}})</i></button></th>
-            <th><button class="btn btn-sm text-info" @click="fetchShipped"><i>Shipped({{getCountStatus('SHIPPED')}})</i></button></th>
-            <th><button class="btn btn-sm text-success" @click="fetchCompleted"><i>Completed({{getCountStatus('COMPLETED')}})</i></button></th>                        
+            <th><button class="btn btn-sm text-primary" value="All" @click="filterByOrderStatus(null)"><i>Total({{getCountTotal()}})</i></button></th>
+            <th><button class="btn btn-sm text-danger" value="READY_TO_SHIP" @click="filterByOrderStatus('READY_TO_SHIP')"><i>Rady to ship({{getCountStatus('READY_TO_SHIP')}})</i></button></th>
+            <th><button class="btn btn-sm text-warning" value="ON_DELIVERY" @click="filterByOrderStatus('ON_DELIVERY')"><i>On Delivery({{getCountStatus('ON_DELIVERY')}})</i></button></th>
+            <th><button class="btn btn-sm text-info" value="SHIPPED" @click="filterByOrderStatus('SHIPPED')"><i>Shipped({{getCountStatus('SHIPPED')}})</i></button></th>
+            <th><button class="btn btn-sm text-success" value="COMPLETED" @click="filterByOrderStatus('COMPLETED')"><i>Completed({{getCountStatus('COMPLETED')}})</i></button></th>                        
 
           </tr>
         </thead>
@@ -69,17 +65,18 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex' 
-
 export default { 
   mounted () {
     Promise.all([
       this.getAllOrder(),
       this.getAllSKU()
+      
     ])
       .then(result => {
         console.debug(result)
     })
       .catch(console.error)
+
   },
   computed: {
     ...mapGetters('Order', {
@@ -87,7 +84,7 @@ export default {
     }),
     ...mapGetters('SKU', {
       skuList: 'all'
-    }),
+    })
   },
   data () {
     return {}
@@ -99,8 +96,7 @@ export default {
     ...mapActions('Order', {
       getAllOrder: 'getAll',
       filterById: 'filterById',
-      filterByOrderStatus: 'filterByOrderStatus',
-      myFetch: 'myFetch'
+      filterByOrderStatus: 'filterByOrderStatus'
     }),
     formatDate(date) {
       let d = new Date(date)
@@ -145,16 +141,12 @@ export default {
        return count
      }, 
      getCountStatus(statevalue) {
-       var count=0
-       
-       var item;
-       for(let i = 0; i < this.orderList.length; i++){      
-        item = this.orderList[i].items;
+       var count=0       
+       for(let i = 0; i < this.orderList.length; i++){
           if (this.orderList[i].orderStatus === statevalue){    
             count = count+1
           } 
-        }
-         
+        }         
        return count
      },         
     fetchALL() {
@@ -169,18 +161,7 @@ export default {
       })
         .catch(console.error)
     },
-     Logger() {
-      console.log(this.orderList);
-      console.log(this.orderList[0]);
-    
-      var count=0
-       for(let i = 0; i < this.orderList.length; i++){
-          if (this.orderList[i].orderStatus == 'READY_TO_SHIP'){
-           count = count+1
-         }
-        }
-
-    },
+ 
   }
 }
 </script>
