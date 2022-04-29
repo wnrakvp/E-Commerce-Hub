@@ -301,6 +301,8 @@ export default {
             }
             else  isNoti = true
 
+        } else if (this.deliveryBy == 'warehouse' || this.deliveryBy == 'courier'){
+            this.orderStatus = 'ON_DELIVERY'
         }   
       } else if (this.orderStatus = 'ON_DELIVERY') {
         this.orderStatus = 'SHIPPED'
