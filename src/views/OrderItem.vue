@@ -292,8 +292,6 @@ export default {
       let isNoti = false
 
       if (this.orderStatus == 'READY_TO_SHIP') {
-       
-
         if (this.deliveryBy  == "self"){
           if(!this.trackNo  == "" && !this.trackNo == "undefined"  && !this.trackNo == ''
             && !this.courier == "" && !this.courier == "undefined"  && !this.courier == ''){
@@ -302,48 +300,99 @@ export default {
             else  isNoti = true
 
         } else if (this.deliveryBy == 'warehouse' || this.deliveryBy == 'courier'){
-            this.orderStatus = 'ON_DELIVERY'
-        }   
+          this.orderStatus = 'ON_DELIVERY'
+        }
+
       } else if (this.orderStatus = 'ON_DELIVERY') {
         this.orderStatus = 'SHIPPED'
       } else if (this.orderStatus = 'SHIPPED') {
         this.orderStatus = 'COMPLETED'
       }
       
-      if (this.deliveryBy == 'warehouse' || this.deliveryBy == 'courier') {
+      
+      if ((this.deliveryBy == 'warehouse') )  {
           const {id, trackNo, orderStatus, courier, deliveryBy} = this
-          this.update({ id, trackNo, orderStatus, courier, deliveryBy }).then(() => {
-            this.disabled = false              
-            this.isSaving = false
-            this._offcanvas.hide()
-          }).catch(console.error)
-      } else if (this.deliveryBy  == "" || this.deliveryBy == "undefined" || this.deliveryBy == ''
-        || this.trackNo  == "" || this.trackNo == "undefined"  || this.trackNo == ''
-        || this.courier == "" || this.courier == "undefined"  || this.courier == ''){ 
+          this.orderStatus = 'ON_DELIVERY'
+          isNoti = false
 
-          console.log('else if updateItem')  
-          console.log(this.trackNo + this.deliveryBy + this.courier)
+          console.log('if updateItem ware house')  
+          console.log(this.orderStatus)  
+
+          // this.update({ id, trackNo, orderStatus, courier, deliveryBy }).then(() => {
+          //   this.disabled = false              
+          //   this.isSaving = false
+          //   this._offcanvas.hide()
+          // }).catch(console.error)
+      } else if (this.deliveryBy == 'courier') {
+        this.orderStatus = 'ON_DELIVERY'
+          isNoti = false
+
+          console.log('if updateItem courier')  
+          console.log(this.orderStatus)  
+
+      
+      } else if (this.deliveryBy == 'self' && this.trackNo  == "" && this.trackNo == "undefined"  && this.trackNo == ''
+          && this.courier == "" && this.courier == "undefined"  && this.courier == '') {
+          const {id, trackNo, orderStatus, courier, deliveryBy} = this
+          this.orderStatus = 'ON_DELIVERY'
+          isNoti = false
+
+          console.log('if updateItem')  
+          console.log(this.orderStatus)  
+
+          // this.update({ id, trackNo, orderStatus, courier, deliveryBy }).then(() => {
+          //   this.disabled = false              
+          //   this.isSaving = false
+          //   this._offcanvas.hide()
+          // }).catch(console.error)
+      } else if ((this.deliveryBy  == "" || this.deliveryBy == "undefined" || this.deliveryBy == ''
+        || this.trackNo  == "" || this.trackNo == "undefined"  || this.trackNo == ''
+        || this.courier == "" || this.courier == "undefined"  || this.courier == '') && (!this.deliveryBy == 'warehouse' && !this.deliveryBy == 'courier')){ 
+
           isNoti = true
 
+          console.log('else if updateItem')  
+          console.log(this.orderStatus)  
+          console.log(this.trackNo + this.deliveryBy + this.courier)
+
       } else {    
-        console.log('else updateItem')  
-        console.log(this.trackNo + this.deliveryBy + this.courier)
 
-        this.disabled = true
-          this.isSaving = true
-          console.log('start updateItem')
-          const {id, trackNo, orderStatus, courier, deliveryBy} = this
-          this.update({ id, trackNo, orderStatus, courier, deliveryBy }).then(() => {
-            this.disabled = false              
-            this.isSaving = false
-            this._offcanvas.hide()
-          }).catch(console.error)
+          if (this.deliveryBy && this.courier && this.trackNo)
+          {
+              this.orderStatus = 'ON_DELIVERY'
+              isNoti = false
+
+              console.log('else : if ')  
+              console.log(this.orderStatus)  
+          }else {
+            console.log('else updateItem')  
+            console.log(this.trackNo + this.deliveryBy + this.courier)
+            console.log(this.orderStatus)  
+
+            isNoti = true
+          }
+        
+    
       }
-
         if (isNoti)
           alert('Please complete or check the information completely!' )
-        else 
-          alert('Done!' )
+        else {
+          console.log('else updateItem')  
+          console.log(this.trackNo + this.deliveryBy + this.courier)
+          console.log(this.orderStatus)  
+
+          this.disabled = true
+            this.isSaving = true
+            console.log('start updateItem')
+            const {id, trackNo, orderStatus, courier, deliveryBy} = this
+            this.update({ id, trackNo, orderStatus, courier, deliveryBy }).then(() => {
+              this.disabled = false              
+              this.isSaving = false
+              this._offcanvas.hide()
+            }).catch(console.error)
+            alert('Done!' )
+        }
+          
 
     },
     formatDate(date) {
