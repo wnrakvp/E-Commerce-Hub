@@ -60,7 +60,10 @@
               <tr>
                 <th scope="row">Warehouse</th>
                 <td align="left">
-                  <span class="badge rounded-pill bg-warning text-dark">{{
+                  <span v-if="warehouse === 'Internal'" class="badge rounded-pill bg-warning text-dark">{{
+                    warehouse
+                  }}</span>
+                  <span v-else class="badge rounded-pill bg-info text-dark">{{
                     warehouse
                   }}</span>
                 </td>
@@ -103,7 +106,7 @@
                     <img
                       class="img-fluid rounded-start"
                       style="max-width: 48px; max-height: 48px"
-                      :src="item.inventory.sku.url"
+                      :src="item.inventory.sku.product.url"
                     />
                     {{ item.inventory.sku.name }}
                   </td>

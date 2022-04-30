@@ -62,7 +62,7 @@
                   <option  value="FLASH">FLASH</option>
                 </select> 
 
-                <label for="trackToAction" class="form-label">Tracking No.</label>
+                <label for="trackToAction" class="form-label mt-3">Tracking No.</label>
                 <input type="text" class="form-control" id="trackNo" placeholder="Tracking No." v-model="trackNo">
               </div>
 

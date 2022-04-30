@@ -37,7 +37,10 @@
           <tr v-for="(item, i) in inventoryList" :key="i">
             <!-- <td></td> -->
             <td>
-              <strong class="badge rounded-pill bg-warning text-dark">{{
+              <strong  v-if="item.type === 'Internal'" class="badge rounded-pill bg-warning text-dark">{{
+                item.type
+              }}</strong>
+              <strong  v-else class="badge rounded-pill bg-info text-dark">{{
                 item.type
               }}</strong>
             </td>
@@ -61,7 +64,7 @@
               <img
                 class="img-fluid rounded-start"
                 style="max-width: 50px; max-height: 50px"
-                :src="item.sku.image"
+                :src="item.sku.product.image"
               />
             </td>
             <td align="left">{{ item.sku.product.name }}</td>

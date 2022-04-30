@@ -26,7 +26,7 @@
               product: item.product.name,
               details: item.desc,
               price: item.price,
-              imageURL: item.image,
+              imageURL: item.product.image,
               isShopee: item.marketplaces.has('shopee'),
               isLazada: item.marketplaces.has('lazada')
             }"/>

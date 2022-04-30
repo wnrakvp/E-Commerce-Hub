@@ -21,7 +21,7 @@ export default {
       Object.assign(item, value);
     },
     UNSHIFT_ALL(state, value) {
-      state.all.push(value);
+      state.all.unshift(value);
     },
     DELETE_ALL(state, value) {
       state.all = state.all.filter(({ id }) => id !== value);
@@ -135,7 +135,7 @@ export default {
             },
           })
           .then((result) => {
-            image = `http://localhost:5000/uploads/${result.data.data.filename}`
+            image = `http://localhost:5000/api/v1/uploads/${result.data.data.filename}`
           });
         }
         return await axios
@@ -181,7 +181,7 @@ export default {
             },
           })
           .then((result) => {
-            image = `http://localhost:5000/uploads/${result.data.data.filename}`
+            image = `http://localhost:5000/api/v1/uploads/${result.data.data.filename}`
           });
         }
         await axios

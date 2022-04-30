@@ -238,7 +238,7 @@ export default {
               warehousetype,
               availableamount
             );
-            commit('PUSH_ALL', model);
+            commit('UNSHIFT_ALL', model);
             return Promise.resolve(model);
           })
           .catch((err) => {

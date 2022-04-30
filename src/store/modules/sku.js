@@ -28,7 +28,7 @@ export default {
       Object.assign(item, value);
     },
     UNSHIFT_ALL(state, value) {
-      state.all.push(value);
+      state.all.unshift(value);
     },
     DELETE_ALL(state, value) {
       state.all = state.all.filter(({ id }) => id !== value);
@@ -206,7 +206,7 @@ export default {
     },
     async save(
       { commit },
-      { id, productId, name, desc, price, image, marketplaces }
+      { id, productId, name, desc, price, image, marketplaces}
     ) {
       if (id == 'add') {
         // -----------------------NodeJS Server---------------------------------------------

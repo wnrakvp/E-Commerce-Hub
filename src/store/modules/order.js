@@ -177,22 +177,22 @@ export default {
               deliveryBy: deliveryBy
             })
             .then((result) => {
-              console.log(result);
-              const { _id, items:lineItems } = result
-              const items = []
-              lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
-                const sku = new SKUModel(
-                  skuDetails._id,
-                  skuDetails.productId,
-                  null,
-                  skuDetails.name,
-                  skuDetails.desc,
-                  skuDetails.price,
-                  skuDetails.image,
-                  new Set(skuDetails.marketplaces)
-                )
-                items.push(new OrderLineItemModel(skuId, sku, price, amount))
-              })
+              console.log(result.data.data);
+              const {_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items} = result.data.data
+              // const items = []
+              // lineItems.forEach(({skuId, sku: skuDetails, price, amount}) => {
+              //   const sku = new SKUModel(
+              //     skuDetails._id,
+              //     skuDetails.productId,
+              //     null,
+              //     skuDetails.name,
+              //     skuDetails.desc,
+              //     skuDetails.price,
+              //     skuDetails.image,
+              //     new Set(skuDetails.marketplaces)
+              //   )
+              //   items.push(new OrderLineItemModel(skuId, sku, price, amount))
+              // })
               const model = new OrderModel(_id, date, marketplace, orderNo, trackNo, orderStatus, courier, deliveryBy, items)
               commit('EDIT_ALL', model)
               return Promise.resolve(model)

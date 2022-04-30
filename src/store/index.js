@@ -31,11 +31,12 @@ const store = createStore({
         console.log(response)
       if (response.status == 200) {
         commit('LOGIN',true)
-        alert('Login Successfully')
       }
       }
       catch(err) {
-        alert('There is error')
+        setTimeout(() => {
+          alert('There is an error with your login')
+        },2000)
         console.log(err)
       }
     }

@@ -102,7 +102,7 @@ export default {
               items
             );
             console.timeEnd('Add Stocks');
-            commit('PUSH_ALL', stockList);
+            commit('UNSHIFT_ALL', stockList);
             console.log(stockList)
             return Promise.resolve(stockList);
           })

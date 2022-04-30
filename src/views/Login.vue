@@ -57,7 +57,6 @@
                     class="btn btn-primary"
                     @click.prevent="
                       validateUser();
-                      setOTP();
                     "
                     v-bind:hidden="isLogin == true"
                     :disabled="isLogin == true"
@@ -77,12 +76,12 @@
                     2-Step Verification
                   </h3>
                   <p style="text-align: center" v-show="isLogin">
-                    Verification Code is sent to <br /><strong>{{
+                    Verification Code is required <br />
+                    Please request OTP and fills it within 5 minutes to verify your account<br /><strong>{{
                       email
                     }}</strong
-                    >.<br />
-                    Please enter OTP to verify your account<br />
-                    {{ otp }}
+                    >
+                    <!-- {{ otp }} -->
                   </p>
                 </div>
                 <div class="d-flex flex-row justify-content-center">
@@ -138,7 +137,7 @@
                     v-show="isLogin"
                     :disabled="otp != null"
                   >
-                    Re-send OTP
+                    Request OTP
                   </button>
                 </div>
 
@@ -226,28 +225,28 @@ export default {
       this.otp = Math.floor(100000 + Math.random() * 900000);
       setTimeout(() => {
         this.otp = null;
-      }, 30000); // 30 seconds OTP disappered
+      }, 300000); // 300 seconds OTP disappered
       // -----Send email to user-----
-      // var templateParams = {
-      //     userEmail: this.email,
-      //     message: this.otp,
-      // };
-      // emailjs
-      //   .send(
-      //     'service_6y3feux',
-      //     'template_rvh3hw5',
-      //     templateParams,
-      //     'KfDmy3MbqTlwBCuKI',
-      //   )
-      //   .then(
-      //     (result) => {
-      //       console.log('SUCCESS!', result.text);
-      //     },
-      //     (error) => {
-      //       console.log('FAILED...', error.text);
-      //       alert('Failed to send OTP. Please Check your email.');
-      //     }
-      //   );
+      var templateParams = {
+          userEmail: this.email,
+          message: this.otp,
+      };
+      emailjs
+        .send(
+          'service_6y3feux',
+          'template_rvh3hw5',
+          templateParams,
+          'KfDmy3MbqTlwBCuKI',
+        )
+        .then(
+          (result) => {
+            console.log('SUCCESS!', result.text);
+          },
+          (error) => {
+            console.log('FAILED...', error.text);
+            alert('Failed to send OTP. Please Check your email.');
+          }
+        );
       // -----------------------------
     },
     noOTP() {

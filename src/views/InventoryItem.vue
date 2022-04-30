@@ -158,6 +158,7 @@
                         class="form-control"
                         id="amount"
                         placeholder="#"
+                        min="0"
                         required
                         v-model="amount"
                         :disabled="
@@ -374,11 +375,11 @@ export default {
       const check = this.items.filter((x) => x.sku.id === sku.id);
       if (check.length == 0) {
         this.items.push({
-          id: inventory? inventory.id:null,
+          id: inventory ? inventory.id : null,
           date: this.date,
           sku: sku,
           type: this.type,
-          oldAmount: inventory? inventory.amount:0,
+          oldAmount: inventory ? inventory.amount : 0,
           amount: this.amount,
         });
       } else {

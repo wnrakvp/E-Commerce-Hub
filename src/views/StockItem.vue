@@ -104,8 +104,9 @@
                     <td>
                       <input
                         type="number"
-                        class="form-control form-control-sm"
+                        class="form-control"
                         id="price"
+                        min="0"
                         placeholder="Price"
                         v-model="price"
                       />
@@ -113,9 +114,9 @@
                     <td>
                       <input
                         type="number"
-                        class="form-control form-control-sm"
-                        :class="{ 'is-invalid': exceedLimit }"
+                        class="form-control"
                         id="amount"
+                        min="0"
                         placeholder="Amount"
                         :disabled="inventoryId == ''"
                         v-model="amountonsell"
